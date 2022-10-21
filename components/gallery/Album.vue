@@ -12,8 +12,8 @@
 <script>
 export default {
     async setup(props) {
-        const photoDesign = ref(null);
-        const videoDesign = ref(null);
+        const photoDesign = shallowRef(null);
+        const videoDesign = shallowRef(null);
         photoDesign.value = resolveComponent('gallery/photo/list')
         videoDesign.value = resolveComponent('gallery/video/list')
         const album = await useGalleryAlbum(props.albumType);

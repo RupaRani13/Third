@@ -13,28 +13,28 @@ export default {
     async setup(props) {
         const listDesign = shallowRef(null);
         if(props.list){
-            if (props.list.includes('L01')) {
+            if (props.list&&props.list.includes('L01')) {
                 listDesign.value = resolveComponent('download/list/design01')
             }
-            else if (props.list.includes('L02')) {
+            else if (props.list&&props.list.includes('L02')) {
                 listDesign.value = resolveComponent('download/list/design02')
             }
-            else if (props.list.includes('L03')) {
+            else if (props.list&&props.list.includes('L03')) {
                 listDesign.value = resolveComponent('download/list/design03')
             }
-            else if (props.list.includes('L04')) {
+            else if (props.list&&props.list.includes('L04')) {
                 listDesign.value = resolveComponent('download/list/design04')
             }
-            else if (props.list.includes('L05')) {
+            else if (props.list&&props.list.includes('L05')) {
                 listDesign.value = resolveComponent('download/list/design05')
             }
-            else if (props.list.includes('L06')) {
+            else if (props.list&&props.list.includes('L06')) {
                 listDesign.value = resolveComponent('download/list/design06')
             }
-            else if (props.list.includes('L07')) {
+            else if (props.list&&props.list.includes('L07')) {
                 listDesign.value = resolveComponent('download/list/design07')
             }
-            else if (props.list.includes('L08')) {
+            else if (props.list&&props.list.includes('L08')) {
                 listDesign.value = resolveComponent('download/list/design08')
             }
             else{

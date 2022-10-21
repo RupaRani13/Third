@@ -179,7 +179,6 @@ export default {
             let newmrp = parseInt(mymrp);
             let mycost = cost.trim();
             let newcost = parseInt(mycost)
-            console.log(newmrp, newcost)
 
             if (newmrp > 0) {
                 return (Math.round(newmrp - newcost) / newmrp * 100).toFixed(2)

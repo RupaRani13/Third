@@ -95,7 +95,7 @@
 
         <template v-else>
           <v-app-bar class="bg-lightgrey">
-            <v-app-bar-title>{{ websiteTitle }}</v-app-bar-title>
+            <v-app-bar-title>{{ websiteData.title }}</v-app-bar-title>
             <v-spacer></v-spacer>
 
             <v-app-bar-nav-icon variant="text" v-click-outside="{
@@ -324,9 +324,7 @@ export default {
 
   },
   watch: {
-    menuData1() {
-      console.log('watched called')
-    }
+
   },
   created() {
 
