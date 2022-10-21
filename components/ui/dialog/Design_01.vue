@@ -6,7 +6,6 @@
             <img v-if="image" style="max-height:80vh; max-width: 100%;" :src="image" :alt="heading">
             <div v-if="video" class="iframe">
                 <iframe width="560" height="315" :src="`https://www.youtube.com/embed/${video}`" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay=true; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
             </div>
             <v-card-text v-if="htmlContent" v-html="htmlContent"></v-card-text>
         </v-card>

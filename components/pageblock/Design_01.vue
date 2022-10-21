@@ -58,48 +58,48 @@ export default {
             if (props.blockContent.advanceData.type=='LIST') {
             }
             else if (props.blockContent.advanceData.type=='FEATURES') {
-                if (props.blockContent.advanceData.design.includes('I03')) {
-                    if (props.blockContent.advanceData.design.includes('D01')) {
+                if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('I03')) {
+                    if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('D01')) {
                         design.value = resolveComponent('contentlist/feature/item3/design01')
                     }
-                    else if (props.blockContent.advanceData.design.includes('D02')) {
+                    else if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('D02')) {
                         design.value = resolveComponent('contentlist/feature/item3/design02')
                     }
-                    else if (props.blockContent.advanceData.design.includes('D03')) {
+                    else if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('D03')) {
                         design.value = resolveComponent('contentlist/feature/item3/design03')
                     }
-                    else if (props.blockContent.advanceData.design.includes('D04')) {
+                    else if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('D04')) {
                         design.value = resolveComponent('contentlist/feature/item3/design04')
                     }
                     else {
                         design.value = resolveComponent('contentlist/feature/item3/design01')
                     }
                 }
-                else if (props.blockContent.advanceData.design.includes('I04')) {
-                    if (props.blockContent.advanceData.design.includes('D01')) {
+                else if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('I04')) {
+                    if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('D01')) {
                         design.value = resolveComponent('contentlist/feature/item4/design01')
                     }
-                    else if (props.blockContent.advanceData.design.includes('D02')) {
+                    else if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('D02')) {
                         design.value = resolveComponent('contentlist/feature/item4/design02')
                     }
-                    else if (props.blockContent.advanceData.design.includes('D03')) {
+                    else if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('D03')) {
                         design.value = resolveComponent('contentlist/feature/item4/design03')
                     }
                     else {
                         design.value = resolveComponent('contentlist/feature/item4/design01')
                     }
                 }
-                else if (props.blockContent.advanceData.design.includes('I06')) {
-                    if (props.blockContent.advanceData.design.includes('D01')) {
+                else if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('I06')) {
+                    if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('D01')) {
                         design.value = resolveComponent('contentlist/feature/item6/design01')
                     }
-                    else if (props.blockContent.advanceData.design.includes('D02')) {
+                    else if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('D02')) {
                         design.value = resolveComponent('contentlist/feature/item6/design02')
                     }
-                    else if (props.blockContent.advanceData.design.includes('D03')) {
+                    else if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('D03')) {
                         design.value = resolveComponent('contentlist/feature/item6/design03')
                     }
-                    else if (props.blockContent.advanceData.design.includes('D04')) {
+                    else if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('D04')) {
                         design.value = resolveComponent('contentlist/feature/item6/design04')
                     }
                     else {
@@ -107,10 +107,10 @@ export default {
                     }
                 }
                 else {
-                    if (props.blockContent.advanceData.design.includes('D01')) {
+                    if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('D01')) {
                         design.value = resolveComponent('contentlist/feature/allitem/design01')
                     }
-                    else if (props.blockContent.advanceData.design.includes('D02')) {
+                    else if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('D02')) {
                         design.value = resolveComponent('contentlist/feature/allitem/design02')
                     } else {
                         design.value = resolveComponent('contentlist/feature/allitem/design01')
@@ -210,28 +210,28 @@ export default {
             else if (props.blockContent.advanceData.type=='DOWNLOAD'||props.blockContent.advanceData.type=='PHOTO'||props.blockContent.advanceData.type=='VIDEO') {
                 if (props.blockContent.advanceData.categoryId) {
                     if (props.blockContent.advanceData.type=='DOWNLOAD') {
-                        if (props.blockContent.advanceData.design.includes('L01')) {
+                        if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('L01')) {
                             design.value = resolveComponent('download/list/design01')
                         }
-                        else if (props.blockContent.advanceData.design.includes('L02')) {
+                        else if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('L02')) {
                             design.value = resolveComponent('download/list/design02')
                         }
-                        else if (props.blockContent.advanceData.design.includes('L03')) {
+                        else if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('L03')) {
                             design.value = resolveComponent('download/list/design03')
                         }
-                        else if (props.blockContent.advanceData.design.includes('L04')) {
+                        else if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('L04')) {
                             design.value = resolveComponent('download/list/design04')
                         }
-                        else if (props.blockContent.advanceData.design.includes('L05')) {
+                        else if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('L05')) {
                             design.value = resolveComponent('download/list/design05')
                         }
-                        else if (props.blockContent.advanceData.design.includes('L06')) {
+                        else if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('L06')) {
                             design.value = resolveComponent('download/list/design06')
                         }
-                        else if (props.blockContent.advanceData.design.includes('L07')) {
+                        else if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('L07')) {
                             design.value = resolveComponent('download/list/design07')
                         }
-                        else if (props.blockContent.advanceData.design.includes('L08')) {
+                        else if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('L08')) {
                             design.value = resolveComponent('download/list/design08')
                         } else {
                             design.value = resolveComponent('download/list/design01')
@@ -244,25 +244,25 @@ export default {
 
 
                 } else {
-                    if (props.blockContent.advanceData.design.includes('D01')) {
+                    if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('D01')) {
                         design.value = resolveComponent('ui/tabs/design01')
                     }
-                    else if (props.blockContent.advanceData.design.includes('D02')) {
+                    else if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('D02')) {
                         design.value = resolveComponent('ui/tabs/design02')
                     }
-                    else if (props.blockContent.advanceData.design.includes('D03')) {
+                    else if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('D03')) {
                         design.value = resolveComponent('ui/tabs/design03')
                     }
-                    else if (props.blockContent.advanceData.design.includes('D04')) {
+                    else if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('D04')) {
                         design.value = resolveComponent('ui/tabs/design04')
                     }
-                    else if (props.blockContent.advanceData.design.includes('D05')) {
+                    else if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('D05')) {
                         design.value = resolveComponent('ui/tabs/design05')
                     }
-                    else if (props.blockContent.advanceData.design.includes('D06')) {
+                    else if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('D06')) {
                         design.value = resolveComponent('ui/tabs/design06')
                     }
-                    else if (props.blockContent.advanceData.design.includes('D07')) {
+                    else if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('D07')) {
                         design.value = resolveComponent('ui/tabs/design07')
                     }
                     else {
