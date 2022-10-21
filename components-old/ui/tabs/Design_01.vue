@@ -1,0 +1,104 @@
+<template>
+    <div id="photoAlbumDesign01">
+            <v-card>
+                <v-tabs color="success" show-arrows slider-color="background">
+                    <v-tab v-for="(item,index) in list" :class="[activeTab==index?'active': '']" @click="setActiveTab(index)" :key="index">
+                        {{item }}
+                    </v-tab>
+                </v-tabs>
+                <slot></slot>
+            </v-card>
+    </div>
+</template>
+
+<script>
+export default {
+    async setup() {
+    },
+    props : {
+        list : {
+            type : Array,
+            required : true
+        }
+    },
+    data(){
+        return{
+            activeTab : 0,
+            albumId : null,
+        }
+    },
+    methods : {
+            setActiveTab(index){
+                this.activeTab = index;
+                this.$emit('activeIndex', index);
+            }
+        },
+    created(){
+    
+    },
+
+
+}
+</script>
+
+<style>
+ 
+    #photoAlbumDesign01 .v-btn__underlay, #photoAlbumDesign01 .v-btn__overlay{
+        display: none;
+    }
+    #photoAlbumDesign01 .v-slide-group__next,#photoAlbumDesign01  .v-slide-group__prev{
+        min-width: 15px  !important;
+        background: var(--v-background);
+        border: 2px solid var(--v-success);
+        color: var(--v-success);
+        max-width: 20px;
+    }
+    #photoAlbumDesign01 .v-btn__content{
+        height: 100%;
+    }
+    #photoAlbumDesign01 .v-slide-group__next--disabled,#photoAlbumDesign01 .v-slide-group__prev--disabled{
+        opacity: 1;
+        background: var(--v-on-surface-variant);
+    }
+    #photoAlbumDesign01 .v-tab{
+        color:var(--v-success) 
+    }
+    #photoAlbumDesign01 .v-tab.active{
+        background: var(--v-success);
+        color:var(--v-background) !important;
+    }
+    @media only screen and (max-width:475px) {
+        #photoAlbumDesign01  .v-tabs{
+            display: block;
+        height: fit-content;
+        }
+        #photoAlbumDesign01 .v-tabs .v-tab a{
+            max-width: 100%;
+        }
+ 
+        #photoAlbumDesign01 .v-slide-group__content .__web-inspector-hide-shortcut__{
+            width: 100%;
+            display: block;
+        }
+        #photoAlbumDesign01 .v-tabs .v-tab{
+            display: block;
+            
+        }
+        #photoAlbumDesign01 .v-btn__content{
+            /* background: black; */
+            width: calc(100vw - 64px);
+            height: 100%;
+            
+        }
+  
+        #photoAlbumDesign01 .v-slide-group__content{
+            display: block;
+        }
+        #photoAlbumDesign01 .v-slide-group__prev, #photoAlbumDesign01 .v-slide-group__next{
+            display: none;
+        }
+    }
+        
+    
+
+</style>
