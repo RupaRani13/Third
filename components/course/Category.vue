@@ -4,8 +4,10 @@
             <ui-tabs-design01 :list="tabArr" @activeIndex=" getprogramIdByEdstandard"></ui-tabs-design01>
             <ui-tabs-design01 :list="coursetab" @activeIndex=" getprogramIdByCourse"></ui-tabs-design01>
             <!-- <course-list-design01 :cardCondition="cardCondition" :myArr="filteredCourseProgram"></course-list-design01> -->
-            <course-list-design02 :cardCondition="cardCondition" :myArr="filteredCourseProgram"></course-list-design02>
+            <!-- <course-list-design02 :cardCondition="cardCondition" :myArr="filteredCourseProgram"></course-list-design02> -->
             <!-- <course-list-design03 :cardCondition="cardCondition" :myArr="filteredCourseProgram"></course-list-design03> -->
+            <course-list-design04 :cardCondition="cardCondition" :myArr="filteredCourseProgram"></course-list-design04>
+            <course-list-design05 :cardCondition="cardCondition" :myArr="filteredCourseProgram"></course-list-design05>
         </v-container>
     </div>
 </template>
@@ -17,7 +19,7 @@ export default {
     async setup() {
         const course = await useCourse();
         const edustand = await useEdustandard();
-        const courseprogram = await useCourseprogram();
+        const courseprogram = await useCourseProgram();
         return {
             course, edustand, courseprogram
         }

@@ -1,5 +1,5 @@
 <template>
-    <div id="courseListDesign03">
+    <div id="courseListDesign05">
         <v-row>
             <template v-for="item in myArr" :key="item.title">
                 <v-col class="v-col-lg-6 v-col-md-6 v-col-sm-12 v-col-12">
@@ -118,13 +118,13 @@ export default {
 }
 </script>
 <style scoped>
- #courseListDesign03 .full-card{
+ #courseListDesign05 .full-card{
    display: flex;
    position: relative;
    padding: 4px;
     background: var(--v-success);
 }
-#courseListDesign03 .content-demo {
+#courseListDesign05 .content-demo {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -132,7 +132,7 @@ export default {
     padding: 0px;
 
 }
-#courseListDesign03 .eduname {
+#courseListDesign05 .eduname {
     position: absolute;
     background: var(--v-success);
     top: 0px;
@@ -143,16 +143,16 @@ export default {
     font-size: 14px;
     left: 0;
 }
-#courseListDesign03 .edustandrad-name {
+#courseListDesign05 .edustandrad-name {
     font-size: 14px;
 
     /* padding: 3px 0px; */
 }
-#courseListDesign03 .content-fee p {
+#courseListDesign05 .content-fee p {
     padding: 0px 10px;
     font-size: 12px;
 }
-#courseListDesign03 .content-fee{
+#courseListDesign05 .content-fee{
     
     position: absolute;
     background: #d9cbcb;
@@ -162,46 +162,46 @@ export default {
     right: 0px;
 
 }
-#courseListDesign03 .course-Date {
+#courseListDesign05 .course-Date {
     font-size: 11px;
     color: #896cb4;
     padding: 3px 0px;
 }
 
-#courseListDesign03 .content-fee p strike {
+#courseListDesign05 .content-fee p strike {
     padding: 0px 5px;
     font-size: 13px;
     color: red;
 }
 
-#courseListDesign03 .discount-cost {
+#courseListDesign05 .discount-cost {
     color: yellow;
 }
 
-#courseListDesign03 .course-name {
+#courseListDesign05 .course-name {
     height: 50px;
 }
-#courseListDesign03 .coursecard-design{
+#courseListDesign05 .coursecard-design{
     padding: 10px;
     background: var(--v-background);
 }
-#courseListDesign03 .course-btn{
+#courseListDesign05 .course-btn{
     justify-content: space-around;
     display: flex;
     /* padding: 20px 0px; */
     transform: translate(0%, 70%);
    
 }
-#courseListDesign03 .course-btn button{
+#courseListDesign05 .course-btn button{
     background: var(--v-success);
     border-radius: 20px;
     color: #fff;
 }
 @media screen and (max-width:600px) {
-    #courseListDesign03 .full-card{
+    #courseListDesign05 .full-card{
         display: block;
     }
-    #courseListDesign03 .course-btn{
+    #courseListDesign05 .course-btn{
         padding: 20px 0px;
     transform: translate(1%, 3%);
     }
