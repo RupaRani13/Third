@@ -45,7 +45,6 @@ export default {
         }
     },
     created() {
-        console.log(this.contentListdata)
     },
 }
 </script>

@@ -324,9 +324,7 @@ export default {
 
   },
   watch: {
-    menuData1() {
-      console.log('watched called')
-    }
+
   },
   created() {
 

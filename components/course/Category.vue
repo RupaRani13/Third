@@ -71,10 +71,8 @@ export default {
             if (edustandardName == 'All' && courseName == "All") {
                 this.filteredCourseProgram = this.courseprogram;
             } else if (edustandardName != 'All' && courseName == "All") {
-                console.log(courseName);
                 this.filteredCourseProgram = this.courseprogram.filter(item => item.eduStandard && item.eduStandard.name == edustandardName);
             } else if (edustandardName == 'All' && courseName != "All") {
-                console.log(courseName);
                 this.filteredCourseProgram = this.courseprogram.filter(item => item.course && item.course.name == courseName);
             } else {
                 this.filteredCourseProgram = this.courseprogram.filter(item => item.course && item.eduStandard && item.course.name == courseName && item.eduStandard.name == edustandardName);
@@ -88,8 +86,6 @@ export default {
         this.tabArr = this.edustand.map(item => item = item.name);
         this.coursetab = this.course.map(item2 => item2 = item2.name);
 
-        console.log(this.tabArr)
-        console.log(this.coursetab)
     },
 }
 </script>

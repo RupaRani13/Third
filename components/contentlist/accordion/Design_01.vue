@@ -30,7 +30,6 @@
         }
     },
     created(){
-       console.log(this.contentListdata)
     },
 }
 </script>
