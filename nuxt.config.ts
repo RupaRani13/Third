@@ -12,7 +12,7 @@ export default defineNuxtConfig({
   plugins: ['plugins/swiper.client.js', 'plugins/vueViewer.client.js'],
   vue: {
     compilerOptions: {
-      isCustomElement: tag => ['marquee' ].includes(tag)
+      isCustomElement: tag => ['marquee', 'strike' ].includes(tag)
     }
   }
 })
