@@ -7,8 +7,8 @@
                         <v-card class="course-card" v-bind="props">
                             <div>
                                 <div class="myClass" style="position:relative">
-                                    <v-expand-transition>
-                                        <v-card-text v-if="item&&item.desci&&isHovering" v-html="item.desci"
+                                    <v-expand-transition v-if="item.desci&&cardCondition.description.show&&isHovering">
+                                        <v-card-text  v-html="item.desci"
                                             class='content-demo'></v-card-text>
                                     </v-expand-transition>
                                     <v-img :src="item.thumb" lazy-src="/gallery_loading_image.jpeg" aspect-ratio="1.9"
@@ -22,20 +22,25 @@
                                     </v-img>
 
                                 </div>
+<<<<<<< components/course/list/Design_01.vue
                                 <p v-if="cardCondition.eduStandard.show==true&&item.eduStandard&&item.eduStandard.name"
                                     class="eduname text-white">
+=======
+                                <p v-if="cardCondition.eduStandard.show&&item.eduStandard&&item.eduStandard.name"
+                                    class="eduname text-white"  >
+>>>>>>> components/course/list/Design_01.vue
                                     {{item.eduStandard.name}}
                                 </p>
                                 <div class="course-content">
                                     <p v-if="item.name" class="edustandrad-name ">
                                         {{item.name}}
                                     </p>
-                                    <p v-if="cardCondition.courseName.show==true&&item.course&&item.course.name"
+                                    <p v-if="cardCondition.course.show&&item.course&&item.course.name"
                                         class="">
                                         {{item.course.name}}
                                     </p>
                                     <v-card flat
-                                        v-if="item.linkedProduct&&item.linkedProduct.cost&&item.linkedProduct.mrp&&(cardCondition.cost||cardCondition.mrp || cardCondition.discount)"
+                                        v-if="item.linkedProduct&&item.linkedProduct.cost&&item.linkedProduct.mrp&&(cardCondition.cost.show||cardCondition.mrp.show || cardCondition.discount.show)"
                                         class="content-fee">
                                         <p>
                                             <span
@@ -47,19 +52,29 @@
                                                 OFF</span>
                                         </p>
                                     </v-card>
-                                    <p v-if="item.linkedProduct&&item.linkedProduct.startDate" class="course-Date">Start
-                                        Date:{{item.linkedProduct.startDate}}</p>
-                                    <p v-else-if="item.startDate" class="course-Date">Start Date:{{item.startDate}}</p>
-                                    <p v-if="item.linkedProduct&&item.linkedProduct.validity" class="course-Date">End
+                                    <template v-if="cardCondition.startDate.show">
+                                        <p v-if="item.linkedProduct&&item.linkedProduct.startDate" class="course-Date">
+                                            Start Date:{{item.linkedProduct.startDate}}
+                                        </p>
+                                        <p v-else-if="item.startDate" class="course-Date">Start Date:{{item.startDate}}</p>
+                                    </template>
+                                    <template v-if="cardCondition.endDate.show">
+                                        <p v-if="item.linkedProduct&&item.linkedProduct.validity" class="course-Date">End
                                         Date:{{item.linkedProduct.validity}}</p>
-                                    <p v-else-if="item.endDate" class="course-Date">End Date:{{item.endDate}}</p>
+                                        <p v-else-if="item.endDate" class="course-Date">End Date:{{item.endDate}}</p>
+                                    </template>
                                     <div class="course-btn">
+<<<<<<< components/course/list/Design_01.vue
                                         <!-- <v-btn size="small" @click="coursedetails()">See Details</v-btn> -->
                                         <v-btn size="small">Buy Now</v-btn>
                                         <NuxtLink :to="`/course-detail/${item.id}`">
                                             <v-btn size="small">See Details</v-btn>
                                         </NuxtLink>
 
+=======
+                                        <v-btn size="small">See Details</v-btn>
+                                        <v-btn v-if="item.linkedProduct" size="small">Buy Now</v-btn>
+>>>>>>> components/course/list/Design_01.vue
                                     </div>
                                 </div>
                             </div>
@@ -82,25 +97,35 @@ export default {
             default: {
                 eduStandard: {
                     show: true,
-                    value: 'Exam Category :',
+                    value: 'Education Standard',
+                },
+                course: {
+                    show: false,
+                    value: 'course'
                 },
                 cost: {
                     show: true,
-                    value: 'Price :',
+                    value: 'Price',
                 },
                 mrp: {
                     show: true,
-
+                    value: 'Mrp',
                 },
                 discount: {
                     show: true,
-
+                    value: 'Discount',
                 },
-                courseName: {
-                    show: false,
-                    value: 'course name :'
+                description: {
+                    'show': false,
                 },
-
+                startDate : {
+                    show: true,
+                    value: 'Start Date'
+                },
+                endDate : {
+                    show: true,
+                    value: 'End Date'
+                } 
             }
         }
     },
@@ -113,7 +138,6 @@ export default {
             let newmrp = parseInt(mymrp);
             let mycost = cost.trim();
             let newcost = parseInt(mycost)
-            console.log(newmrp, newcost)
 
             if (newmrp > 0) {
                 return (Math.round(newmrp - newcost) / newmrp * 100).toFixed(2)

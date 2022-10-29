@@ -7,7 +7,11 @@
             <!-- <course-list-design02 :cardCondition="cardCondition" :myArr="filteredCourseProgram"></course-list-design02> -->
             <!-- <course-list-design03 :cardCondition="cardCondition" :myArr="filteredCourseProgram"></course-list-design03> -->
             <!-- <course-list-design04 :cardCondition="cardCondition" :myArr="filteredCourseProgram"></course-list-design04> -->
+<<<<<<< components/course/Category.vue
             <!-- <course-list-design05 :cardCondition="cardCondition" :myArr="filteredCourseProgram"></course-list-design05> -->
+=======
+            <course-list-design01 :cardCondition="cardCondition" :myArr="filteredCourseProgram"></course-list-design01>
+>>>>>>> components/course/Category.vue
         </v-container>
     </div>
 </template>
@@ -35,27 +39,43 @@ export default {
                 course: 'All',
                 edustandard: 'All',
             },
+<<<<<<< components/course/Category.vue
             cardCondition: {   
                 eduStandard:{
+=======
+            cardCondition: {
+                eduStandard: {
+>>>>>>> components/course/Category.vue
                     show: true,
-                    value : 'Exam Category :',
+                    value: 'Education Standard',
                 },
-                cost:{
-                    show: true,
-                    value : 'Price :',
+                course: {
+                    show: false,
+                    value: 'course'
                 },
-                mrp:{
+                cost: {
                     show: true,
-                  
+                    value: 'Price',
+                },
+                mrp: {
+                    show: true,
+                    value: 'Mrp',
                 },
                 discount: {
-                    show:true,
-                    
+                    show: true,
+                    value: 'Discount',
                 },
-                courseName: {
-                    show:false,
-                    value:'course name :'
+                description: {
+                    show: true,
                 },
+                startDate : {
+                    show: false,
+                    value: 'Start Date'
+                },
+                endDate : {
+                    show: false,
+                    value: 'End Date'
+                }      
             }
         }
     },

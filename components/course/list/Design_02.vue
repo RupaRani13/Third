@@ -17,17 +17,17 @@
                         <v-card flat v-if="item.linkedProduct&&item.linkedProduct.cost&&item.linkedProduct.mrp&&(cardCondition.cost||cardCondition.mrp || cardCondition.discount)" class="content-fee">
                                 <p>
                                     <span
-                                        v-if="cardCondition.cost.show==true">{{cardCondition.cost.value}}{{item.linkedProduct.cost}}</span>
+                                        v-if="cardCondition.cost.show">{{cardCondition.cost.value}}{{item.linkedProduct.cost}}</span>
                                     <span
-                                        v-if="cardCondition.mrp.show==true"><strike>{{item.linkedProduct.mrp}}</strike></span>
-                                    <span v-if="cardCondition.discount.show==true"
+                                        v-if="cardCondition.mrp.show"><strike>{{item.linkedProduct.mrp}}</strike></span>
+                                    <span v-if="cardCondition.discount.show"
                                         class="discount-cost">{{discount(item.linkedProduct.mrp,item.linkedProduct.cost)}}%
                                         OFF</span>
                                 </p>
                             </v-card>
                     </div>
                     <div class="coursecard-design">
-                        <p v-if="cardCondition.eduStandard.show==true&&item.eduStandard&&item.eduStandard.name"
+                        <p v-if="cardCondition.eduStandard.show&&item.eduStandard&&item.eduStandard.name"
                             class="eduname text-white">
                             {{item.eduStandard.name}}
                         </p>
@@ -35,7 +35,7 @@
                             <b v-if="item.name" class="edustandrad-name ">
                                 {{item.name}}
                             </b>
-                            <p v-if="cardCondition.courseName.show==true&&item.course&&item.course.name" class="">
+                            <p v-if="cardCondition.courseName.show&&item.course&&item.course.name" class="">
                                 {{item.course.name}}
                             </p>
                         
@@ -75,26 +75,28 @@ export default {
             type: Object,
             default: {
                 eduStandard: {
-                    show: true,
-                    value: 'Exam Category :',
+                    show: false,
+                    value: 'Education Standard',
+                },
+                course: {
+                    show: false,
+                    value: 'course'
                 },
                 cost: {
                     show: true,
-                    value: 'Price :',
+                    value: 'Price',
                 },
                 mrp: {
                     show: true,
-
+                    value: 'Mrp',
                 },
                 discount: {
                     show: true,
-
+                    value: 'Discount',
                 },
-                courseName: {
+                description: {
                     show: false,
-                    value: 'course name :'
-                },
-
+                }
             }
         }
     },
