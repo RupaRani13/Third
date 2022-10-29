@@ -9,6 +9,7 @@
 export default {
     async setup() {
         const route = useRoute();
+        console.log('hello', route.fullPath);
         const pageData = await usePageData(route.fullPath);
         const pageBlocks = shallowRef(null)
         if(pageData){
@@ -32,6 +33,9 @@ export default {
                 }
             });
         }
+        console.log('hello',pageBlocks);
+
+
         return { pageBlocks, pageData };
     },
     data() {

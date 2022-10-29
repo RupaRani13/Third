@@ -42,6 +42,8 @@
                                       direction="vertical">
                                       <template v-for="subItem_2 in subItem_1.subItems" :key="subItem_2.title">
                                         <v-hover v-slot="{ isHovering, props }" open-delay="100">
+                                          <NuxtLink :to="subItem_2.url"> 
+
                                           <v-tab :class="
                                             isHovering
                                               ? 'v-slide-group-item--active v-tab--selected text-orange darken-4'
@@ -61,18 +63,22 @@
                                                   <template v-for="subItem_3 in subItem_2.subItems"
                                                     :key="subItem_3.title">
                                                     <v-hover v-slot="{ isHovering, props }" open-delay="100">
+                                                      <NuxtLink :to="subItem_3.url"> 
+
                                                       <v-tab :class="
                                                         isHovering
                                                           ? 'v-slide-group-item--active v-tab--selected text-orange darken-4'
                                                           : ''
                                                       " v-bind="props" selected-class="" ripple>
                                                         {{ subItem_3.title }}</v-tab>
+                                                        </NuxtLink>
                                                     </v-hover>
                                                   </template>
                                                 </v-tabs>
                                               </v-menu>
                                             </template>
                                           </v-tab>
+                                          </NuxtLink>
                                         </v-hover>
                                       </template>
                                     </v-tabs>
@@ -256,7 +262,7 @@ export default {
               img: "",
               subItems: [],
               title: "More",
-              url: "#",
+              url: "",
             };
             singleNavItem.subItems.push(item);
             newMenuItems.push(singleNavItem);
@@ -336,21 +342,21 @@ export default {
 #primary-menu .v-slide-group__content {
   align-items: center;
 }
-.v-slide-group__content a{
+#primary-menu .v-slide-group__content a{
   text-decoration: none;
 }
 
 
-.slide-fade-enter-active {
+#primary-menu  .slide-fade-enter-active {
   transition: all 0.3s ease-out;
 }
 
-.slide-fade-leave-active {
+#primary-menu .slide-fade-leave-active {
   transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
 }
 
-.slide-fade-enter-from,
-.slide-fade-leave-to {
+#primary-menu .slide-fade-enter-from,
+#primary-menu .slide-fade-leave-to {
   transform: translateX(20px);
   opacity: 0;
 }
@@ -371,21 +377,35 @@ export default {
 }
 
 @media screen and (max-width:768px) {
-  .largeScreen {
+  #primary-menu .largeScreen {
     display: none
   }
 
-  .smallScreen {
+  #primary-menu .smallScreen {
     display: block
   }
 }
 
 @media screen and (min-width:768px) {
-  .largeScreen {
-    display: block
+    #primary-menu .largeScreen {
+      display: block
+    }
+    #primary-menu .smallScreen {
+      display: none
+    }
+
   }
-  .smallScreen {
-    display: none
+  #primary-menu .v-tab--selected .v-tab__slider {
+        opacity: 0;
+    }
+  .router-link-active .v-tab__slider, .router-link-exact-active .v-tab__slider{
+    opacity: 1;
   }
-}
+  .v-slide-group__content a {
+      text-decoration: none !important;
+  }
+  .v-slide-group--vertical .v-tab {
+      width: 100%;
+  }
+
 </style>
