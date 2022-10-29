@@ -22,13 +22,8 @@
                                     </v-img>
 
                                 </div>
-<<<<<<< components/course/list/Design_01.vue
-                                <p v-if="cardCondition.eduStandard.show==true&&item.eduStandard&&item.eduStandard.name"
-                                    class="eduname text-white">
-=======
                                 <p v-if="cardCondition.eduStandard.show&&item.eduStandard&&item.eduStandard.name"
                                     class="eduname text-white"  >
->>>>>>> components/course/list/Design_01.vue
                                     {{item.eduStandard.name}}
                                 </p>
                                 <div class="course-content">
@@ -64,17 +59,11 @@
                                         <p v-else-if="item.endDate" class="course-Date">End Date:{{item.endDate}}</p>
                                     </template>
                                     <div class="course-btn">
-<<<<<<< components/course/list/Design_01.vue
-                                        <!-- <v-btn size="small" @click="coursedetails()">See Details</v-btn> -->
                                         <v-btn size="small">Buy Now</v-btn>
                                         <NuxtLink :to="`/course-detail/${item.id}`">
                                             <v-btn size="small">See Details</v-btn>
                                         </NuxtLink>
 
-=======
-                                        <v-btn size="small">See Details</v-btn>
-                                        <v-btn v-if="item.linkedProduct" size="small">Buy Now</v-btn>
->>>>>>> components/course/list/Design_01.vue
                                     </div>
                                 </div>
                             </div>
