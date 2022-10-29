@@ -7,8 +7,13 @@ async function useCourse() {
     const apiUrl = 'https://demo02.institute.org.in/api/webber/course';
    return await $fetch(apiUrl);
 }
-async function useCourseProgram(){
-    const apiUrl = 'https://demo02.institute.org.in/api/webber/courseprogram';
+// async function useCourseProgram(){
+//     const apiUrl = 'https://demo02.institute.org.in/api/webber/courseprogram';
+//    return await $fetch(apiUrl);
+
+// }
+async function useCourseProgram(id){
+    const apiUrl = `https://demo02.institute.org.in/api/webber/courseprogram/${id}`;
    return await $fetch(apiUrl);
 
 }

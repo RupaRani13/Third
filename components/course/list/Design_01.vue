@@ -14,7 +14,7 @@
                                     <v-img :src="item.thumb" lazy-src="/gallery_loading_image.jpeg" aspect-ratio="1.9"
                                         cover class="bg-grey-lighten-2">
                                         <template v-slot:placeholder>
-                                            <v-row class="fill-height ma-0" align="center" justify="center">
+                                            <v-row class="fill-height ma-0" align-item="center" justify="center">
                                                 <v-progress-circular indeterminate color="success">
                                                 </v-progress-circular>
                                             </v-row>
@@ -23,7 +23,7 @@
 
                                 </div>
                                 <p v-if="cardCondition.eduStandard.show==true&&item.eduStandard&&item.eduStandard.name"
-                                    class="eduname text-white"  >
+                                    class="eduname text-white">
                                     {{item.eduStandard.name}}
                                 </p>
                                 <div class="course-content">
@@ -54,8 +54,12 @@
                                         Date:{{item.linkedProduct.validity}}</p>
                                     <p v-else-if="item.endDate" class="course-Date">End Date:{{item.endDate}}</p>
                                     <div class="course-btn">
-                                        <v-btn size="small">See Details</v-btn>
+                                        <!-- <v-btn size="small" @click="coursedetails()">See Details</v-btn> -->
                                         <v-btn size="small">Buy Now</v-btn>
+                                        <NuxtLink :to="`/course-detail/${item.id}`">
+                                            <v-btn size="small">See Details</v-btn>
+                                        </NuxtLink>
+
                                     </div>
                                 </div>
                             </div>
@@ -114,7 +118,9 @@ export default {
             if (newmrp > 0) {
                 return (Math.round(newmrp - newcost) / newmrp * 100).toFixed(2)
             }
-        }
+
+        },
+
     }
 }
 </script>
@@ -135,7 +141,7 @@ export default {
 
 #courseListDesign01 .content-demo {
 
-    
+
     overflow: auto;
     overflow-y: scroll;
     background: #c4ccc4db;
@@ -187,7 +193,9 @@ export default {
     justify-content: space-between;
     padding: 9px 0px;
 }
-
+#courseListDesign01 .course-btn a{
+    text-decoration: none;
+}
 #courseListDesign01 .edustandrad-name {
     font-size: 14px;
     padding: 3px 0px;

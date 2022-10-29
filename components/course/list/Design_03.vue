@@ -5,7 +5,7 @@
                 <v-col class="v-col-lg-6 v-col-md-6 v-col-sm-12 v-col-12">
                     <div class="full-card">
                     <div class="myClass" style="position:relative">
-                        <v-img :src="item.thumb" lazy-src="/gallery_loading_image.jpeg"   aspect-ratio="1"  cover min-width="217"
+                        <v-img :src="item.thumb" lazy-src="/gallery_loading_image.jpeg"   aspect-ratio="1"  cover min-width="189"
                             class="bg-grey-lighten-2">
                             <template v-slot:placeholder>
                                 <v-row class="fill-height ma-0" align="center" justify="center">
@@ -53,11 +53,12 @@
 
                             <v-card-text v-if="item&&item.desci" v-html="item.desci" class='content-demo'>
                             </v-card-text>
-                            <div class="course-btn">
+                        
+                        </div>
+                        <div class="course-btn">
                                 <v-btn size="small">See Details</v-btn>
                                 <v-btn size="small">Buy Now</v-btn>
                             </div>
-                        </div>
                     </div>
                     </div>
                 </v-col>
@@ -186,10 +187,13 @@ export default {
     background: var(--v-background);
 }
 #courseListDesign03 .course-btn{
+    position: absolute;
+    bottom: 0;
     justify-content: space-around;
     display: flex;
+    gap: 10px;
     /* padding: 20px 0px; */
-    transform: translate(0%, 70%);
+    transform: translate(0%, -40%);
    
 }
 #courseListDesign03 .course-btn button{
@@ -202,8 +206,8 @@ export default {
         display: block;
     }
     #courseListDesign03 .course-btn{
-        padding: 20px 0px;
-    transform: translate(1%, 3%);
+    position: relative;
+    transform: translate(0%, 6%);
     }
     
 }
