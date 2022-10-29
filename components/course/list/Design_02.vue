@@ -5,7 +5,7 @@
                 <v-col class="v-col-lg-6 v-col-md-6 v-col-sm-12 v-col-12">
                     <div class="full-card">
                     <div class="myClass" style="position:relative">
-                        <v-img :src="item.thumb" lazy-src="/gallery_loading_image.jpeg"   aspect-ratio="1"  cover min-width="172"
+                        <v-img :src="item.thumb" lazy-src="/gallery_loading_image.jpeg"   aspect-ratio="1"  cover min-width="189" 
                             class="bg-grey-lighten-2">
                             <template v-slot:placeholder>
                                 <v-row class="fill-height ma-0" align="center" justify="center">
@@ -14,9 +14,7 @@
                                 </v-row>
                             </template>
                         </v-img>
-                        <v-card flat
-                                v-if="item.linkedProduct&&item.linkedProduct.cost&&item.linkedProduct.mrp&&(cardCondition.cost||cardCondition.mrp || cardCondition.discount)"
-                                class="content-fee">
+                        <v-card flat v-if="item.linkedProduct&&item.linkedProduct.cost&&item.linkedProduct.mrp&&(cardCondition.cost||cardCondition.mrp || cardCondition.discount)" class="content-fee">
                                 <p>
                                     <span
                                         v-if="cardCondition.cost.show">{{cardCondition.cost.value}}{{item.linkedProduct.cost}}</span>
@@ -53,11 +51,12 @@
 
                             <v-card-text v-if="item&&item.desci" v-html="item.desci" class='content-demo'>
                             </v-card-text>
-                            <div class="course-btn">
+                         
+                        </div>
+                        <div class="course-btn">
                                 <v-btn size="small">See Details</v-btn>
                                 <v-btn size="small">Buy Now</v-btn>
                             </div>
-                        </div>
                     </div>
                     </div>
                 </v-col>
@@ -184,21 +183,22 @@ export default {
     padding: 10px;
 }
 #courseListDesign02 .course-btn{
+    position: absolute;
+    bottom: 0;
     justify-content: space-around;
     display: flex;
-    /* padding: 20px 0px; */
-    transform: translate(0%, 70%);
+    gap: 10px;
+    transform: translate(0%, -40%);
 }
 @media screen and (max-width:600px) {
     #courseListDesign02 .full-card{
         display: block;
     }
     #courseListDesign02 .course-btn{
-        padding: 20px 0px;
-    transform: translate(1%, 3%);
-    }
+        position: relative;
+    transform: translate(0%, 6%);
 
-    
+    }   
 }
 </style>
 
