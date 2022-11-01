@@ -4,12 +4,17 @@ export default async function (path) {
     const data:any[] = await $fetch(apiUrl);
     let myData:String;
     data.forEach(item => {
+        if(path=='/materialdesignicons.min.css.map'){
+            path = '/';
+        }
         if(item.uri==path){
             myData= item.id;
             return  
         }
+
+
     });
     return myData
-    }
+ }
 
 

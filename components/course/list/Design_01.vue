@@ -39,10 +39,10 @@
                                         class="content-fee">
                                         <p>
                                             <span
-                                                v-if="cardCondition.cost.show==true">{{cardCondition.cost.value}}{{item.linkedProduct.cost}}</span>
+                                                v-if="cardCondition.cost.show">{{cardCondition.cost.value}}{{item.linkedProduct.cost}}</span>
                                             <span
-                                                v-if="cardCondition.mrp.show==true"><strike>{{item.linkedProduct.mrp}}</strike></span>
-                                            <span v-if="cardCondition.discount.show==true"
+                                                v-if="cardCondition.mrp.show"><strike>{{item.linkedProduct.mrp}}</strike></span>
+                                            <span v-if="cardCondition.discount.show"
                                                 class="discount-cost">{{discount(item.linkedProduct.mrp,item.linkedProduct.cost)}}%
                                                 OFF</span>
                                         </p>

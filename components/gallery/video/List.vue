@@ -12,26 +12,9 @@
                         </template>
                     </v-img>
                 </v-col>
-                <UiDialogDesign02 @closeDialog="dialog.open=false" v-model="dialog.open" :video='dialog.video'></UiDialogDesign02>
+                    <UiDialogDesign02 @close-dialog="dialog.open=false" v-model="dialog.open" :video='dialog.video'></UiDialogDesign02>
             </v-row>
         </v-card>
-        <!-- <v-card v-if="videoList.list.length" class="pt-3">
-            
-
-            <v-row style="padding: 10px;">
-                <v-col v-for="(item) in videoList.list" :key="item.id"
-                    class="d-flex child-flex v-col-12 v-col-sm-4 v-col-md-3">
-
-                    <div class="iframe-container">
-                        <iframe class="responsive-iframe" :src="`https://www.youtube.com/embed/${item.url}`"
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen></iframe>
-                    </div>
-                </v-col>
-            </v-row>
-        </v-card> -->
-
     </div>
 </template>
 

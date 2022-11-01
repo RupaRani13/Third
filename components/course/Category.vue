@@ -3,7 +3,7 @@
         <v-container>
             <ui-tabs-design01 :list="tabArr" @activeIndex=" getprogramIdByEdstandard"></ui-tabs-design01>
             <ui-tabs-design01 :list="coursetab" @activeIndex=" getprogramIdByCourse"></ui-tabs-design01>
-            <course-list-design01 :cardCondition="cardCondition" :myArr="filteredCourseProgram"></course-list-design01>
+            <course-list-design02 :cardCondition="cardCondition" :myArr="filteredCourseProgram"></course-list-design02>
         </v-container>
     </div>
 </template>
@@ -15,7 +15,7 @@ export default {
     async setup() {
         const course = await useCourse();
         const edustand = await useEdustandard();
-        const courseprogram = await useCourseProgram('6349186898bb9b52be001b24');
+        const courseprogram = await useCourseProgram();
         return {
             course, edustand, courseprogram
         }
