@@ -399,7 +399,7 @@ export default {
         opacity: 0;
     }
   .router-link-active .v-tab__slider, .router-link-exact-active .v-tab__slider{
-    opacity: 1;
+    opacity: 1 !important;
   }
   .v-slide-group__content a {
       text-decoration: none !important;

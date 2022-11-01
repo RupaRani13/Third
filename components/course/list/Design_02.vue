@@ -14,7 +14,7 @@
                                 </v-row>
                             </template>
                         </v-img>
-                        <v-card flat v-if="item.linkedProduct&&item.linkedProduct.cost&&item.linkedProduct.mrp&&(cardCondition.cost||cardCondition.mrp || cardCondition.discount)" class="content-fee">
+                        <!-- <v-card flat v-if="item.linkedProduct&&item.linkedProduct.cost&&item.linkedProduct.mrp&&(cardCondition.cost||cardCondition.mrp || cardCondition.discount)" class="content-fee">
                                 <p>
                                     <span
                                         v-if="cardCondition.cost.show">{{cardCondition.cost.value}}{{item.linkedProduct.cost}}</span>
@@ -24,10 +24,10 @@
                                         class="discount-cost">{{discount(item.linkedProduct.mrp,item.linkedProduct.cost)}}%
                                         OFF</span>
                                 </p>
-                            </v-card>
+                            </v-card> -->
                     </div>
                     <div class="coursecard-design">
-                        <p v-if="cardCondition.eduStandard.show&&item.eduStandard&&item.eduStandard.name"
+                        <p v-if="item.eduStandard&&item.eduStandard.name"
                             class="eduname text-white">
                             {{item.eduStandard.name}}
                         </p>
@@ -35,7 +35,7 @@
                             <b v-if="item.name" class="edustandrad-name ">
                                 {{item.name}}
                             </b>
-                            <p v-if="cardCondition.courseName.show&&item.course&&item.course.name" class="">
+                            <p v-if="item.course&&item.course.name" class="">
                                 {{item.course.name}}
                             </p>
                         
@@ -75,7 +75,7 @@ export default {
             type: Object,
             default: {
                 eduStandard: {
-                    show: false,
+                    show: true,
                     value: 'Education Standard',
                 },
                 course: {
@@ -95,8 +95,16 @@ export default {
                     value: 'Discount',
                 },
                 description: {
-                    show: false,
-                }
+                    'show': false,
+                },
+                startDate : {
+                    show: true,
+                    value: 'Start Date'
+                },
+                endDate : {
+                    show: true,
+                    value: 'End Date'
+                } 
             }
         }
     },

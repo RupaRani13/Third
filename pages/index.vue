@@ -1,5 +1,5 @@
 <template>
-    <div v-if="pageBlocks.length">
+    <div v-if="pageBlocks&&pageBlocks.length">
         <div v-for="item in pageBlocks" :key="item.id">
             <component :is="item.design" :blockContent="item" />
         </div>
@@ -9,10 +9,10 @@
 export default {
     async setup() {
         const route = useRoute();
-        const pageData = await usePageData(route.fullPath);
-        const pageBlocks = shallowRef(null);
-        if(pageData){
-            pageBlocks.value = await usepageBlock(pageData);
+        const pageId = await usePageData(route.fullPath);
+        const pageBlocks = shallowRef(null)
+        if(pageId){
+            pageBlocks.value = await usepageBlock(pageId);
             pageBlocks.value = pageBlocks.value.filter(item => {
                 if (item.status == true) {
                     if (item.design=='D01') {
@@ -32,10 +32,11 @@ export default {
                 }
             });
         }
-        return { pageBlocks, pageData };
+        return { pageBlocks, pageId };
     },
     data() {
         return {
+            
         }
     }
 }

@@ -9,10 +9,11 @@
 export default {
     async setup() {
         const route = useRoute();
-        const pageData = await usePageData(route.fullPath);
+
+        const pageId = await usePageData(route.fullPath);
         const pageBlocks = shallowRef(null)
-        if(pageData){
-            pageBlocks.value = await usepageBlock(pageData);
+        if(pageId){
+            pageBlocks.value = await usepageBlock(pageId);
             pageBlocks.value = pageBlocks.value.filter(item => {
                 if (item.status == true) {
                     if (item.design=='D01') {
@@ -32,7 +33,7 @@ export default {
                 }
             });
         }
-        return { pageBlocks, pageData };
+        return { pageBlocks };
     },
     data() {
         return {
