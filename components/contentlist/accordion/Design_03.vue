@@ -29,7 +29,6 @@ export default {
         }
     },
     created() {
-        console.log(this.contentListdata)
     },
 }
 </script>
@@ -107,6 +106,9 @@ export default {
 }
 #contentDesign03 .v-expansion-panel__shadow{
     box-shadow: none;
+}
+#contentDesign03 .course-btn a{
+ text-decoration: none;
 }
 @media screen and (max-width:475px) {
     #contentDesign03 .v-expansion-panel-title:before{

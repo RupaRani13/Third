@@ -1,95 +1,78 @@
 <template>
-    <div id="courseListDesign04">
-        <v-row>
-            <template v-for="item in myArr" :key="item.title">
-                <v-col class="v-col-lg-6 v-col-md-6 v-col-sm-12 v-col-12">
-                    <div class="full-card">
-                        <div class="myClass">
-                            <v-card
-                                v-if="item.linkedProduct&&item.linkedProduct.cost&&item.linkedProduct.mrp&&(cardCondition.cost||cardCondition.mrp || cardCondition.discount)"
-                                class="content-fee">
-                                <p>
-                                    <span
-                                        v-if="cardCondition.cost.show==true">{{cardCondition.cost.value}}{{item.linkedProduct.cost}}</span>
-                                    <span
-                                        v-if="cardCondition.mrp.show==true"><strike>{{item.linkedProduct.mrp}}</strike></span>
-                                    <span v-if="cardCondition.discount.show==true"
-                                        class="discount-cost">{{discount(item.linkedProduct.mrp,item.linkedProduct.cost)}}%
-                                        OFF</span>
-                                </p>
-                            </v-card>
-                        </div>
-                        <div class="coursecard-design">
-                            <p v-if="cardCondition.eduStandard.show==true&&item.eduStandard&&item.eduStandard.name"
-                                class="eduname text-white">
-                                {{item.eduStandard.name}}
+
+    <v-col class="v-col-lg-6 v-col-md-6 v-col-sm-12 v-col-12" id="courseListDesign04">
+        <div class="full-card">
+            <div class="myClass">
+            </div>
+            <div class="coursecard-design">
+                <p v-if="courseDetailObj.eduStandard && courseDetailObj.eduStandard.show && courseDetailObj.eduStandard.value"
+                    class="eduname">
+                    {{ courseDetailObj.eduStandard.value }}
+                </p>
+                
+                <div class="course-content">
+                    <b v-if="courseDetailObj.title && courseDetailObj.title.show && courseDetailObj.title.value"
+                        class="edustandrad-name ">
+                        {{ courseDetailObj.title.value }}
+                    </b>
+                    <p v-if="courseDetailObj.course && courseDetailObj.course.show && courseDetailObj.course.value"
+                        class="">
+                        {{ courseDetailObj.course.value }}
+                    </p>
+                    <div class="new-time">
+                        <template
+                            v-if="courseDetailObj.startDate && courseDetailObj.startDate.show && courseDetailObj.startDate.value">
+                            <p class="course-Date">
+                                Start Date:{{ courseDetailObj.startDate.value }}
                             </p>
-                            <div class="course-content">
-                                <b v-if="item.name" class="edustandrad-name ">
-                                    {{item.name}}
-                                </b>
-                                <p v-if="cardCondition.courseName.show==true&&item.course&&item.course.name" class="">
-                                    {{item.course.name}}
-                                </p>
-                                <div class="new-time">
-                                    <p v-if="item.linkedProduct&&item.linkedProduct.startDate" class="course-Date">
-                                        Start
-                                        Date:{{item.linkedProduct.startDate}}
-                                    </p>
-                                    <p v-else-if="item.startDate" class="course-Date">Start Date:{{item.startDate}}
-                                    </p>
-                                    <p v-if="item.linkedProduct&&item.linkedProduct.validity" class="course-Date">
-                                        End
-                                        Date:{{item.linkedProduct.validity}}</p>
-                                    <p v-else-if="item.endDate" class="course-Date">End Date:{{item.endDate}}</p>
-                                </div>
-                                <v-card-text v-if="item&&item.desci" v-html="item.desci" class='content-demo'>
-                                </v-card-text>
-                                <div class="course-btn">
-                                    <v-btn size="small">See Details</v-btn>
-                                    <v-btn size="small">Buy Now</v-btn>
-                                </div>
-                            </div>
-                        </div>
+                        </template>
+                        <template
+                            v-if="courseDetailObj.endDate && courseDetailObj.endDate.show && courseDetailObj.endDate.value">
+                            <p class="course-Date">
+                                End Date:{{ courseDetailObj.endDate.value }}
+                            </p>
+                        </template>
                     </div>
-                </v-col>
-            </template>
-        </v-row>
-    </div>
+                    <div class="pricing-section">
+                        <v-card flat
+                        v-if="courseDetailObj.cost&&courseDetailObj.cost.value&&courseDetailObj.cost.show || courseDetailObj.mrp && courseDetailObj.mrp.value && courseDetailObj.mrp.show"
+                        class="content-fee">
+                        <p>
+                            <span
+                                v-if="courseDetailObj.cost && courseDetailObj.cost.value && courseDetailObj.cost.show">
+                                {{courseDetailObj.cost.title}}{{ courseDetailObj.cost.value }}</span>
+                            <span
+                                v-if="courseDetailObj.mrp && courseDetailObj.mrp.value && courseDetailObj.mrp.show"><strike>
+                                    {{courseDetailObj.mrp.value}}</strike></span>
+                            <span
+                                v-if="courseDetailObj.discount.show && courseDetailObj.mrp && courseDetailObj.mrp.value && courseDetailObj.cost && courseDetailObj.cost.value"
+                                class="discount-cost">{{ discount(courseDetailObj.mrp.value, courseDetailObj.cost.value)
+                                }}%
+                                OFF</span>
+                        </p>
+                    </v-card>
+                    </div>
+                    <v-card-text v-html="courseDetailObj.description.value" class='content-demo'></v-card-text>
+                    <div v-if="courseDetailObj.pathUrl" class="course-btn">
+                        <v-btn size="small">Buy Now</v-btn>
+                        <NuxtLink :to="`/course-detail/${courseDetailObj.pathUrl.value}`">
+                            <v-btn size="small">{{ courseDetailObj.pathUrl.title }}</v-btn>
+                        </NuxtLink>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </v-col>
 </template>
+  
 
 <script>
 export default {
     props: {
-        myArr: {
-            default: [],
-        },
-        cardCondition: {
-            type: Object,
-            default: {
-                eduStandard: {
-                    show: true,
-                    value: 'Exam Category :',
-                },
-                cost: {
-                    show: true,
-                    value: 'Price :',
-                },
-                mrp: {
-                    show: true,
-
-                },
-                discount: {
-                    show: true,
-
-                },
-                courseName: {
-                    show: false,
-                    value: 'course name :'
-                },
-
-            }
-        }
+        courseDetailObj: {
+            default: {},
+        },   
     },
     methods: {
 
@@ -100,7 +83,6 @@ export default {
             let newmrp = parseInt(mymrp);
             let mycost = cost.trim();
             let newcost = parseInt(mycost)
-            console.log(newmrp, newcost)
 
             if (newmrp > 0) {
                 return (Math.round(newmrp - newcost) / newmrp * 100).toFixed(2)
@@ -142,7 +124,7 @@ export default {
 #courseListDesign04 .edustandrad-name {
     font-size: 14px;
     justify-content: center;
-    display: flex; 
+    display: flex;
     margin-top: 20px;
 }
 
@@ -156,7 +138,7 @@ export default {
     background: #d9cbcb;
     border-radius: 0px;
     top: 0;
-  
+
     right: 0px;
 }
 
@@ -196,7 +178,9 @@ export default {
     border-radius: 20px;
     color: #fff;
 }
-
+#courseListDesign04 .course-btn a {
+    text-decoration: none;
+}
 @media screen and (max-width:600px) {
     #courseListDesign04 .full-card {
         display: block;
@@ -206,7 +190,8 @@ export default {
         padding: 20px 0px;
         transform: translate(1%, 3%);
     }
-    #courseListDesign04 .new-time{
+
+    #courseListDesign04 .new-time {
         display: block;
     }
 

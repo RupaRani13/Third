@@ -1,8 +1,9 @@
+
 <template>
     <div>
         <v-container>
-            <ui-tabs-design01 :list="tabArr" @activeIndex=" getprogramIdByEdstandard"></ui-tabs-design01>
-            <ui-tabs-design01 :list="coursetab" @activeIndex=" getprogramIdByCourse"></ui-tabs-design01>
+            <ui-tabs-design01 class="mb-2" :list="eduStandardNameArr" @activeIndex=" getprogramIdByEdstandard"></ui-tabs-design01>
+            <ui-tabs-design01 class="mb-2" v-if="courseNameArr.length" :list="courseNameArr" @activeIndex=" getprogramIdByCourse"></ui-tabs-design01>
             <v-row>
                 <template v-for="item in filteredCourseProgram" :key="item">
                     <ui-coursecard-design01 :courseDetailObj="item"></ui-coursecard-design01>
@@ -20,18 +21,18 @@
 export default {
     async setup() {
         const course = await useCourse();
-        const edustand = await useEdustandard();
-        const courseprogram = await useCourseProgram();
+        const eduStandard = await useEdustandard();
+        const courseProgram = await useCourseProgram();
         return {
-            course, edustand, courseprogram
+            course, eduStandard, courseProgram
         }
     },
     data() {
         return {
-            tabArr: [],
-            filteredCourseProgram: [],
-            selectedEdustandard: '',
-            coursetab: '',
+            eduStandardNameArr: [],
+            courseNameArr: [],
+            filteredCourse : [],
+            filteredCourseProgram: [], 
             selectedCourseProgram: {
                 course: 'All',
                 edustandard: 'All',
@@ -42,28 +43,50 @@ export default {
 
     methods: {
         getprogramIdByEdstandard(index) {
-            this.selectedCourseProgram.edustandard = this.edustand[index].name;
+            this.selectedCourseProgram.edustandard = this.eduStandard[index].name;
+            this.getfilteredCourse(this.eduStandard[index].id);
+            this.selectedCourseProgram.course = "All";
             this.getFilteredCp(this.selectedCourseProgram.edustandard, this.selectedCourseProgram.course);
         },
         getprogramIdByCourse(index) {
             this.selectedCourseProgram.course = this.course[index].name;
             this.getFilteredCp(this.selectedCourseProgram.edustandard, this.selectedCourseProgram.course);
+            
+        },
+        getfilteredCourse(eduStandard) {
+            if(eduStandard){
+                this.filteredCourse = this.course.filter(item=> {
+                    if(item.eduStandard&&item.eduStandard.id == eduStandard){
+                        return item
+                    }
+                })
+            }else{
+                this.filteredCourse = this.course;
+            }
+            if (this.filteredCourse.some(e => e.name == 'All')) {
+                this.courseNameArr = this.filteredCourse.map(item => item = item.name);
+            }else if(this.filteredCourse.length){
+                this.filteredCourse.unshift({ name: "All" });
+                this.courseNameArr = this.filteredCourse.map(item => item = item.name);
+            }else{
+                this.courseNameArr = [];
+            }
+
         },
         getFilteredCp(edustandardName, courseName) {
             if (edustandardName == 'All' && courseName == "All") {
-                this.filteredCourseProgram = this.courseprogram;
+                this.filteredCourseProgram = this.courseProgram;
             } else if (edustandardName != 'All' && courseName == "All") {
-                this.filteredCourseProgram = this.courseprogram.filter(item => item.eduStandard && item.eduStandard.name == edustandardName);
+                this.filteredCourseProgram = this.courseProgram.filter(item => item.eduStandard && item.eduStandard.name == edustandardName);
             } else if (edustandardName == 'All' && courseName != "All") {
-                this.filteredCourseProgram = this.courseprogram.filter(item => item.course && item.course.name == courseName);
+                this.filteredCourseProgram = this.courseProgram.filter(item => item.course && item.course.name == courseName);
             } else {
-                this.filteredCourseProgram = this.courseprogram.filter(item => item.course && item.eduStandard && item.course.name == courseName && item.eduStandard.name == edustandardName);
+                console.log(12)
+                this.filteredCourseProgram = this.courseProgram.filter(item => item.course && item.eduStandard && item.course.name == courseName && item.eduStandard.name == edustandardName);
             }
-            this.filteredCourseProgram = this.getFinalCourseObj(this.filteredCourseProgram);
-
-
+            this.filteredCourseProgram = this.getStandardCP(this.filteredCourseProgram);
         },
-        getFinalCourseObj(myArr){
+        getStandardCP(myArr){
             if(myArr&&myArr.length){
                 let CourseArr = [];
                 myArr.forEach(item=>{
@@ -83,17 +106,17 @@ export default {
                         },
                         course: {
                             show : false,
-                            title : 'Exam',
+                            title : 'Exam:',
                             value : null
                         },
                         cost: {
-                            show : false,
-                            title : 'Price',
+                            show : true,
+                            title : 'Price:',
                             value : null
                         },
                         mrp: {
-                            show : false,
-                            title : 'Mrp',
+                            show : true,
+                            title : 'Mrp:',
                             value : null
                         },
                         discount: {
@@ -106,12 +129,12 @@ export default {
                         },
                         startDate : {
                             show : true,
-                            title : 'Start Date',
+                            title : 'Start Date:',
                             value : null
                         },
                         endDate : {
                             show : true,
-                            title : 'End Date',
+                            title : 'End Date:',
                             value : null
                         }, 
                         pathUrl : {
@@ -163,11 +186,11 @@ export default {
         }
     },
     created() {
-        this.filteredCourseProgram = this.getFinalCourseObj(this.courseprogram);
-        this.edustand.unshift({ name: "All" })
-        this.course.unshift({ name: "All" })
-        this.tabArr = this.edustand.map(item => item = item.name);
-        this.coursetab = this.course.map(item2 => item2 = item2.name);
+        this.getfilteredCourse()
+        this.filteredCourseProgram = this.getStandardCP(this.courseProgram);
+        this.eduStandard.unshift({ name: "All" })
+        this.eduStandardNameArr = this.eduStandard.map(item => item = item.name);
+       
 
     },
 }
@@ -176,3 +199,10 @@ export default {
 <style>
 
 </style> 
+
+
+
+
+
+
+
