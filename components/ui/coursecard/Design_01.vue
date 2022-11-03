@@ -47,7 +47,7 @@
                                         class="content-fee">
                                         <p>
                                             <span
-                                                v-if="courseDetailObj.cost&&courseDetailObj.cost.value&&courseDetailObj.cost.show">{{courseDetailObj.cost.value}}{{courseDetailObj.cost.value}}</span>
+                                                v-if="courseDetailObj.cost&&courseDetailObj.cost.value&&courseDetailObj.cost.show">{{courseDetailObj.cost.title}}{{courseDetailObj.cost.value}}</span>
                                             <span
                                                 v-if="courseDetailObj.mrp&&courseDetailObj.mrp.value&&courseDetailObj.mrp.show"><strike>{{courseDetailObj.mrp.value}}</strike></span>
                                             <span v-if="courseDetailObj.discount.show&&courseDetailObj.mrp&&courseDetailObj.mrp.value&&courseDetailObj.cost&&courseDetailObj.cost.value"
@@ -65,6 +65,7 @@
                                             End Date:{{courseDetailObj.endDate.value}}
                                         </p>
                                     </template>
+                                 
                                     <div v-if="courseDetailObj.pathUrl" class="course-btn">
                                         <v-btn size="small">Buy Now</v-btn>
                                         <NuxtLink :to="`/course-detail/${courseDetailObj.pathUrl.value}`">

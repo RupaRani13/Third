@@ -304,7 +304,6 @@ export default {
     },
   },
   mounted() {
-    // console.log(this.$refs.myRef3.getElementsByClassName('customClass')[0].scrollHeight);
     // var xyz = this.$refs.myRef3.getElementsByClassName('customClass')[0].children;
     // var prevItem = {};
     // var currItem = {};
@@ -315,7 +314,6 @@ export default {
     //     
     //     index = i;
     //     this.checkMenuList1(index)
-    //     console.log(prevItem)
     //     break;
     //   }
     //   prevItem = currItem;

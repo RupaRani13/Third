@@ -6,7 +6,6 @@
 export default {
     async setup(props) {
         const productdetails = await useProductdetails(props.id)
-        console.log(productdetails)
         return { productdetails }
     },
     props: {

@@ -10,11 +10,11 @@
         </v-card>
         <ContentlistFeatureAllitemDesign02 v-if="details.list" :id="details.list">
         </ContentlistFeatureAllitemDesign02>
-        <v-row>
+        <!-- <v-row>
             <template v-for="(item) in details.products" :key="item">
                 <CourseCoursedetailsProductdetails :id="item"></CourseCoursedetailsProductdetails>
             </template>
-        </v-row>
+        </v-row> -->
 
     </div>
 </template>
