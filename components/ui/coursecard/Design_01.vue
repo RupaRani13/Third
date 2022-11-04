@@ -1,4 +1,5 @@
 <template>
+
                 <v-col id="courseListDesign01" class="v-col-lg-3">
                     <v-hover v-slot="{ isHovering, props }">
                         <v-card class="course-card" v-bind="props">
