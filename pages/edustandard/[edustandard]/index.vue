@@ -1,5 +1,5 @@
 <template>
     <div>
-        <CourseCategory :eduStandardId="$route.params.edustandard"></CourseCategory>
+        <CourseList :eduStandardId="$route.params.edustandard"></CourseList>
     </div>
 </template>

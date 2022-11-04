@@ -1,15 +1,5 @@
 <template>
     <div>
-<CourseCategory></CourseCategory>
+        <CourseList></CourseList>
     </div>
 </template>
-
-<script>
-    export default {
-        
-    }
-</script>
-
-<style lang="scss" scoped>
-
-</style>

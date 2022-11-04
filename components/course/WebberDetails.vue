@@ -1,21 +1,19 @@
 <template>
-    <div id="course-detailsDesign01">
-        {{}}
+    <div v-if="details" id="course-detailsDesign01">
         <v-card>
             <v-card-text v-if="details.content" v-html="details.content"></v-card-text>
-
         </v-card>
         <v-card>
             <DownloadListDesign07 v-if="details.downloadCategory" :id="details.downloadCategory"></DownloadListDesign07>
         </v-card>
         <ContentlistFeatureAllitemDesign02 v-if="details.list" :id="details.list">
         </ContentlistFeatureAllitemDesign02>
-        <!-- <v-row>
-            <template v-for="(item) in details.products" :key="item">
-                <CourseCoursedetailsProductdetails :id="item"></CourseCoursedetailsProductdetails>
-            </template>
-        </v-row> -->
 
+        <v-row>
+            <template v-for="(item) in details.products" :key="item">
+                <CourseProductlist :id="item"></CourseProductlist>
+            </template>
+        </v-row>
     </div>
 </template>
 
