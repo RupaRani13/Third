@@ -60,7 +60,7 @@
             const courseDetails = ref(null);
             let courseTabArray = [];
                 courseDetails.value = await useCourseProgramDetail(props.courseProgram);
-                console.log(courseDetails.value)
+                // console.log(courseDetails.value)
                 if (courseDetails.value.isLinkedVideoProduct) {
                     const myObj = {}
                     myObj.title = 'LinkedVideoProduct';
@@ -209,3 +209,28 @@
 
     }
 </script>
+<style >
+#courseDeatailsD01 #tabDesign02>.v-container>.v-card .v-card:first-of-type {
+    border: unset;
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+}
+
+#courseDeatailsD01 #tabDesign04>.v-container>.v-card .v-card:first-of-type {
+    border: unset;
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+}
+
+#courseDeatailsD01 #tabDesign05>.v-container>.v-card .v-card:first-of-type {
+    border: unset;
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+}
+
+#courseDeatailsD01 #tabDesign06 .v-card--variant-elevated {
+    border: unset;
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+}
+
+#courseDeatailsD01 .v-container #course-detailsDesign01 .v-container {
+    padding: 0px;
+}
+</style>

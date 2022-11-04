@@ -1,5 +1,4 @@
 <template> 
-hello
     <ui-coursecard-design01 :courseDetailObj="courseDetailObj"></ui-coursecard-design01>
 </template>
 
@@ -42,12 +41,12 @@ export default {
                             value : null
                         },
                         cost: {
-                            show : false,
-                            title : 'Price',
+                            show : true,
+                            title : 'Price:',
                             value : null
                         },
                         mrp: {
-                            show : false,
+                            show : true,
                             title : 'Mrp',
                             value : null
                         },
@@ -60,12 +59,12 @@ export default {
                             value : null
                         },
                         startDate : {
-                            show : false,
+                            show : true,
                             title : 'Start Date',
                             value : null
                         },
                         endDate : {
-                            show : false,
+                            show : true,
                             title : 'End Date',
                             value : null
                         }, 
@@ -91,7 +90,7 @@ export default {
                 myObj.cost.value = productDetail.cost
             }
             if( productDetail.mrp){
-                myObj.course.value = productDetail.mrp
+                myObj.mrp.value = productDetail.mrp
             }
             if( productDetail.description){
                 myObj.description.value = productDetail.description
@@ -102,6 +101,7 @@ export default {
             if( productDetail.validity){
                 myObj.endDate.value = productDetail.validity
             }
+            console.log(myObj);
             return myObj
 
 
