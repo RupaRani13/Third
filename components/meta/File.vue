@@ -11,8 +11,6 @@
                 <Meta v-if="metaTags.ogDescription" property="og:description" :content="metaTags.ogDescription" />
                 <Meta v-if="metaTags.ogImage" property="og:image" :content="metaTags.ogImage" />
             </template>
-
-
         </Head>
 </template>
 <script>
