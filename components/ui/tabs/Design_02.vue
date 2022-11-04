@@ -2,7 +2,7 @@
     <div id="tabDesign02">
         <v-container>
             <v-card flat>
-                <v-tabs class="nav-tabs" show-arrows center-active>
+                <v-tabs v-model="activeTab" class="nav-tabs" show-arrows center-active>
                     <v-tab v-for="(item,index) in list" :class="[activeTab==index?'active': '']" @click="setActiveTab(index)" :key="index"><a>{{item }}</a></v-tab>
                 </v-tabs>
                 <slot></slot>
@@ -12,33 +12,34 @@
 </template>
 
 <script>
-    export default {
-        async setup() {
+export default {
+    async setup() {
+    },
+    props: {
+        list: {
+            type: Array,
+            required: true
         },
-        props : {
-            list : {
-                type : Array,
-                required : true
-            }
-        },
-        data(){
-            return{
-                activeTab : 0,
-            }
-        },
-        methods : {
-            setActiveTab(index){
-                this.activeTab = index;
-                this.$emit('activeIndex', index);
-            }
-        },
-        created(){
-        
-        },
+        activeTab: {
+            default: 0,
+        }
+    },
+    data(){
+        return{
+        }
+    },
+    methods : {
+        setActiveTab(index){
+            this.$emit('activeIndex', index);
+        }
+    },
+    created(){
     
-    
-    }
-    </script>
+    },
+
+
+}
+</script>
 
 <style>
     #tabDesign02  > .v-card{

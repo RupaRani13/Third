@@ -1,16 +1,15 @@
 <template>
     <div id="tabDesign01">
-            <v-card flat>
-                <v-tabs color="success" show-arrows slider-color="background">
-                    <v-tab v-for="(item,index) in list" :class="[activeTab==index?'active': '']" @click="setActiveTab(index)" :key="index">
-                        {{item }}
-                    </v-tab>
-                </v-tabs>
-                <slot></slot>
-            </v-card>
+        <v-card flat>
+            <v-tabs v-model="activeTab" color="success" show-arrows slider-color="background">
+                <v-tab v-for="(item,index) in list" :class="[activeTab==index?'active': '']" @click="setActiveTab(index)" :key="index">
+                    {{item }}
+                </v-tab>
+            </v-tabs>
+            <slot></slot>
+        </v-card>
     </div>
 </template>
-
 <script>
 export default {
     async setup() {
@@ -19,17 +18,19 @@ export default {
         list : {
             type : Array,
             required : true
+        },
+        activeTab : {
+            default : 0,
         }
+
     },
     data(){
         return{
-            activeTab : 0,
             albumId : null,
         }
     },
     methods : {
             setActiveTab(index){
-                this.activeTab = index;
                 this.$emit('activeIndex', index);
             }
         },
@@ -77,7 +78,7 @@ export default {
             max-width: 100%;
         }
  
-        #tabDesign01 .v-slide-group__content .__web-inspector-hide-shortcut__{
+        #tabDesign01 .v-slide-group__content ._web-inspector-hide-shortcut_{
             width: 100%;
             display: block;
         }
@@ -86,7 +87,6 @@ export default {
             
         }
         #tabDesign01 .v-btn__content{
-            /* background: black; */
             width: calc(100vw - 32px);
             height: 100%;
             

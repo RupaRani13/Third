@@ -1,4 +1,5 @@
 <template> 
+hello
     <ui-coursecard-design01 :courseDetailObj="courseDetailObj"></ui-coursecard-design01>
 </template>
 

@@ -2,7 +2,7 @@
     <div id="tabDesign05">
         <v-container>
             <v-card>
-                <v-tabs class="nav-tabs" show-arrows center-active>
+                <v-tabs v-model="activeTab" class="nav-tabs" show-arrows center-active>
                     <v-tab v-for="(item,index) in list" :class="[activeTab==index?'active': '']" @click="setActiveTab(index)" :key="index"><a>{{item}}</a></v-tab>
                 </v-tabs >
                 <slot></slot>
@@ -20,17 +20,19 @@
             list : {
                 type : Array,
                 required : true
-            }
+            },
+            activeTab : {
+                default: 0
+            },
+
         },
         data(){
             return{
-                activeTab : 0,
-                albumId : null,
+
             }
         },
         methods : {
             setActiveTab(index){
-                this.activeTab = index;
                 this.$emit('activeIndex', index);
             }
         },
