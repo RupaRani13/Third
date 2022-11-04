@@ -2,8 +2,11 @@
 <template>
     <div>
         <v-container>
-            <ui-tabs-design01 class="mb-2" :list="eduStandardNameArr" @activeIndex=" getprogramIdByEdstandard"></ui-tabs-design01>
-            <ui-tabs-design01 class="mb-2" v-if="courseNameArr.length" :list="courseNameArr" @activeIndex=" getprogramIdByCourse"></ui-tabs-design01>
+            <v-card-title v-if="eduStandardId">
+                {{eduStandard.name}}
+            </v-card-title>
+            <ui-tabs-design02 v-if="!eduStandardId" :list="eduStandardNameArr" @activeIndex=" getprogramIdByEdstandard"></ui-tabs-design02>
+            <ui-tabs-design02 :activeTab="activeCourseTab" v-if="courseNameArr.length" :list="courseNameArr" @activeIndex=" getprogramIdByCourse"></ui-tabs-design02>
             <v-row>
                 <template v-for="item in filteredCourseProgram" :key="item">
                     <ui-coursecard-design01 :courseDetailObj="item"></ui-coursecard-design01>
@@ -19,12 +22,18 @@
 
 
 export default {
-    async setup() {
-        const course = await useCourse();
-        const eduStandard = await useEdustandard();
-        const courseProgram = await useCourseProgram();
+    async setup(props) {
+        const course = await useCourse(props.eduStandardId);
+        const eduStandard = await useEdustandard(props.eduStandardId);
+        const courseProgram = await useCourseProgram(props.eduStandardId);
         return {
             course, eduStandard, courseProgram
+        }
+    },
+    props :{
+        eduStandardId : {
+            type: String,
+            default : null,
         }
     },
     data() {
@@ -37,12 +46,14 @@ export default {
                 course: 'All',
                 edustandard: 'All',
             },
+            activeCourseTab : 0,
             
         }
     },
 
     methods: {
         getprogramIdByEdstandard(index) {
+            this.activeCourseTab=0;
             this.selectedCourseProgram.edustandard = this.eduStandard[index].name;
             this.getfilteredCourse(this.eduStandard[index].id);
             this.selectedCourseProgram.course = "All";
@@ -50,8 +61,7 @@ export default {
         },
         getprogramIdByCourse(index) {
             this.selectedCourseProgram.course = this.course[index].name;
-            this.getFilteredCp(this.selectedCourseProgram.edustandard, this.selectedCourseProgram.course);
-            
+            this.getFilteredCp(this.selectedCourseProgram.edustandard, this.selectedCourseProgram.course); 
         },
         getfilteredCourse(eduStandard) {
             if(eduStandard){
@@ -188,8 +198,11 @@ export default {
     created() {
         this.getfilteredCourse()
         this.filteredCourseProgram = this.getStandardCP(this.courseProgram);
-        this.eduStandard.unshift({ name: "All" })
-        this.eduStandardNameArr = this.eduStandard.map(item => item = item.name);
+        if(!this.$props.eduStandardId){
+            this.eduStandard.unshift({ name: "All" })
+            this.eduStandardNameArr = this.eduStandard.map(item => item = item.name);
+        }
+
        
 
     },
