@@ -1,18 +1,24 @@
 <template>
-    <div v-if="pageBlocks&&pageBlocks.length">
-        <div v-for="item in pageBlocks" :key="item.id">
-            <component :is="item.design" :blockContent="item" />
-        </div>
+    <div>
+        <MetaFile :title="pageTitle" :metaTags="pageMetaTags"></MetaFile>
+        <template v-if="pageBlocks&&pageBlocks.length">
+            <div v-for="item in pageBlocks" :key="item.id">
+                <component :is="item.design" :blockContent="item" />
+            </div>
+        </template>
     </div>
 </template>
 <script>
 export default {
     async setup() {
         const route = useRoute();
-        const pageId = await usePageData(route.fullPath);
+        const pageData = await usePageData(route.fullPath);
+        const pageId = ref(pageData.id);
+        const pageTitle = ref(pageData.title);
+        const pageMetaTags = ref(pageData.metaTags);
         const pageBlocks = shallowRef(null)
         if(pageId){
-            pageBlocks.value = await usepageBlock(pageId);
+            pageBlocks.value = await usepageBlock(pageId.value);
             pageBlocks.value = pageBlocks.value.filter(item => {
                 if (item.status == true) {
                     if (item.design=='D01') {
@@ -32,7 +38,7 @@ export default {
                 }
             });
         }
-        return { pageBlocks, pageId };
+        return { pageBlocks, pageTitle, pageMetaTags };
     },
     data() {
         return {
