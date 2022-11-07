@@ -15,7 +15,6 @@ export default {
         console.log(data);
         const gaCode = data.gaCode;
         return {favicon,gaCode}
-
-    },
+    }
 }
 </script>
