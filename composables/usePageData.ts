@@ -9,6 +9,7 @@ export default async function (path) {
             path = '/';
         }
         if(item.uri==path){
+            console.log(item.website)
             myData['id']= item.id;
             myData['metaTags'] = {};
             if(item.metaTags&&item.metaTags.keywords){
@@ -23,8 +24,10 @@ export default async function (path) {
             }
             if(item.metaTags&&item.metaTags.ogDescription){
                 myData['metaTags']['ogDescription']= item.metaTags.ogDescription
-            }else{
+            }else if(item.website.metaTags.ogDescription){
                 myData['metaTags']['ogDescription']= item.website.metaTags.ogDescription
+            }else{
+                myData['metaTags']['ogDescription']= item.website.description
             }
             if(item.metaTags&&item.metaTags.ogImage){
                 myData['metaTags']['ogImage']= item.metaTags.ogImage
