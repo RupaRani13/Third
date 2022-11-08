@@ -1,6 +1,7 @@
 <template>
   <div>
     <MetaCommonFile></MetaCommonFile>
+    <MetaOtherFile></MetaOtherFile>
     <MenuTopbar></MenuTopbar>
     <MenuPrimary :id="primaryMenu"></MenuPrimary>
     <!-- <NotificationDesign01 :id="notification"></NotificationDesign01> -->
