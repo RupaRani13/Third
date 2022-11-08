@@ -43,9 +43,8 @@ export default {
     },
     methods: {
         openDialog(videoId){
-            this.dialog.video = videoId;
-            this.dialog.open = true;
-
+                this.dialog.video = videoId;
+                this.dialog.open = true;
         },
     },
     mounted(){
