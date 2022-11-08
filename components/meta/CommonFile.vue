@@ -3,7 +3,10 @@
         <Meta name="msapplication-square" :content="favicon" />
         <Link rel="icon" type="image/x-icon" :href="favicon" />
         <Link rel="apple-touch-icon" :href="favicon" />
-        <template v-html="gaCode"></template>
+        <Script async type="text/javascript">{{gaCode}}</Script>
+
+        <Script src='https://code.jquery.com/jquery-3.5.1.min.js'></Script>
+        
     </Head>
 
 </template>
