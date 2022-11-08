@@ -9,7 +9,6 @@ export default async function (path) {
             path = '/';
         }
         if(item.uri==path){
-            console.log(item.website)
             myData['id']= item.id;
             myData['metaTags'] = {};
             if(item.metaTags&&item.metaTags.keywords){

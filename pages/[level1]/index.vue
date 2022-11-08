@@ -1,6 +1,6 @@
 <template>
     <div>
-        <MetaFile :title="pageTitle" :metaTags="pageMetaTags"></MetaFile>
+        <HeadMeta :title="pageTitle" :metaTags="pageMetaTags"></HeadMeta>
         <template v-if="pageBlocks&&pageBlocks.length">
             <div v-for="item in pageBlocks" :key="item.id">
                 <component :is="item.design" :blockContent="item" />

@@ -55,7 +55,6 @@
         async setup(props) {
             const courseDetails = ref(null);
             courseDetails.value= await useProductdetails(props.productProgram)
-            console.log(courseDetails.value)
             return{
                 courseDetails
             }

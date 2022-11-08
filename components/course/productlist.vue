@@ -101,7 +101,6 @@ export default {
             if( productDetail.validity){
                 myObj.endDate.value = productDetail.validity
             }
-            console.log(myObj);
             return myObj
 
 

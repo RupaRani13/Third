@@ -98,7 +98,6 @@ export default {
             } else if (edustandardName == 'All' && courseName != "All") {
                 this.filteredCourseProgram = this.courseProgram.filter(item => item.course && item.course.name == courseName);
             } else {
-                console.log(12)
                 this.filteredCourseProgram = this.courseProgram.filter(item => item.course && item.eduStandard && item.course.name == courseName && item.eduStandard.name == edustandardName);
             }
             this.filteredCourseProgram = this.getStandardCP(this.filteredCourseProgram);

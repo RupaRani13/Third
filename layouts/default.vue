@@ -1,7 +1,7 @@
 <template>
   <div>
-    <MetaCommonFile></MetaCommonFile>
-    <MetaOtherFile></MetaOtherFile>
+    <HeadFevicon></HeadFevicon>
+    <HeadScript></HeadScript>
     <MenuTopbar></MenuTopbar>
     <MenuPrimary :id="primaryMenu"></MenuPrimary>
     <!-- <NotificationDesign01 :id="notification"></NotificationDesign01> -->

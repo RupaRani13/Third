@@ -33,10 +33,6 @@
             </template>
             <!-- keywords -->
             <Meta v-if="metaTags.keywords" :content="metaTags.keywords" />
-
-
-
-
         </Head>
 </template>
 <script>
@@ -55,11 +51,7 @@ export default {
         fullPath.value= route.fullPath;
         const url = ref(null);
         url.value= originUrl.value+fullPath.value;
-        
-
         return {url} 
-
- 
     },
     props : {
         title : {
