@@ -1,6 +1,7 @@
 {
   "compilerOptions" : {
-    "allowJs": true
+    "allowJs": true,
+
 
   },
   // https://v3.nuxtjs.org/concepts/typescript

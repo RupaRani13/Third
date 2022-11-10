@@ -14,7 +14,7 @@
                 @activeIndex="getprogramIdByCourse"></ui-tabs-design02>
             <v-row v-if="filteredCourseProgram.length">
                 <template v-for="item in filteredCourseProgram" :key="item">
-                    <ui-coursecard-design01 :courseDetailObj="item"></ui-coursecard-design01>
+                    <ui-coursecard-design03 :courseDetailObj="item"></ui-coursecard-design03>
                 </template>
             </v-row>
         </v-container>
@@ -139,6 +139,9 @@ export default {
                         discount: {
                             show: true,
                         },
+                        buyBtn: {
+                            show: true,
+                        },
                         description: {
                             show: true,
                             title: '',
@@ -175,7 +178,7 @@ export default {
                     if (item.thumb) {
                         myObj.thumb['value'] = item.thumb;
                     }
-                    if (item.course && item.course.name) {
+                    if (item.course && item.course.name){
                         myObj.course['value'] = item.course.name;
                     }
                     if (item.eduStandard && item.eduStandard.name) {
@@ -192,7 +195,9 @@ export default {
                         myObj.endDate['value'] = item.myObj.linkedProduct.validity;
                     }
                     if (item.id) {
-                        myObj.pathUrl.value = item.id
+                        // myObj.pathUrl.value = '$course-detail'item.id
+                        // myObj.pathUrl.value = "/course-detail/" + item.id + "fnjdf" + item.dsd;
+                        myObj.pathUrl.value = `/course-detail/${item.id}`;
                     }
                     CourseArr.push(myObj)
                 })

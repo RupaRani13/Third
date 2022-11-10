@@ -12,6 +12,16 @@
                         </v-row>
                     </template>
                 </v-img>
+                <v-img v-else src="/default-course-img.jpeg"
+                            lazy-src="/gallery_loading_image.jpeg" aspect-ratio="1" cover min-width="189" class="bg-grey-lighten-2">
+                            <template v-slot:placeholder>
+                                <v-row class="fill-height ma-0" align-item="center" justify="center">
+                                    <v-progress-circular indeterminate color="success">
+                                    </v-progress-circular>
+                                </v-row>
+                            </template>
+                        </v-img>
+                        
                 <v-card flat
                     v-if="courseDetailObj.cost&&courseDetailObj.cost.value&&courseDetailObj.cost.show || courseDetailObj.mrp&&courseDetailObj.mrp.value&&courseDetailObj.mrp.show"
                     class="content-fee">
@@ -57,14 +67,16 @@
                             {{courseDetailObj.endDate.title}}{{courseDetailObj.endDate.value}}
                         </p>
                     </template>
-                    <v-card-text v-html="courseDetailObj.description&&courseDetailObj.description.value" class='content-demo'></v-card-text>
+                    <v-card-text  v-html="courseDetailObj.description&&courseDetailObj.description.value" class='content-demo'></v-card-text>
                 </div>
                 <div v-if="courseDetailObj.pathUrl" class="course-btn">
-                        <v-btn size="small">Buy Now</v-btn>
-                        <NuxtLink :to="`/course-detail/${courseDetailObj.pathUrl.value}`">
+                        <v-btn v-if="courseDetailObj.buyBtn" size="small">Buy Now</v-btn>
+                        <NuxtLink :to="`${courseDetailObj.pathUrl.value}`">
                             <v-btn size="small">{{courseDetailObj.pathUrl.title}}</v-btn>
                         </NuxtLink>
-
+                        <!-- <NuxtLink :to="`/course-detail/${courseDetailObj.pathUrl.value}`">
+                            <v-btn size="small">{{courseDetailObj.pathUrl.title}}</v-btn>
+                        </NuxtLink> -->
                     </div>
             </div>
         </div>

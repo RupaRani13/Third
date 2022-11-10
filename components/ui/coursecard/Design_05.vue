@@ -71,7 +71,7 @@
                     </template>
                     <v-card-text v-html="courseDetailObj.description.value" class='content-demo'></v-card-text>
                     <div v-if="courseDetailObj.pathUrl" class="course-btn">
-                        <v-btn size="small">Buy Now</v-btn>
+                        <v-btn v-if="courseDetailObj.buyBtn" size="small">Buy Now</v-btn>
                         <NuxtLink :to="`/course-detail/${courseDetailObj.pathUrl.value}`">
                             <v-btn size="small">{{ courseDetailObj.pathUrl.title }}</v-btn>
                         </NuxtLink>

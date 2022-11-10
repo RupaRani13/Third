@@ -3,7 +3,7 @@
         <v-container>
             <v-row v-if="courseDetails">
                 <v-col class="v-col-lg-5 v-col-sm-12 v-col-12">
-                        <v-img v-if="courseDetails.thumb" :src="courseDetails.thumb"
+                        <v-img v-if="courseDetails.featureImg" :src="courseDetails.featureImg"
                             lazy-src="/gallery_loading_image.jpeg" aspect-ratio="1.9" cover class="bg-grey-lighten-2">
                             <template v-slot:placeholder>
                                 <v-row class="fill-height ma-0" align="center" justify="center">
@@ -12,7 +12,7 @@
                                 </v-row>
                             </template>
                         </v-img>
-                        <v-img v-else src="/default-course-img.jpeg"
+                        <v-img v-else src="/default-productcourseimg.jpg"
                             lazy-src="/gallery_loading_image.jpeg" aspect-ratio="1.9" cover class="bg-grey-lighten-2">
                             <template v-slot:placeholder>
                                 <v-row class="fill-height ma-0" align="center" justify="center">
@@ -26,13 +26,18 @@
                     <v-card-title>{{ courseDetails.title }}</v-card-title>
                     <div style="margin-top: 10px;">
                         <p class="course-heading">product Details</p>
+                        <div class="course-stream">
                         <p v-if="courseDetails.course&&courseDetails.course.value" class="course-name">
-                            <span>{{ courseDetails.course.value }}</span>
+                            <span><b> {{  producturlvalue.course.title }}</b>{{ courseDetails.course.value }}</span>
                         </p>
+                        <p v-if="courseDetails.stream&&courseDetails.stream.value" class="course-name">
+                            <span><b>{{  producturlvalue.stream.title }}</b>{{ courseDetails.stream.value }}</span>
+                        </p>
+                    </div>
                         <v-card-text v-html="courseDetails.description" class='content-demo'></v-card-text>
                        <p class="course-date"> 
-                            <span v-if="courseDetails.startDate">{{producturlvalue.startDate.title}}{{ courseDetails.startDate }}</span>
-                            <span v-if="courseDetails.endDate">{{producturlvalue.endDate.title}}{{ courseDetails.endDate }}</span>
+                            <span v-if="courseDetails.startDate">{{producturlvalue.startDate.title}}</span>
+                            <span v-if="courseDetails.validity">{{producturlvalue.validity.title}}{{ courseDetails.validity }}</span>
                         </p>
                           
                         <p v-if="courseDetails" class="course-price">
@@ -42,7 +47,7 @@
                                 {{producturlvalue.cost.title}}{{courseDetails.cost}}</span>
                         </p>
                         <div class="course-btn">
-                            <v-btn>Buy Now</v-btn>
+                            <v-btn >Buy Now</v-btn>
                         </div>
                     </div>
                 </v-col>
@@ -52,6 +57,7 @@
 </template>
 <script>
     export default {
+   
         async setup(props) {
             const courseDetails = ref(null);
             courseDetails.value= await useProductdetails(props.productProgram)
@@ -90,6 +96,11 @@
                         title: 'Exam:',
                         value: null
                     },
+                    stream: {
+                        show: false,
+                        title: 'stream:',
+                        value: null
+                    },
                     cost: {
                         show: true,
                         title: 'Price:',
@@ -113,7 +124,7 @@
                         title: 'Start Date:',
                         value: null
                     },
-                    endDate: {
+                    validity: {
                         show: true,
                         title: 'End Date:',
                         value: null
@@ -137,12 +148,34 @@
     }
 </script>
 <style >
-#courseDeatailsD01 .v-card-title,#courseDeatailsD01 .course-heading{
+#courseDeatailsD01 .v-card-title{
    text-align: center;
 }
-#courseDeatailsD01 .course-price{
+#courseDeatailsD01 .course-heading{
+   text-align: center;
+   border-bottom: 3px solid var(--v-success);
+}
+#courseDeatailsD01 .course-price, #courseDeatailsD01 .course-date{
     display: flex;
     justify-content: space-between;
+}
+#courseDeatailsD01 .content-demo{
+    padding: 10px 0px;
+}
+#courseDeatailsD01 .course-btn{
+    display: block;
+    text-align: end;
+    padding: 10px 0px;
+}
+#courseDeatailsD01 .course-stream{
+    display: flex;
+    justify-content: space-between;
+}
+#courseDeatailsD01 .course-date{
+    color: #896cb4;
+}
+#courseDeatailsD01 .course-name b{
+    padding-right: 10px;
 }
 #courseDeatailsD01 #tabDesign02>.v-container>.v-card .v-card:first-of-type {
     border: unset;
