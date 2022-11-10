@@ -15,4 +15,5 @@ export default defineNuxtConfig({
       isCustomElement: tag => ['marquee', 'strike' ].includes(tag)
     }
   },
+ 
 })

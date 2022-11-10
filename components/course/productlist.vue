@@ -72,7 +72,10 @@ export default {
                             show : true,
                             title : 'See Details',
                             value : null,
-                        }
+                        },
+                        buyBtn: {
+                            show: true,
+                        },
                     }
             if( productDetail.title){
                 myObj.title.value = productDetail.title
