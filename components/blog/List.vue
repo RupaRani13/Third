@@ -7,19 +7,38 @@
         ></ui-coursecard-design03>
       </template>
     </v-row>
+    <div class="text-center">
+      <v-pagination
+        v-model="page"
+        :length="6"
+      ></v-pagination>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   async setup(props) {
-    const blogCategory = await useBlogCategory();
-    const blogs = await useBlog(props.id);
-    console.log(blogCategory);
-    console.log(blogs);
+    const route = useRoute();
+    console.log(route);
+    const limit = ref(null);
+    const page = ref(null);
+    page.value = parseInt(route.query.page);
+    limit.value = route.query.limit;
+    if(!page.value){
+        page.value = 1
+    }
+    if(!limit.value){
+        limit.value = 1
+    }
+    const blogList = ref(null);
+     watch(async () => {
+      // blogList.value = await useBlog(props.id, page.value, limit.value);
+    } )
+
+    blogList.value = await useBlog(props.id, page.value, limit.value);
     return {
-      blogCategory,
-      blogs,
+           blogList, route, page, limit
     };
   },
   props: {
@@ -102,9 +121,20 @@ export default {
       }
     },
   },
+  watch : {
+    page(){
+        console.log(this.page);
+        this.$router.push({
+            query: {
+                'page' : this.page,
+                'limit' : this.limit,
+            }
+        })
+    }
+
+  },
   created() {
-    this.filteredBlog = this.getblog(this.blogs);
-    console.log(this.filteredBlog);
+    this.filteredBlog = this.getblog(this.blogList);
   },
 };
 </script>
@@ -144,7 +174,10 @@ export default {
 #bloglist .blog-name a {
   text-decoration: none;
 }
-.active {
-  background: yellow;
-}
+/* #blogcatgory .blog-innerdetails .active{
+    background: red;
+} */
+/* #bloglist .blog-innerdetails .active{
+    background: red;
+} */
 </style>

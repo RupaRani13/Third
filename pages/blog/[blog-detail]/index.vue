@@ -49,9 +49,12 @@ export default {
   async setup() {
     const route = useRoute();
     const blogs = await useBlogDetails(route.params.blogdetail);
+     
     return {
       route,
       blogs,
+     
+
     };
   },
 };

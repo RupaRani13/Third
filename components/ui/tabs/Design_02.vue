@@ -176,7 +176,8 @@ export default {
         #tabDesign02 .v-btn__content{
             display: block;
             /* background: black; */
-            width: calc(100vw - 32px);
+            /* width: calc(100vw - 32px); */
+            width: calc(100vw - 62px);
             height: 100%;
             
         }
