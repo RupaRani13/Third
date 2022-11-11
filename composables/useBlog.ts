@@ -9,16 +9,16 @@
     return data;
  
 }
-async function useBlog(id=null) {
+async function useBlog(id=null, page=1, limit=10) {
     const apiUrl = 'https://demo02.institute.org.in/api/public/data/posts'
     const params = {
+        category : id,
+        page : page,
+        limit : limit,
         sort : 'order',
         orderBy : 'ASC',
         status : true,
-    }
-    if(id){
-        params['category']= id;
-    }
+    } 
     const data = await $fetch(apiUrl, {params : params})
     return data;
 }

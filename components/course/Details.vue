@@ -4,7 +4,7 @@
             <v-row v-if="courseDetails">
                 <v-col class="v-col-lg-5 v-col-sm-12 v-col-12">
                         <v-img v-if="courseDetails.thumb" :src="courseDetails.thumb"
-                            lazy-src="/gallery_loading_image.jpeg" aspect-ratio="1.9" cover class="bg-grey-lighten-2">
+                            lazy-src="gallery_loading_image.jpeg" aspect-ratio="1.9" cover class="bg-grey-lighten-2">
                             <template v-slot:placeholder>
                                 <v-row class="fill-height ma-0" align="center" justify="center">
                                     <v-progress-circular indeterminate color="success">
@@ -12,7 +12,7 @@
                                 </v-row>
                             </template>
                         </v-img>
-                        <v-img v-else src="/default-course-img.jpeg"
+                        <!-- <v-img v-else src="/default-course-img.jpeg"
                             lazy-src="/gallery_loading_image.jpeg" aspect-ratio="1.9" cover class="bg-grey-lighten-2">
                             <template v-slot:placeholder>
                                 <v-row class="fill-height ma-0" align="center" justify="center">
@@ -20,7 +20,7 @@
                                     </v-progress-circular>
                                 </v-row>
                             </template>
-                        </v-img>
+                        </v-img> -->
                 </v-col>
                 <v-col class="v-col-lg-7 v-col-sm-12 v-col-12">
                     <v-card-title>{{ courseDetails.name }}</v-card-title>
@@ -47,9 +47,9 @@
                     </div>
                 </v-col>
             </v-row>
-            <UiTabsDesign07  :list="tabArr" @activeIndex="setActiveTab">
+            <!-- <UiTabsDesign07  :list="tabArr" @activeIndex="setActiveTab">
                 <CourseWebberDetails :details="details"></CourseWebberDetails>
-            </UiTabsDesign07>
+            </UiTabsDesign07> -->
           
         </v-container>
     </div>
@@ -60,7 +60,6 @@
             const courseDetails = ref(null);
             let courseTabArray = [];
                 courseDetails.value = await useCourseProgramDetail(props.courseProgram);
-                // console.log(courseDetails.value)
                 if (courseDetails.value.isLinkedVideoProduct) {
                     const myObj = {}
                     myObj.title = 'LinkedVideoProduct';

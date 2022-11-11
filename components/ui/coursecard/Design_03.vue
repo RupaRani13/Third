@@ -2,26 +2,27 @@
     <v-col class="v-col-lg-6 v-col-md-6 v-col-sm-12 v-col-12" id="courseListDesign03">
         <div class="full-card">
             <div class="myClass" style="position:relative">
-                <v-img v-if="courseDetailObj.thumb&&courseDetailObj.thumb.show" :src="courseDetailObj.thumb.value"
-                    lazy-src="/gallery_loading_image.jpeg" aspect-ratio="1" cover min-width="189"
-                    class="bg-grey-lighten-2">
-                    <template v-slot:placeholder>
-                        <v-row class="fill-height ma-0" align-item="center" justify="center">
-                            <v-progress-circular indeterminate color="success">
-                            </v-progress-circular>
-                        </v-row>
-                    </template>
-                </v-img>
-                <v-img v-else src="/default-course-img.jpeg"
-                            lazy-src="/gallery_loading_image.jpeg" aspect-ratio="1" cover min-width="189" class="bg-grey-lighten-2">
-                            <template v-slot:placeholder>
-                                <v-row class="fill-height ma-0" align-item="center" justify="center">
-                                    <v-progress-circular indeterminate color="success">
-                                    </v-progress-circular>
-                                </v-row>
-                            </template>
-                        </v-img>
-                        
+                            <template v-if="courseDetailObj.thumb&&courseDetailObj.thumb.show">
+                                        <v-img v-if="courseDetailObj.thumb.value" :src="courseDetailObj.thumb.value" lazy-src="/gallery_loading_image.jpeg" aspect-ratio="1" cover min-width="189"
+                                            class="bg-grey-lighten-2">
+                                            <template v-slot:placeholder>
+                                                <v-row class="fill-height ma-0" align-item="center" justify="center">
+                                                    <v-progress-circular indeterminate color="success">
+                                                    </v-progress-circular>
+                                                </v-row>
+                                            </template>
+                                        </v-img>
+                                        <v-img v-else src="/default-course-img.jpeg" lazy-src="/gallery_loading_image.jpeg" aspect-ratio="1" cover
+                                           min-width="189" class="bg-grey-lighten-2">
+                                            <template v-slot:placeholder>
+                                                <v-row class="fill-height ma-0" align-item="center" justify="center">
+                                                    <v-progress-circular indeterminate color="success">
+                                                    </v-progress-circular>
+                                                </v-row>
+                                            </template>
+                                        </v-img>
+                                    
+                                    </template>
                 <v-card flat
                     v-if="courseDetailObj.cost&&courseDetailObj.cost.value&&courseDetailObj.cost.show || courseDetailObj.mrp&&courseDetailObj.mrp.value&&courseDetailObj.mrp.show"
                     class="content-fee">
