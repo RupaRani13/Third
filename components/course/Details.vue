@@ -47,9 +47,9 @@
                     </div>
                 </v-col>
             </v-row>
-            <!-- <UiTabsDesign07  :list="tabArr" @activeIndex="setActiveTab">
+            <UiTabsDesign07  :list="tabArr" @activeIndex="setActiveTab">
                 <CourseWebberDetails :details="details"></CourseWebberDetails>
-            </UiTabsDesign07> -->
+            </UiTabsDesign07>
           
         </v-container>
     </div>

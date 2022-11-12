@@ -1,5 +1,6 @@
 <template>
    <div id="courseDeatailsD01">
+  
         <v-container>
             <v-row v-if="courseDetails">
                 <v-col class="v-col-lg-5 v-col-sm-12 v-col-12">
