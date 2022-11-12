@@ -1,7 +1,7 @@
 <template>
   <div id="bloglist">
     <v-row>
-      <template v-for="item in filteredBlog" :key="item">
+      <template v-for="item in blogList" :key="item">
         <ui-coursecard-design03
           :courseDetailObj="item"
         ></ui-coursecard-design03>
@@ -11,6 +11,7 @@
       <v-pagination
         v-model="page"
         :length="6"
+         :total-visible="3"
       ></v-pagination>
     </div>
   </div>
@@ -19,42 +20,7 @@
 <script>
 export default {
   async setup(props) {
-    const route = useRoute();
-    console.log(route);
-    const limit = ref(null);
-    const page = ref(null);
-    page.value = parseInt(route.query.page);
-    limit.value = route.query.limit;
-    if(!page.value){
-        page.value = 1
-    }
-    if(!limit.value){
-        limit.value = 1
-    }
-    const blogList = ref(null);
-     watch(async () => {
-      // blogList.value = await useBlog(props.id, page.value, limit.value);
-    } )
-
-    blogList.value = await useBlog(props.id, page.value, limit.value);
-    return {
-           blogList, route, page, limit
-    };
-  },
-  props: {
-    id: {
-      default: null,
-      required: false,
-    },
-  },
-  data() {
-    return {
-      filteredBlog: [],
-    };
-  },
-
-  methods: {
-    getblog(myArr) {
+     function getblog(myArr) {
       if (myArr && myArr.length) {
         let CourseArr = [];
         myArr.forEach((item) => {
@@ -116,10 +82,45 @@ export default {
           }
           CourseArr.push(myObj);
         });
-
         return CourseArr;
       }
+    }
+    const route = useRoute();
+    console.log(route);
+    const limit = ref(null);
+    const page = ref(null);
+    page.value = parseInt(route.query.page);
+    limit.value = route.query.limit;
+    if(!page.value){
+        page.value = 1
+    }
+    if(!limit.value){
+        limit.value = 10
+    }
+    const blogList = ref(null);
+     watchEffect(async () => {
+      blogList.value = await useBlog(props.id, page.value, limit.value);
+      blogList.value =  getblog(blogList.value);  
+    } )   
+    return {
+           blogList, route, page, limit
+    };
+     
+  },
+  props: {
+    id: {
+      default: null,
+      required: false,
     },
+  },
+  data() {
+    return {
+      filteredBlog: [],
+    };
+  },
+
+  methods: {
+  
   },
   watch : {
     page(){
@@ -132,9 +133,6 @@ export default {
         })
     }
 
-  },
-  created() {
-    this.filteredBlog = this.getblog(this.blogList);
   },
 };
 </script>

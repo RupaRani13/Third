@@ -72,6 +72,7 @@ export default {
                             show : true,
                             title : 'See Details',
                             value : null,
+                          
                         },
                         buyBtn: {
                             show: true,
@@ -104,6 +105,11 @@ export default {
             if( productDetail.validity){
                 myObj.endDate.value = productDetail.validity
             }
+            // if (productDetail.id){
+            //             // myObj.pathUrl.value = '$course-detail'item.id
+            //             // myObj.pathUrl.value = "/course-detail/" + item.id + "fnjdf" + item.dsd;
+            //             myObj.pathUrl.value = `product-detail/${productDetail.id}`;
+            //     }
             return myObj
 
 
