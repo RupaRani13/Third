@@ -6,6 +6,11 @@
                 <component :is="item.design" :blockContent="item" />
             </div>
         </template>
+        <template v-else>
+            <div>
+               Page not found
+            </div>
+        </template>
     </div>
 </template>
 <script>
@@ -13,11 +18,16 @@ export default {
     async setup() {
         const route = useRoute();
         const pageData = await usePageData(route.fullPath);
-        const pageId = ref(pageData.id);
-        const pageTitle = ref(pageData.title);
-        const pageMetaTags = ref(pageData.metaTags);
+        const pageId = ref(null);
+        const pageTitle = ref(null);
+        const pageMetaTags = ref(null);
+        if(pageData){
+            pageId.value = pageData.id;
+            pageTitle.value = pageData.title;
+            pageMetaTags.value = pageData.metaTags;
+        }
         const pageBlocks = shallowRef(null)
-        if(pageId){
+        if(pageId.value){
             pageBlocks.value = await usepageBlock(pageId.value);
             pageBlocks.value = pageBlocks.value.filter(item => {
                 if (item.status == true) {

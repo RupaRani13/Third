@@ -2,13 +2,13 @@
 export default async function (path) {
     const apiUrl = 'https://demo02.institute.org.in/api/webfront/page'
     const data:any[] = await $fetch(apiUrl);
-    let myData= {
-    };
+    let myData= null;
     data.forEach(item => {
         if(path=='/materialdesignicons.min.css.map'){
             path = '/';
         }
         if(item.uri==path){
+            myData = {}
             myData['id']= item.id;
             myData['metaTags'] = {};
             if(item.metaTags&&item.metaTags.keywords){
