@@ -4,22 +4,22 @@
             <Meta http-equiv="content-type" content="text/html; charset=UTF-8" />
             <Meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1' />
             <Meta name="viewport" content="width=device-width,initial-scale=1.0" />
-            <Meta property='og:site_name' :content='title' />
+            <Meta v-if="title" property='og:site_name' :content='title' />
             <Meta property='og:type' content='website' />
             <!-- title -->
-            <Title>{{title}}</Title>
+            <Title v-if="title">{{title}}</Title>
             <template v-if="metaTags&&metaTags.ogTitle">
                 <Meta property="og:title" :content="metaTags.ogTitle" />
                 <Meta name="twitter:title" :content="metaTags.ogTitle" />
             </template>
-            <template v-else>
+            <template v-else-if="title">
                 <Meta property="og:title" :content="title" />
                 <Meta name="twitter:title" :content="title" />
             </template>
             <!-- url -->
-            <Link rel='canonical' :href="url" />
-            <Meta property='og:url'  :content="url" />
-            <Meta name='twitter:url' :content="url" />
+            <Link  v-if="url" rel='canonical' :href="url" />
+            <Meta v-if="url"  property='og:url'  :content="url" />
+            <Meta  v-if="url" name='twitter:url' :content="url" />
             <!-- description -->
             <template v-if="metaTags&&metaTags.ogDescription">
                 <Meta name='description' :content='metaTags.ogDescription' />
@@ -58,7 +58,6 @@ export default {
             type : String
         },
         metaTags : {
-            type : Object
 
         }
     }
