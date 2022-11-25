@@ -1,6 +1,6 @@
 <template>
     <Head>
-        <!-- <Script :children="gaCode"></Script> -->
+        <Script :children="gaCode"></Script>
     </Head>
 </template>
 
