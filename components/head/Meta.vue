@@ -8,7 +8,7 @@
             <Meta property='og:type' content='website' />
             <!-- title -->
             <Title>{{title}}</Title>
-            <template v-if="metaTags.ogTitle">
+            <template v-if="metaTags&&metaTags.ogTitle">
                 <Meta property="og:title" :content="metaTags.ogTitle" />
                 <Meta name="twitter:title" :content="metaTags.ogTitle" />
             </template>
@@ -21,18 +21,18 @@
             <Meta property='og:url'  :content="url" />
             <Meta name='twitter:url' :content="url" />
             <!-- description -->
-            <template v-if="metaTags.ogDescription">
+            <template v-if="metaTags&&metaTags.ogDescription">
                 <Meta name='description' :content='metaTags.ogDescription' />
                 <Meta property='og:description' :content='metaTags.ogDescription' />
                 <Meta name='twitter:description' :content='metaTags.ogDescription' />
             </template>
             <!-- image -->
-            <template v-if="metaTags.ogImage">
+            <template v-if="metaTags&&metaTags.ogImage">
                 <Meta property="og:image" :content="metaTags.ogImage" />
                 <Meta name="twitter:image" :content="metaTags.ogImage" />
             </template>
             <!-- keywords -->
-            <Meta v-if="metaTags.keywords" :content="metaTags.keywords" />
+            <Meta v-if="metaTags&&metaTags.keywords" :content="metaTags.keywords" />
         </Head>
 </template>
 <script>

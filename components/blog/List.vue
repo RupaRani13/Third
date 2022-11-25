@@ -1,5 +1,5 @@
 <template>
-  <div id="bloglist">
+  <div v-if="blogList&&blogList.length" id="bloglist">
     <v-row>
       <template v-for="item in blogList" :key="item">
         <ui-coursecard-design03
@@ -7,11 +7,10 @@
         ></ui-coursecard-design03>
       </template>
     </v-row>
-    <div class="text-center">
+    <div v-if="totalPages>1" class="text-center">
       <v-pagination
         v-model="page"
-        :length="6"
-         :total-visible="3"
+        :length="totalPages"
       ></v-pagination>
     </div>
   </div>
@@ -86,7 +85,6 @@ export default {
       }
     }
     const route = useRoute();
-    console.log(route);
     const limit = ref(null);
     const page = ref(null);
     page.value = parseInt(route.query.page);
@@ -95,15 +93,19 @@ export default {
         page.value = 1
     }
     if(!limit.value){
-        limit.value = 10
+        limit.value = 3
     }
+    const totalPages = ref(null);
     const blogList = ref(null);
+    const res = ref(null)
      watchEffect(async () => {
-      blogList.value = await useBlog(props.id, page.value, limit.value);
+      res.value = await useBlog(props.id, page.value, limit.value);
+      blogList.value = res.value.data;
+      totalPages.value = Math.ceil(res.value.totalRecords/limit.value);
       blogList.value =  getblog(blogList.value);  
     } )   
     return {
-           blogList, route, page, limit
+           blogList, route, page, limit, totalPages
     };
      
   },
@@ -124,7 +126,6 @@ export default {
   },
   watch : {
     page(){
-        console.log(this.page);
         this.$router.push({
             query: {
                 'page' : this.page,
