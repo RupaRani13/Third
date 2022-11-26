@@ -1,4 +1,5 @@
 <template>
+    
     <div>
         <HeadMeta :title="pageTitle" :metaTags="pageMetaTags"></HeadMeta>
         <template v-if="pageBlocks&&pageBlocks.length">
@@ -57,5 +58,6 @@ export default {
 </script>
 
 <style >
+
 
 </style>

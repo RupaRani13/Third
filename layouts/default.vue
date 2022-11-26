@@ -4,7 +4,7 @@
     <HeadScript></HeadScript>
     <MenuTopbar></MenuTopbar>
     <MenuPrimary :id="primaryMenu"></MenuPrimary>
-    <!-- <NotificationDesign01 :id="notification"></NotificationDesign01> -->
+    <NotificationDesign01 :id="notification"></NotificationDesign01>
     <slot />
     <MenuFooter :id="footerMenu" :id2="footerMenu2"></MenuFooter>
 
@@ -32,6 +32,21 @@
     }
   }
 </script>
+<style>
+/* .page-left-enter-active, .page-right-enter-active, .page-left-leave-active, .page-right-leave-active{
+  transition: all 30s leave;
+}
+.page-left-enter-from, .page-right-leave-to{
+  transform : translateX(100%)
+}
+.page-left-leave-to, .page-right-enter-from{
+  transform : translateX(-100%)
+}
+.page-left-enter-to, .page-right-enter-to{
+  transform : translateX(0)
+} */
+</style>
+
 
 
   

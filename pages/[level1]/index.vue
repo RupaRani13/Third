@@ -7,7 +7,7 @@
             </div>
         </template>
         <template v-else>
-            <PagenotfoundDesign03></PagenotfoundDesign03>
+            <PagenotfoundDesign01></PagenotfoundDesign01>
         </template>
     </div>
 </template>
