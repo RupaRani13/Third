@@ -1,8 +1,11 @@
 import { defineNuxtConfig } from 'nuxt'
 export default defineNuxtConfig({
-    css: ['vuetify/lib/styles/main.sass', '@mdi/font/css/materialdesignicons.min.css', '@fortawesome/fontawesome-free/css/all.min.css'],
-    build: {
+  css: ['vuetify/lib/styles/main.sass', '@mdi/font/css/materialdesignicons.min.css', '@fortawesome/fontawesome-free/css/all.min.css'],
+  build: {
     transpile: ['vuetify'],
+  },
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' }
   },
   vite: {
     define: {
@@ -12,8 +15,9 @@ export default defineNuxtConfig({
   plugins: ['plugins/swiper.client.js', 'plugins/vueViewer.client.js'],
   vue: {
     compilerOptions: {
-      isCustomElement: tag => ['marquee', 'strike' ].includes(tag)
+      isCustomElement: tag => ['marquee', 'strike'].includes(tag)
     }
   },
- 
+
+
 })
