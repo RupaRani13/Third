@@ -4,7 +4,7 @@
     <HeadScript></HeadScript>
     <MenuTopbar></MenuTopbar>
     <MenuPrimary :id="primaryMenu"></MenuPrimary>
-    <NotificationDesign01 :id="notification"></NotificationDesign01>
+    <!-- <NotificationDesign01 :id="notification"></NotificationDesign01> -->
     <slot />
     <MenuFooter :id="footerMenu" :id2="footerMenu2"></MenuFooter>
 
