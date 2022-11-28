@@ -6,9 +6,7 @@
                 <component :is="item.design" :blockContent="item" />
             </div>
         </template>
-        <template v-else>
-            <PagenotfoundDesign03></PagenotfoundDesign03>
-        </template>
+
     </div>
 </template>
 <script>
@@ -45,6 +43,8 @@ export default {
                     return true;
                 }
             });
+        }else{
+            throw createError({ statusCode: 404, statusMessage: 'Page Not Found', fatal: true })
         }
         return { pageBlocks, pageTitle, pageMetaTags };
     },

@@ -6,9 +6,6 @@
                 <component :is="item.design" :blockContent="item" />
             </div>
         </template>
-        <template v-else>
-            <PagenotfoundDesign01></PagenotfoundDesign01>
-        </template>
     </div>
 </template>
 <script>
@@ -37,22 +34,19 @@ export default {
                         item['design'] = resolveComponent('pageblock/design03')
                     } else if(item.design=='D04'){
                         item['design'] = resolveComponent('pageblock/design04')
-                    }else if(item.design=='D05'){
+                    } else if(item.design=='D05'){
                         item['design'] = resolveComponent('pageblock/design05')
-                    }else {
+                    } else {
                         item['design'] = resolveComponent('pageblock/design01')
                     }
                     return true;
                 }
             });
+        }else{
+            throw createError({ statusCode: 404, statusMessage: 'Page Not Found', fatal: true })
         }
-        return { pageBlocks, pageTitle, pageMetaTags };
+        return { pageBlocks, pageTitle, pageMetaTags};
     },
-    data() {
-        return {
-            
-        }
-    }
 }
 </script>
 

@@ -7,6 +7,8 @@
                 </v-row>
             </template>
         </v-img>
+        <button @click = "$emit('handleClearError')">Go to Home</button>
+
     </div>
 </template>
 

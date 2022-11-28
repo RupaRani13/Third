@@ -45,6 +45,8 @@ export default {
                     return true;
                 }
             });
+        }else{
+            throw createError({ statusCode: 404, statusMessage: 'Page Not Found', fatal: true })
         }
         return { pageBlocks, pageTitle, pageMetaTags };
     },

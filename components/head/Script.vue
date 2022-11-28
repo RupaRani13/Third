@@ -7,6 +7,12 @@
 <script>
 export default {
     async setup(){
+        function reverseString(str) {
+            var splitString = str.split("");
+            var reverseArray = splitString.reverse();
+            var joinArray = reverseArray.join("");
+            return joinArray;
+        }
         const gaCode = ref(null);
         const data = await useWebsiteData('5f8ff2901c6863595640aa75');
         gaCode.value = data.gaCode;
@@ -14,7 +20,6 @@ export default {
         return {gaCode}
     },
 }
-
 </script>
 
 <style scoped>

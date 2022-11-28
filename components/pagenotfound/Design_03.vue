@@ -14,7 +14,7 @@
                             </h3>
 
                             <p>the page you are looking for not avaible!</p>
-                            <NuxtLink class="linkclass" to="/">Go to Home</NuxtLink>
+                            <button class="linkclass" @click = "$emit('handleClearError')">Go to Home</button>
 
                         </div>
                     </div>
@@ -32,7 +32,7 @@ export default {
 
 <style scoped>
 .linkclass{
-    background: var(--v-success);
+    background: var(--v-theme-on-background);
     padding: 7px 15px;
     margin: 10px;
     display: inline-block;
