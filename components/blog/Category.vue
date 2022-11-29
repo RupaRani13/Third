@@ -1,8 +1,6 @@
 <template>
   <div id="blogcatgory">
-    <div v-for="item2 in blogCategory" key="item2.id">
-      {{ item2.id }}
-    </div>
+
     <HeadMeta :title="title" :metaTags="metaTags"></HeadMeta>
     <div class="blog-name">
       <p>BLOG Category</p>
@@ -34,61 +32,35 @@
 <script>
 export default {
   async setup(props) {
+
     const blogCategory = await useBlogCategory();
     const metaTags = ref(null);
     metaTags.value = {}
-    // if(blogCategory&&blogCategory.metaTags){
-    //   if(blogCategory.metaTags.ogTitle){
-    //     metaTags.value.ogTitle = blogCategory.metaTags.ogTitle
-    //   }else{
-    //     metaTags.value.ogTitle = blogCategory.title
-    //   }
-    //   if(blogCategory.metaTags.ogDescription){
-    //     metaTags.value.ogDescription = blogCategory.metaTags.ogDescription
-    //   }
-    //   if(blogCategory.metaTags.ogImage){
-    //     metaTags.value.ogImage = blogCategory.metaTags.ogImage
-    //   }else{
-    //     metaTags.value.ogImage = blogCategory.featureImg
-    //   }
-    //   if(blogCategory.metaTags.keywords){
-    //     metaTags.value.keywords = blogCategory.metaTags.keywords
-    //   }else if(blogs.tags.length){
-    //     metaTags.value.keywords = blogCategory.tags.toString();
-    //   }else{
-    //     metaTags.value.keywords = ''
-    //   }
-    //   console.log(metaTags)
-    // }
-
-
     // if(props.id==blogCategory.id){
     //   console.log(this.id)
     // }
 
-    for (var i = 0; i < blogCategory.length; i++) {
-      const allid = blogCategory[i].id 
-      console.log(allid);
-    }
-    if(allid == props.id) {
-      if(blogCategory&&blogCategory.metaTags){
-        if(blogCategory.metaTags.ogTitle){
-        metaTags.value.ogTitle = blogCategory.metaTags.ogTitle
-      }else{
-        metaTags.value.ogTitle = blogCategory.title
-      }
-      if(blogCategory.metaTags.ogDescription){
-        metaTags.value.ogDescription = blogCategory.metaTags.ogDescription
-      }else{
-        metaTags.value.ogDescription = getDesc(blogCategory.description, 200);
-      }
-      if(blogCategory.metaTags.ogImage){
-        metaTags.value.ogImage = blogCategory.metaTags.ogImage
-      }else{
-        metaTags.value.ogImage = blogCategory.featureImg
-      }
+    for (let i = 0; i < blogCategory.length; i++) {
+      if (props.id == blogCategory[i].id) {
+        if (blogCategory[i].metaTags.ogTitle) {
+          metaTags.value.ogTitle = blogCategory[i].metaTags.ogTitle;
+        } else {
+          metaTags.value.ogTitle = blogCategory[i].title;
+        }
+        if (blogCategory[i].metaTags.ogDescription) {
+          metaTags.value.ogDescription = blogCategory[i].metaTags.ogDescription;
+        } else {
+          metaTags.value.ogDescription = blogCategory[i].description;
+        }
+        if (blogCategory[i].metaTags.ogImage) {
+          metaTags.value.ogImage = blogCategory[i].metaTags.ogImage;
+        } else {
+          metaTags.value.ogImage = blogCategory[i].featureImg
+        }
+        metaTags.value.keywords = blogCategory[i].metaTags.keywords;
       }
     }
+
 
     const title = ref(null);
     if (blogCategory && blogCategory.title) {
@@ -108,6 +80,7 @@ export default {
   data() {
     return {
       activeIndex: null,
+      myindex: '',
       metaTags: {
         type: Object
 
@@ -126,9 +99,6 @@ export default {
         }
       });
     }
-    // getActiveBlogCategory(){
-
-    // }
   },
 };
 </script>

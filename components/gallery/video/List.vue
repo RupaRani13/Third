@@ -4,7 +4,7 @@
             <v-row>
                 <v-col v-for="(item, index) in videoList.list" :key="index" class="d-flex child-flex v-col-12 v-col-sm-4 v-col-md-3">
                     <v-img @click="openDialog(item.url)" :src="item.thumb==''||item.thumb==null? `https://i.ytimg.com/vi/${item.url}/hqdefault.jpg` : item.thumb" lazy-src="/gallery_loading_image.jpeg"
-                        aspect-ratio="1.5" cover class="bg-grey-lighten-2">
+                        aspect-ratio="1.5" cover class="bg-grey-lighten-2" >
                         <template v-slot:placeholder>
                             <v-row class="fill-height ma-0" align="center" justify="center">
                                 <v-progress-circular indeterminate color="success"></v-progress-circular>
