@@ -232,4 +232,6 @@
 #courseDeatailsD01 .v-container #course-detailsDesign01 .v-container {
     padding: 0px;
 }
+
+
 </style>

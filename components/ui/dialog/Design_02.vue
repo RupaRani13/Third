@@ -1,19 +1,23 @@
 <template>
     <client-only>
+
         <v-dialog id="ui-dialog-d02" max-height="90vh" max-width="90vw" min-height="40vh" min-width="40vw" scrollable
             v-model="modelValue">
             <v-card v-if="video" max-width="90vw" style="position:relative;" aspect-ratio="16/9">
                 <v-responsive>
                     <!-- <img src="/gallery_loading_image.jpeg" alt=""> -->
-                    <iframe width="700px" height="350px" class="responsive-iframe1"
-                        :src="`https://www.youtube.com/embed/${video}`" title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay=true; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen>
-                    </iframe>
+                    <div class="videoWrapper">
+                        <iframe width="700px" height="500px" class="responsive-iframe1"
+                            :src="`https://www.youtube.com/embed/${video}`" title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay=true; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
                 </v-responsive>
 
             </v-card>
             <v-card v-else max-width="90vw">
+
                 <v-card-title v-if="heading" class="text-xs-h5 text-md-h5 text-lg-h4 bg-primary"><span>{{ heading
                 }}</span>
                 </v-card-title>
@@ -111,10 +115,40 @@ export default {
     width: 100%;
     height: 100%; */
     display: block;
-  margin: 20px auto;
-  width: 100%;
-  height: 30vh;
-  overflow: none;
+    margin: 20px auto;
+    width: 100%;
+    height: 30vh;
+    overflow: none;
 
 }
+
+
+/* #ui-dialog-d02 .responsive-iframe {
+    width: "700px";
+    height: "350px";
+} */
+
+/* .video-foreground,
+.video-background iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+@media (min-aspect-ratio: 16/9) {
+    .video-foreground {
+        height: 300%;
+        top: -100%;
+    }
+}
+
+@media (max-aspect-ratio: 16/9) {
+    .video-foreground {
+        width: 300%;
+        left: -100%;
+    }
+} */
 </style>
