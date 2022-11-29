@@ -72,7 +72,6 @@
                                         <NuxtLink :to="`/course-detail/${courseDetailObj.pathUrl.value}`">
                                             <v-btn size="small">{{courseDetailObj.pathUrl.title}}</v-btn>
                                         </NuxtLink>
-
                                     </div>
                                 </div>
                             </div>
@@ -120,7 +119,6 @@ export default {
 
 
 }
-
 #courseListDesign01 .content-demo {
 
 
@@ -131,6 +129,7 @@ export default {
     top: 0px;
     z-index: 1;
     height: 100%;
+    width: 100%;
 
 }
 

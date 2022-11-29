@@ -104,16 +104,13 @@ export default {
     overflow: hidden;
     width: 100%;
     padding-top: 56.25%;
+   
+    
 }
 
+
 #ui-dialog-d02 .responsive-iframe {
-    /* position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    width: 100%;
-    height: 100%; */
+   
     display: block;
     margin: 20px auto;
     width: 100%;
@@ -121,34 +118,4 @@ export default {
     overflow: none;
 
 }
-
-
-/* #ui-dialog-d02 .responsive-iframe {
-    width: "700px";
-    height: "350px";
-} */
-
-/* .video-foreground,
-.video-background iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-}
-
-@media (min-aspect-ratio: 16/9) {
-    .video-foreground {
-        height: 300%;
-        top: -100%;
-    }
-}
-
-@media (max-aspect-ratio: 16/9) {
-    .video-foreground {
-        width: 300%;
-        left: -100%;
-    }
-} */
 </style>

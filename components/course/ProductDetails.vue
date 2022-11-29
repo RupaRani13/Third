@@ -1,5 +1,5 @@
 <template>
-   <div id="courseDeatailsD01">
+   <div id="productDeatailsD01">
   
         <v-container>
             <v-row v-if="courseDetails">
@@ -159,9 +159,7 @@
     display: flex;
     justify-content: space-between;
 }
-#courseDeatailsD01 .content-demo{
-    padding: 10px 0px;
-}
+
 #courseDeatailsD01 .course-btn{
     display: block;
     text-align: end;

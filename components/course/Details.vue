@@ -12,7 +12,7 @@
                                 </v-row>
                             </template>
                         </v-img>
-                        <!-- <v-img v-else src="/default-course-img.jpeg"
+                        <v-img v-else src="/default-course-img.jpeg"
                             lazy-src="/gallery_loading_image.jpeg" aspect-ratio="1.9" cover class="bg-grey-lighten-2">
                             <template v-slot:placeholder>
                                 <v-row class="fill-height ma-0" align="center" justify="center">
@@ -20,7 +20,7 @@
                                     </v-progress-circular>
                                 </v-row>
                             </template>
-                        </v-img> -->
+                        </v-img>
                 </v-col>
                 <v-col class="v-col-lg-7 v-col-sm-12 v-col-12">
                     <v-card-title>{{ courseDetails.name }}</v-card-title>
@@ -47,7 +47,7 @@
                     </div>
                 </v-col>
             </v-row>
-            <UiTabsDesign07  :list="tabArr" @activeIndex="setActiveTab">
+            <UiTabsDesign07  :list="tabArr" @activeIndex="setActiveTab" v-if="details">
                 <CourseWebberDetails :details="details"></CourseWebberDetails>
             </UiTabsDesign07>
           
