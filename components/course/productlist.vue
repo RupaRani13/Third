@@ -79,11 +79,6 @@ export default {
                         buyBtn: {
                             show: true,
                         },
-                        pagepath:{
-                            show : true,
-                            path : '/product-detail/',
-                            value : null, 
-                        }
                     }
             if( productDetail.title){
                 myObj.title.value = productDetail.title
