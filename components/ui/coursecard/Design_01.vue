@@ -69,7 +69,8 @@
                                  
                                     <div v-if="courseDetailObj.pathUrl" class="course-btn">
                                         <v-btn v-if="courseDetailObj.buyBtn"  size="small">Buy Now</v-btn>
-                                        <NuxtLink :to="`/course-detail/${courseDetailObj.pathUrl.value}`">
+                                        <NuxtLink :to="`${courseDetailObj.pathUrl.value}`">
+                                        <!-- <NuxtLink :to="`${courseDetailObj.pagepath.path}${courseDetailObj.pathUrl.value}`"> -->
                                             <v-btn size="small">{{courseDetailObj.pathUrl.title}}</v-btn>
                                         </NuxtLink>
                                     </div>

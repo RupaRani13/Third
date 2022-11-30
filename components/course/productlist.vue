@@ -16,7 +16,9 @@ export default {
     },
     data() {
         return {
-            courseDetailObj : {}
+            courseDetailObj : {
+
+            }
         }
     },
     methods: {
@@ -77,6 +79,11 @@ export default {
                         buyBtn: {
                             show: true,
                         },
+                        pagepath:{
+                            show : true,
+                            path : '/product-detail/',
+                            value : null, 
+                        }
                     }
             if( productDetail.title){
                 myObj.title.value = productDetail.title
@@ -105,11 +112,11 @@ export default {
             if( productDetail.validity){
                 myObj.endDate.value = productDetail.validity
             }
-            // if (productDetail.id){
-            //             // myObj.pathUrl.value = '$course-detail'item.id
-            //             // myObj.pathUrl.value = "/course-detail/" + item.id + "fnjdf" + item.dsd;
-            //             myObj.pathUrl.value = `product-detail/${productDetail.id}`;
-            //     }
+            if (productDetail.id){
+                        // myObj.pathUrl.value = '$course-detail'item.id
+                        // myObj.pathUrl.value = "/course-detail/" + item.id + "fnjdf" + item.dsd;
+                        myObj.pathUrl.value = `/product-detail/${productDetail.id}`;
+                }
             return myObj
 
 

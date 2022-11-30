@@ -14,7 +14,7 @@
                 @activeIndex="getprogramIdByCourse"></ui-tabs-design02>
             <v-row v-if="filteredCourseProgram.length">
                 <template v-for="item in filteredCourseProgram" :key="item">
-                    <ui-coursecard-design03 :courseDetailObj="item"></ui-coursecard-design03>
+                    <ui-coursecard-design01 :courseDetailObj="item"></ui-coursecard-design01>
                 </template>
             </v-row>
         </v-container>
