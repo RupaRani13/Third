@@ -137,11 +137,7 @@
                         title: 'See Details',
                         value: null,
                     },
-                    pagepath:{
-                        show : true,
-                        path : '/product-detail/',
-                        value : null, 
-                    }
+
                 }
                
             }
