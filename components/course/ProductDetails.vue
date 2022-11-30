@@ -61,7 +61,10 @@
    
         async setup(props) {
             const courseDetails = ref(null);
-            courseDetails.value= await useProductdetails(props.productProgram)
+            courseDetails.value= await useProductdetails(props.productProgram);
+            console.log(props.productProgram);
+            console.log(courseDetails);
+
             return{
                 courseDetails
             }
@@ -133,6 +136,11 @@
                         show: true,
                         title: 'See Details',
                         value: null,
+                    },
+                    pagepath:{
+                        show : true,
+                        path : '/product-detail/',
+                        value : null, 
                     }
                 }
                

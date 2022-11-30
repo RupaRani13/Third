@@ -1,6 +1,7 @@
 <template>
     <div v-if="details" id="course-detailsDesign01">
         <v-card class="webbercourse">
+            
             <v-card-text v-if="details.content" v-html="details.content"></v-card-text>
         </v-card>
         <v-card>

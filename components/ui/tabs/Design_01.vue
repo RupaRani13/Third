@@ -1,11 +1,11 @@
 <template>
     <div id="tabDesign01">
-        <v-card flat>
+        <v-card flat >
             <v-tabs v-model="activeTab" color="success" show-arrows slider-color="background">
                 <v-tab v-for="(item,index) in list" :class="[activeTab==index?'active': '']" @click="setActiveTab(index)" :key="index">
                     {{item }}
                 </v-tab>
-            </v-tabs>
+            </v-tabs> 
             <slot></slot>
         </v-card>
     </div>
