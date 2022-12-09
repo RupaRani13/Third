@@ -1,26 +1,10 @@
+
 <template>
-    <div>
-{{formData}}
-
-    </div>
+  <div>
+   <FormFile></FormFile>
+     <!-- <UiFormDesign01></UiFormDesign01> -->
+     <!-- <imageupload></imageupload> -->
+     <!-- <hello></hello> -->
+      
+  </div>
 </template>
-
-<script>
-    export default {
-        async setup(){
-            const formData = await useContact()
-            return{
-                formData
-            }
-        },
-        data(){
-            return{
-                
-            }
-        },
-    }
-</script>
-
-<style>
-
-</style>
