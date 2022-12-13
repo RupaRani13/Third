@@ -1,11 +1,14 @@
 <template>
     <div>
         <template v-if="type == 'text'">
-            <v-text-field :label="required ? `${label}*` : label" hideDetails="auto" variant="solo" class="mb-3"
-                v-model="value" @input="$emit('newValue', $event.target.value, controlName)" :rules="required ? [rules.required] : ''">
-            </v-text-field>
+                <v-text-field validate-on="input" v-if="required" :label="`${label}*`"
+                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.required]" >
+                </v-text-field>
+                <v-text-field validate-on="input" v-else :label="required ? `${label}*` : label"
+                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" >
+                </v-text-field>
         </template>
-        <template v-if="type == 'number'">
+        <!-- <template v-if="type == 'number'">
             <v-text-field :label="required ? `${label}*` : label" hideDetails="auto" v-model="value"
             @input="$emit('newValue', $event.target.value, controlName)"  :rules="required ? [rules.required, rules.number] : rules.number" variant="solo"
                 class="mb-3"></v-text-field>
@@ -43,7 +46,7 @@
                     </v-radio>
                 </v-radio-group>
             </div>
-        </template>
+        </template> -->
         <!-- <template v-if="type == 'file'">
             <v-file-input v-if="fileType.includes('PDF')" showSize :label="label" type="file"
                 ref="fileUpload" @change="onFileSelected"
@@ -67,9 +70,37 @@ export default {
     setup() {
 
     },
-    data(props) {
+    props: {
+        label: {
+            default: ''
+        },
+        type: {
+            type: String,
+            default: 'text'
+        },
+        required: {
+            type: Boolean,
+            default: false,
+        },
+        options: {
+            type: Array
+        },
+        fileType: {
+            
+        },
+        fileSize: {
+            type: String
+        },
+        modelValue: {
+            type: String
+        },
+        controlName : {
+            type : String
+        }
+       
+    },
+    data() {
         return {
-            value : props.modelValue,
             rules: {
                 required: value => !!value || 'Required.',
                 requiredSelect: (value) => value.length > 0 || "Value is required!!",
@@ -112,35 +143,7 @@ export default {
 
         }
     },
-    props: {
-        label: {
-            default: ''
-        },
-        type: {
-            type: String,
-            default: 'text'
-        },
-        required: {
-            type: Boolean,
-            default: false,
-        },
-        options: {
-            type: Array
-        },
-        fileType: {
-            
-        },
-        fileSize: {
-            type: String
-        },
-        modelValue: {
-            type: String
-        },
-        controlName : {
-            type : String
-        }
-       
-    }
+
 }
 
 </script>

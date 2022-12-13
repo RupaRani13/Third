@@ -1,26 +1,35 @@
 <template>
     <div>
         <v-container>
-            <v-form ref="form" v-if="groupArr" v-model="valid" @submit.prevent="onSubmit()">
-                <div v-for="(item,index) in groupArr" :key="index">
-                    <template v-if="(page==index)">
-                        <div class="form-group-container">
-                            <div class="form-heading" v-if="item.heading">{{item.heading}}</div>
-                            <div v-for="(subItem,index) in item.formData" :key="index" >
-                                <v-text-field :label="subItem.mandatory?`${subItem.label}**`: subItem.label" :rules="[subItem.mandatory? rules.required : '']" v-model="userData[subItem.controlName]"></v-text-field>
-                            </div>
+            <div  v-for="(value,property) in newFinalObj" :key="property">
+                <v-form :ref="'form'+ property" :v-model="valid+property" @submit.prevent="onSubmit()">
+                    <template v-if="(page==property)">
+                        <div v-for="(item,index) in value" :key="index">
+                                <div class="form-group-container">
+                                    <div class="form-heading" v-if="item.heading">{{item.heading}}</div>
+                                    <div v-for="(subItem,index) in item.formData" :key="index" >
+                                        <ui-form-design02 :label="subItem.label" :required="subItem.mandatory" v-model="userData[subItem.controlName]">
+                                        </ui-form-design02>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="d-flex justify-center">
+                            <v-btn v-if="(property<Object.keys(newFinalObj).length-1)" class="mt-5 mx-2 d-inline-block" size="x-large" color="primary" type="button" @click="saveNext(property)">Save & Next</v-btn>
+                            <v-btn v-if="property>0" class="mt-5 mx-2 d-inline-block" size="x-large" color="warning" type="button" @click="page--">Back</v-btn>
+                            <v-btn v-if="(property==Object.keys(newFinalObj).length-1)" class="mt-5 mx-2 d-inline-block" size="x-large" color="success" type="submit" @click="onSubmit(property)">Submit</v-btn>
                         </div>
                     </template>
+                </v-form>
 
-                </div>
-                <div class="d-flex justify-center">
-                    <v-btn v-if="(page<groupArr.length-1)" class="mt-5 mx-2 d-inline-block" size="x-large" color="primary" type="button" @click="page++">Save & Next</v-btn>
+
+
+                <!-- <div class="d-flex justify-center">
+                    <v-btn v-if="(property<groupArr.length-1)" class="mt-5 mx-2 d-inline-block" size="x-large" color="primary" type="button" @click="saveNext(index)">Save & Next</v-btn>
                     <v-btn v-if="(page>0)" class="mt-5 mx-2 d-inline-block" size="x-large" color="warning" type="button" @click="page--">Back</v-btn>
                     <v-btn v-if="(page==groupArr.length-1)" class="mt-5 mx-2 d-inline-block" size="x-large" color="success" type="submit">Submit</v-btn>
+                </div> -->
+            </div>
 
-                </div>
-
-            </v-form>
         </v-container>
     </div>
 
@@ -28,6 +37,7 @@
 
 <script>
 export default {
+
     async setup() {
         const data = reactive({});
         console.log(data);
@@ -44,9 +54,9 @@ export default {
             if(!myObj[key].hasOwnProperty('fields')){
                 if(myObj[key].hasOwnProperty('display')&&myObj[key].display){
                     if(myObj[key].type){
-                        myNewArr.push({'controlName' : key, 'order' : myObj[key].order, 'label' : myObj[key].label, 'mandatory' : myObj[key].mandatory, 'heading' : myObj[key].heading, 'type' : myObj[key].type})
+                        myNewArr.push({'controlName' : key, 'order' : myObj[key].order, 'label' : myObj[key].label, 'mandatory' : myObj[key].mandatory, 'heading' : myObj[key].heading, 'type' : myObj[key].type, 'newPage' : myObj[key].newPage} )
                     }else{
-                        myNewArr.push({'controlName' : key, 'order' : myObj[key].order, 'label' : myObj[key].label, 'mandatory' : myObj[key].mandatory, 'heading' : myObj[key].heading, 'type' : 'text'})
+                        myNewArr.push({'controlName' : key, 'order' : myObj[key].order, 'label' : myObj[key].label, 'mandatory' : myObj[key].mandatory, 'heading' : myObj[key].heading, 'type' : 'text', 'newPage' : myObj[key].newPage})
                     }
                 }
             }else{
@@ -56,9 +66,9 @@ export default {
                         let newObjKey1 = `${key}.${key1}`;
                         if(myObj1[key1].hasOwnProperty('display')&&myObj1[key1].display){
                             if(myObj1[key1].type){
-                                myNewArr.push({'controlName' : newObjKey1, 'order' : myObj1[key1].order, 'label' : myObj1[key1].label, 'mandatory' : myObj1[key1].mandatory,  'heading' : myObj1[key1].heading, 'type' : myObj1[key1].type})
+                                myNewArr.push({'controlName' : newObjKey1, 'order' : myObj1[key1].order, 'label' : myObj1[key1].label, 'mandatory' : myObj1[key1].mandatory,  'heading' : myObj1[key1].heading, 'type' : myObj1[key1].type, 'newPage' : myObj1[key1].newPage})
                             }else{
-                                myNewArr.push({'controlName' : newObjKey1, 'order' : myObj1[key1].order, 'label' : myObj1[key1].label, 'mandatory' : myObj1[key1].mandatory, 'heading' : myObj1[key1].heading, 'type' : 'text'})
+                                myNewArr.push({'controlName' : newObjKey1, 'order' : myObj1[key1].order, 'label' : myObj1[key1].label, 'mandatory' : myObj1[key1].mandatory, 'heading' : myObj1[key1].heading, 'type' : 'text', 'newPage' : myObj1[key1].newPage})
                             }
                         }
                     }else{
@@ -68,9 +78,9 @@ export default {
                                 let newObjKey2 = `${key}.${key1}.${key2}`;
                                 if(myObj2[key2].hasOwnProperty('display')){
                                     if(myObj2[key2].type){
-                                        myNewArr.push({'controlName' : newObjKey2, 'order' : myObj2[newObjKey2].order, 'label' : myObj2[key2].label, 'mandatory' : myObj2[key2].mandatory, 'heading' : myObj2[key2].heading, 'type' : myObj2[key2].type})
+                                        myNewArr.push({'controlName' : newObjKey2, 'order' : myObj2[newObjKey2].order, 'label' : myObj2[key2].label, 'mandatory' : myObj2[key2].mandatory, 'heading' : myObj2[key2].heading, 'type' : myObj2[key2].type, 'newPage' : myObj2[key2].newPage})
                                     }else{
-                                        myNewArr.push({'controlName' : newObjKey2, 'order' : myObj2[key2].order, 'label' : myObj2[key2].label, 'mandatory' : myObj2[key2].mandatory, 'heading' : myObj2[key2].heading, 'type' : 'text'})
+                                        myNewArr.push({'controlName' : newObjKey2, 'order' : myObj2[key2].order, 'label' : myObj2[key2].label, 'mandatory' : myObj2[key2].mandatory, 'heading' : myObj2[key2].heading, 'type' : 'text', 'newPage' : myObj2[key2].newPage})
                                     }
                                 }
                             }
@@ -79,12 +89,28 @@ export default {
                 }
             }
         }
-        console.log(myNewArr);
         const userData = reactive({});
         myNewArr.sort(function(a, b){return a.order - b.order});
-        const groupArr = [];
-        let groupIndex = 0;
-        myNewArr.forEach(item => {
+        debugger
+        const newTempObj = {}
+        let page = 0;
+        myNewArr.forEach((item,index)=>{
+            if(index==0){
+                newTempObj[page]= [];
+                newTempObj[page].push(item)
+            }else if(item.newPage){
+                page=page+1;
+                newTempObj[page]= [];
+                newTempObj[page].push(item)
+            }else{
+                newTempObj[page].push(item)
+            }  
+        })
+        const newFinalObj = {}
+        for (const key in newTempObj){
+            const groupArr = [];
+            let groupIndex = 0;
+            newTempObj[key].forEach(item => {
                 if(groupArr.length){
                     if(item.heading){
                         groupIndex = groupIndex+1;
@@ -99,22 +125,40 @@ export default {
                     groupArr[groupIndex].heading = item.heading;
                     groupArr[groupIndex].formData.push(item);
                 }
-            })
-        console.log(groupArr);
-        return {userData, groupArr }
+            });
+            newFinalObj[key] = groupArr;
+            
+        }
+        return {userData, newFinalObj }
     },
     data(){
         return{
             rules : {
                 required : value => !!value || 'Required',
             },
-            valid : false,
-            page: 0,
+            valid : true,
+            page : 0,
         }
     },
     methods : {
-        onSubmit(){
-            this.$refs.form.validate();
+        saveNext(i){
+            let refData = `form${i}`;
+            debugger
+            this.$refs[refData][0].validate();
+            debugger
+            if(this.valid||this.valid==null){
+                this.page= this.page+1;
+            }else{
+                return
+            }
+        },
+        onSubmit(i){
+            let refData = `form${i}`;
+            this.$refs[refData][0].validate();
+            debugger
+            
+            if(this.valid||this.valid==null){
+                debugger
                 let stdData = {}
                 for(let key in this.userData){
                     let x = key.split('.');
@@ -143,10 +187,13 @@ export default {
                     else if(x.length==1){
                         stdData[key]=this.userData[key];
                     }
-                    console.log(stdData);
-            }    
+                }
+                this.page= this.page+1;
+            }else{
+                return
+            }
         }
-    }
+    },
 
 }
 </script>
