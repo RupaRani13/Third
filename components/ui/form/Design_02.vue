@@ -2,12 +2,21 @@
     <div>
        
         <template v-if="type == 'text'">
+<<<<<<< HEAD:components/ui/form/Design_01.vue
             <v-text-field :label="required ? `${label}*` : label" hideDetails="auto" variant="solo" class="mb-3"
                 v-model="value" @input="$emit('newValue', $event.target.value, controlName)"
                 :rules="required ? [rules.required] : ''">
             </v-text-field>
+=======
+                <v-text-field validate-on="input" v-if="required" :label="`${label}*`"
+                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.required]" >
+                </v-text-field>
+                <v-text-field validate-on="input" v-else :label="required ? `${label}*` : label"
+                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" >
+                </v-text-field>
+>>>>>>> c3ec2d505656cfec5bdbad0ea642380f7d0f01fd:components/ui/form/Design_02.vue
         </template>
-        <template v-if="type == 'number'">
+        <!-- <template v-if="type == 'number'">
             <v-text-field :label="required ? `${label}*` : label" hideDetails="auto" v-model="value"
                 @input="$emit('newValue', $event.target.value, controlName)"
                 :rules="required ? [rules.required] : ''" variant="solo"
@@ -49,7 +58,7 @@
                     </v-radio>
                 </v-radio-group>
             </div>
-        </template>
+        </template> -->
         <!-- <template v-if="type == 'file'">
             <v-file-input v-if="fileType.includes('PDF')" showSize :label="label" type="file"
                 ref="fileUpload" @update:modelValue="onFileSelected(value,controlName)"
@@ -74,8 +83,38 @@ export default {
     setup() {
 
     },
-    data(props) {
+    props: {
+        label: {
+            default: ''
+        },
+        type: {
+            type: String,
+            default: 'text'
+        },
+        required: {
+            type: Boolean,
+            default: false,
+        },
+        options: {
+            type: Array
+        },
+        fileType: {
+            
+        },
+        fileSize: {
+            type: String
+        },
+        modelValue: {
+            type: String
+        },
+        controlName : {
+            type : String
+        }
+       
+    },
+    data() {
         return {
+<<<<<<< HEAD:components/ui/form/Design_01.vue
             // myfile : '',
             // filename: null,
             // files: null,
@@ -83,6 +122,8 @@ export default {
             selectedFile: null,
             value: props.modelValue,
             emits:["newValue"],
+=======
+>>>>>>> c3ec2d505656cfec5bdbad0ea642380f7d0f01fd:components/ui/form/Design_02.vue
             rules: {
                 required: value => !!value || 'Required.',
                 // requiredSelect: (value) => value.length > 0 || "Value is required!!",
@@ -123,6 +164,7 @@ export default {
       
     },
 
+<<<<<<< HEAD:components/ui/form/Design_01.vue
     props: {
         label: {
             default: ''
@@ -152,6 +194,8 @@ export default {
         }
 
     }
+=======
+>>>>>>> c3ec2d505656cfec5bdbad0ea642380f7d0f01fd:components/ui/form/Design_02.vue
 }
 
 </script>
