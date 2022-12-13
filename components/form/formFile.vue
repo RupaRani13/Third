@@ -1,13 +1,17 @@
 <template>
     <div>
-        <v-form v-model="valid" @submit.prevent="onSubmit()">
+        <!-- <Imageupload></Imageupload> -->
+        <v-form v-model="valid" @submit.prevent="onSubmit()" ref="form">
             <v-responsive class="mx-auto" max-width="1000" pb-4>
                 <div v-for="item in formFields" :key="item.id">
-                    <UiFormDesign01 @newValue="myFunction" :label="item.title" :type="item.type" :required='item.required' :options="item.options" :fileType="item.fileType" :fileSize="item.fileSize" v-model="userData[item.controlName]" :controlName="item.controlName"></UiFormDesign01>
+                    <UiFormDesign01 @newValue="myFunction" :label="item.title" :type="item.type"
+                        :required='item.required' :options="item.options" :fileType="item.fileType"
+                        :fileSize="item.fileSize" v-model="userData[item.controlName]" :controlName="item.controlName">
+                    </UiFormDesign01>
                 </div>
                 <v-btn class="btn" type="submit">submit</v-btn>
             </v-responsive>
-       
+
         </v-form>
     </div>
 </template>
@@ -20,11 +24,11 @@ export default {
         console.log(formdata, 'formdata');
         const formFields = ref(null);
         formFields.value = formdata.fields;
-        console.log( formFields.value, ' formFields.value')
+        console.log(formFields.value, ' formFields.value')
         formFields.value.forEach(item => {
             userData[item.controlName] = "";
         });
-        console.log(userData,formFields);
+        console.log(userData, formFields);
         return {
             formFields, userData
 
@@ -33,15 +37,15 @@ export default {
     data() {
         return {
             fileModel: null,
-            valid: false,
+            valid: true,
             terms: false,
             selectedFile: null,
         }
     },
     methods: {
-        myFunction(a, b){
-            this.userData[b]= a;
-            console.log( this.userData);
+        myFunction(a, b) {
+            this.userData[b] = a;
+            console.log(this.userData);
 
         },
         async submitUserData(userData) {
@@ -50,17 +54,53 @@ export default {
                 form: '6388487e8e13e93f22cbe9c4',
                 response: userData,
             }
-            alert(1);
+            // alert(1);
             await $fetch(apiUrl, { method: 'POST', body: data }).then(res => console.log(res)).catch(e => console.log(e))
         },
         onSubmit(e) {
-                this.submitUserData(this.userData);
-            console.log(this.userData)
+            this.$refs.form.validate();
+            debugger
+            if (this.valid) {
+                this.submitUserData(this.userData)
+                this.$refs.form.reset()
+                this.$refs.form.resetValidation();
+                debugger
+                return
+
+            } else {
+                return
+            }
+        },
+        onUpload() {
+            const fd = new FormData();
+            if (this.selectedFile && this.selectedFile.size < 3000) {
+                debugger
+                fd.append('ekFile', this.selectedFile, this.selectedFile.name);
+                $fetch('https://demo02.institute.org.in/api/public/file/upload', { method: 'POST', body: fd })
+                    .then(res => {
+                        console.log(res);
+                        debugger
+                        this.value = [];
+                    })
+                //     .catch(e => console.log(e))
+                // debugger
+
+            } else if (this.selectedFile && this.selectedFile.size >= 3000) {
+                if (this.selectedFile) {
+                    debugger
+                    // this.$refs.fileUpload.reset()
+                    alert('file is greater')
+                }
+            }
+            else if (!this.selectedFile) {
+                alert("File missing")
+            }
+
         },
         handleFileUpload(e) {
             console.log(e.target)
         },
-     
+
     }
 }
 </script>

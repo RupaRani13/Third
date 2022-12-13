@@ -1,44 +1,50 @@
 <template>
     <div>
+       
         <template v-if="type == 'text'">
             <v-text-field :label="required ? `${label}*` : label" hideDetails="auto" variant="solo" class="mb-3"
-                v-model="value" @input="$emit('newValue', $event.target.value, controlName)" :rules="required ? [rules.required] : ''">
+                v-model="value" @input="$emit('newValue', $event.target.value, controlName)"
+                :rules="required ? [rules.required] : ''">
             </v-text-field>
         </template>
         <template v-if="type == 'number'">
             <v-text-field :label="required ? `${label}*` : label" hideDetails="auto" v-model="value"
-            @input="$emit('newValue', $event.target.value, controlName)"  :rules="required ? [rules.required, rules.number] : rules.number" variant="solo"
+                @input="$emit('newValue', $event.target.value, controlName)"
+                :rules="required ? [rules.required] : ''" variant="solo"
                 class="mb-3"></v-text-field>
         </template>
+    
         <template v-if="type == 'mobile'">
             <v-text-field :label="required ? `${label}*` : label" hideDetails="auto" v-model="value"
-            @input="$emit('newValue', $event.target.value, controlName)"  :rules="required ? [rules.required, rules.mobileNumber, rules.number] : [rules.mobileNumber, rules.number]"
+                @input="$emit('newValue', $event.target.value, controlName)"
+                :rules="required ? [rules.required, rules.mobileNumber, rules.number] : [rules.mobileNumber, rules.number]"
                 variant="solo" class="mb-3">
             </v-text-field>
-
         </template>
         <template v-if="type == 'email'">
             <v-text-field :label="required ? `${label}*` : label" hideDetails="auto" v-model="value"
-            @input="$emit('newValue', $event.target.value, controlName)"   :rules="required ? [rules.required, rules.email] : [rules.email]" variant="solo" class="mb-3">
+                @input="$emit('newValue', $event.target.value, controlName)"
+                :rules="required ? [rules.required, rules.email] : [rules.email]" variant="solo" class="mb-3">
             </v-text-field>
         </template>
 
         <template v-if="type == 'textarea'">
-            <v-textarea variant="filled solo" autoGrow :label="required ? `${label}*` : label" rows="4" row-height="30"
-                shaped v-model="value"  @input="$emit('newValue', $event.target.value, controlName)"  :rules="required ? [rules.required] : ''" class="mb-3">
+            <v-textarea variant="solo" autoGrow :label="required ? `${label}*` : label" rows="4" row-height="30"
+                shaped v-model="value" @input="$emit('newValue', $event.target.value, controlName)"
+                :rules="required ? [rules.required] : ''" class="mb-3">
             </v-textarea>
         </template>
         <template v-if="type == 'dropdown'">
-            <v-combobox :items="options" :label="required ? `${label}*` : label" 
-                v-model="value"  @input="$emit('newValue', $event.target.value, controlName)"  :rules="required ? [rules.requiredSelect] : ''" variant="solo"
-                class="mb-3">
+            <v-combobox :items="options" :label="required ? `${label}*` : label" v-model="value"
+                @input="$emit('newValue', $event.target.value, controlName)"
+                :rules="required ? [rules.requiredSelect] : ''" variant="solo" class="mb-3">
             </v-combobox>
         </template>
         <template v-if="type == 'radio'">
             <div class="titlesec">
-                <v-radio-group inline v-model="value"
-                @input="$emit('newValue', $event.target.value, controlName)"  :rules=" rules.required ? [rules.requiredSelect] : ''" class="radiosection mb-3" variant="solo">
-                    <v-title v-html="required ? `${label}*` : label"></v-title>
+                <v-radio-group inline v-model="value" @input="$emit('newValue', $event.target.value, controlName)"
+                    :rules="rules.required ? [rules.requiredSelect] : ''" class="radiosection mb-3" variant="solo">
+                    <p v-html="required ? `${label}*` : label"></p>
                     <v-radio v-for="subItem in options" :key="subItem" :label="subItem" :value="subItem">
                     </v-radio>
                 </v-radio-group>
@@ -46,17 +52,18 @@
         </template>
         <!-- <template v-if="type == 'file'">
             <v-file-input v-if="fileType.includes('PDF')" showSize :label="label" type="file"
-                ref="fileUpload" @change="onFileSelected"
+                ref="fileUpload" @update:modelValue="onFileSelected(value,controlName)"
                 :accept="fileType.includes('PDF') && fileType.includes('Image') ? 'application/pdf, image/png, image/jpeg, image/bmp' : 'application/pdf'"
-                variant="solo" class="mb-3"  v-model="value"   @input="$emit('newValue', $event.target.value, controlName)"></v-file-input>
+                :rules="rules.required ? [rules.required] : ''" variant="solo" class="mb-3"  v-model="value"  ></v-file-input>
 
             <v-file-input v-else-if="fileType.includes('Image')" showSize :label="title" type="file"
-                ref="fileUpload" @change="onFileSelected"
-                :accept="fileType.includes('Image') ? 'image/png, image/jpeg, image/bmp' : ''" variant="solo"
-                class="mb-3"  v-model="value"   @input="$emit('newValue', $event.target.value, controlName)"></v-file-input>
-            <v-btn @click="onUpload">Submit</v-btn>
+                ref="fileUpload" @update:modelValue="onFileSelected(value,controlName)"
+                :accept="fileType.includes('Image') ? 'image/png, image/jpeg, image/bmp' : ''"  :rules="rules.required ? [rules.required] : ''" variant="solo"
+                class="mb-3"  v-model="value"  ></v-file-input>
+              <v-btn @click="onUpload">Submit</v-btn>   
         </template>  -->
-  
+     
+
     </div>
 </template>
 
@@ -69,49 +76,53 @@ export default {
     },
     data(props) {
         return {
-            value : props.modelValue,
+            // myfile : '',
+            // filename: null,
+            // files: null,
+            value:'',
+            selectedFile: null,
+            value: props.modelValue,
+            emits:["newValue"],
             rules: {
                 required: value => !!value || 'Required.',
-                requiredSelect: (value) => value.length > 0 || "Value is required!!",
-                number: value => Number.isInteger(Number(value)) || "The value must be an integer number",
+                // requiredSelect: (value) => value.length > 0 || "Value is required!!",
+                number: value => (!isNaN(parseFloat(value)) && value >= 0 && value <= 9999999999) || 'Number has to be between 0 and 999',
                 mobileNumber: value => (value > 1000000000 && value < 9999999999) || 'Enter a valid 10 digit Mobile Number',
                 email: value => (value != '' && /.+@.+/.test(value)) || 'E-mail must be valid',
-            },     
+            },
         }
     },
-    methods:{
-         onFileSelected(event) {
-            console.log(event)
-            this.selectedFile = event.target.files[0]
+    methods: {
+        onFileSelected(value,controlName) { 
+            let x= value;
+            let y =controlName;
+            debugger                
+                // @change="$emit('newValue', value, controlName)"
+            
+            console.log(this.value,'value')
+            this.selectedFile = this.value[0]
+            debugger
+            // console.log(event);
+            // this.selectedFile = event.target.files[0]
             console.log(this.selectedFile, 'file');
-            if (this.selectedFile.size < 1024) {
+            console.log(this.selectedFile.size,'size')
+            if (this.selectedFile.size < 3000) {
                 return
-            } else {
-                alert('file size should be less than 1MB')
-                // event.target.value = '';
-            //    this.selectedFile.size.reset()
-            //    this.$refs.event.target.value= null
-            this.$refs.selectedFile = null
-
-              
-
+            } else if(this.selectedFile && this.selectedFile.size >= 3000){
+                if (this.selectedFile) {
+                    debugger
+                    alert('file is greater')
+                    this.value = [];
+                return
+                }     
+            }   else if (!this.selectedFile) {
+                alert("File missing")
             }
         },
-        onUpload() {
-            const fd = new FormData();
-            fd.append('ekFile', this.selectedFile, this.selectedFile.name);
-            console.log(fd.values());
-            console.log(this.selectedFile.size)
-            if (this.selectedFile.size < 1024) {
-                $fetch('https://demo02.institute.org.in/api/public/file/upload', { method: 'POST', body: fd })
-                    .then(res => console.log(res, alert("hello")))
-                    .catch(e => console.log(e))
-            } else {
-                console.log("please upload 2kb image")
-            }
-
-        }
+      
+      
     },
+
     props: {
         label: {
             default: ''
@@ -128,7 +139,7 @@ export default {
             type: Array
         },
         fileType: {
-            
+
         },
         fileSize: {
             type: String
@@ -136,10 +147,10 @@ export default {
         modelValue: {
             type: String
         },
-        controlName : {
-            type : String
+        controlName: {
+            type: String
         }
-       
+
     }
 }
 
