@@ -2,34 +2,31 @@
     <div>
         <v-container>
             <div  v-for="(value,property) in newFinalObj" :key="property">
-                <v-form :ref="'form'+ property" :v-model="valid+property" @submit.prevent="onSubmit()">
-                    <template v-if="(page==property)">
-                        <div v-for="(item,index) in value" :key="index">
-                                <div class="form-group-container">
-                                    <div class="form-heading" v-if="item.heading">{{item.heading}}</div>
-                                    <div v-for="(subItem,index) in item.formData" :key="index" >
-                                        <ui-form-design02 :label="subItem.label" :required="subItem.mandatory" v-model="userData[subItem.controlName]">
-                                        </ui-form-design02>
+                <template v-if="(page==property)">
+                    <v-form  :ref="'form'+ property" v-model="valid[property]" @submit.prevent="onSubmit()">
+                            <template v-for="(item,index) in value" :key="index">
+                                    <div class="form-group-container">
+                                        <div class="form-heading" v-if="item.heading">{{item.heading}}</div>
+                                        <div v-for="(subItem,index) in item.formData" :key="index" >
+                                            <ui-form-design02 :label="subItem.label" :type="subItem.type" :required="subItem.mandatory" v-model="userData[subItem.controlName]">
+                                            </ui-form-design02>
+                                        </div>
                                     </div>
-                                </div>
-                        </div>
-                        <div class="d-flex justify-center">
-                            <v-btn v-if="(property<Object.keys(newFinalObj).length-1)" class="mt-5 mx-2 d-inline-block" size="x-large" color="primary" type="button" @click="saveNext(property)">Save & Next</v-btn>
-                            <v-btn v-if="property>0" class="mt-5 mx-2 d-inline-block" size="x-large" color="warning" type="button" @click="page--">Back</v-btn>
-                            <v-btn v-if="(property==Object.keys(newFinalObj).length-1)" class="mt-5 mx-2 d-inline-block" size="x-large" color="success" type="submit" @click="onSubmit(property)">Submit</v-btn>
-                        </div>
-                    </template>
-                </v-form>
-
-
-
-                <!-- <div class="d-flex justify-center">
-                    <v-btn v-if="(property<groupArr.length-1)" class="mt-5 mx-2 d-inline-block" size="x-large" color="primary" type="button" @click="saveNext(index)">Save & Next</v-btn>
-                    <v-btn v-if="(page>0)" class="mt-5 mx-2 d-inline-block" size="x-large" color="warning" type="button" @click="page--">Back</v-btn>
-                    <v-btn v-if="(page==groupArr.length-1)" class="mt-5 mx-2 d-inline-block" size="x-large" color="success" type="submit">Submit</v-btn>
-                </div> -->
+                            </template>
+                            <div class="d-flex justify-center">
+                                <v-btn v-if="(property<Object.keys(newFinalObj).length-1)" class="mt-5 mx-2 d-inline-block" size="x-large" color="primary" type="button" @click="saveNext(property)">Save & Next</v-btn>
+                                <v-btn v-if="property>0" class="mt-5 mx-2 d-inline-block" size="x-large" color="warning" type="button" @click="page--">Back</v-btn>
+                                <v-btn v-if="(property==Object.keys(newFinalObj).length-1)" class="mt-5 mx-2 d-inline-block" size="x-large" color="success" type="submit" @click="onSubmit(property)">Submit</v-btn>
+                            </div>
+                    </v-form>
+                </template>
             </div>
-
+            <template v-if="(page==Object.keys(newFinalObj).length)">
+                <div>
+                    You have successfully registered!!
+                    {{userData}}
+                </div>
+            </template>
         </v-container>
     </div>
 
@@ -91,7 +88,6 @@ export default {
         }
         const userData = reactive({});
         myNewArr.sort(function(a, b){return a.order - b.order});
-        debugger
         const newTempObj = {}
         let page = 0;
         myNewArr.forEach((item,index)=>{
@@ -106,8 +102,10 @@ export default {
                 newTempObj[page].push(item)
             }  
         })
+        const valid = ref([]);
         const newFinalObj = {}
         for (const key in newTempObj){
+            valid.value.push(true);
             const groupArr = [];
             let groupIndex = 0;
             newTempObj[key].forEach(item => {
@@ -127,38 +125,40 @@ export default {
                 }
             });
             newFinalObj[key] = groupArr;
-            
         }
-        return {userData, newFinalObj }
+        return { newFinalObj, valid }
     },
     data(){
         return{
             rules : {
                 required : value => !!value || 'Required',
             },
-            valid : true,
             page : 0,
+            userData : {},
         }
     },
     methods : {
-        saveNext(i){
+        checkValidity(i){
             let refData = `form${i}`;
-            debugger
             this.$refs[refData][0].validate();
-            debugger
-            if(this.valid||this.valid==null){
+            if(this.valid[i]==null){
+                if (this.$refs[refData][0].items.filter(e => e.isValid == null).length>0) {
+                    this.valid[i]=null
+                }else{
+                    this.valid[i]=true
+                }
+            }
+            return this.valid[i];
+        },
+        saveNext(i){
+            if(this.checkValidity(i)){
                 this.page= this.page+1;
             }else{
                 return
             }
         },
-        onSubmit(i){
-            let refData = `form${i}`;
-            this.$refs[refData][0].validate();
-            debugger
-            
-            if(this.valid||this.valid==null){
-                debugger
+        onSubmit(i){            
+            if(this.checkValidity(i)){
                 let stdData = {}
                 for(let key in this.userData){
                     let x = key.split('.');
