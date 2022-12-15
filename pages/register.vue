@@ -3,12 +3,12 @@
         <v-container>
             <div  v-for="(value,property) in newFinalObj" :key="property">
                 <template v-if="(page==property)">
-                    <v-form  :ref="'form'+ property" v-model="valid[property]" @submit.prevent="onSubmit()">
+                    <v-form  :ref="'form'+ property" v-model="valid[property]">
                             <template v-for="(item,index) in value" :key="index">
                                     <div class="form-group-container">
                                         <div class="form-heading" v-if="item.heading">{{item.heading}}</div>
                                         <div v-for="(subItem,index) in item.formData" :key="index" >
-                                            <ui-form-design02 :label="subItem.label" :type="subItem.type" :required="subItem.mandatory" v-model="userData[subItem.controlName]">
+                                            <ui-form-design02 :label="subItem.label" :type="subItem.type" :required="subItem.mandatory" :options="subItem.options?subItem.options : ''" v-model="userData[subItem.controlName]">
                                             </ui-form-design02>
                                         </div>
                                     </div>
@@ -16,7 +16,7 @@
                             <div class="d-flex justify-center">
                                 <v-btn v-if="(property<Object.keys(newFinalObj).length-1)" class="mt-5 mx-2 d-inline-block" size="x-large" color="primary" type="button" @click="saveNext(property)">Save & Next</v-btn>
                                 <v-btn v-if="property>0" class="mt-5 mx-2 d-inline-block" size="x-large" color="warning" type="button" @click="page--">Back</v-btn>
-                                <v-btn v-if="(property==Object.keys(newFinalObj).length-1)" class="mt-5 mx-2 d-inline-block" size="x-large" color="success" type="submit" @click="onSubmit(property)">Submit</v-btn>
+                                <v-btn v-if="(property==Object.keys(newFinalObj).length-1)" class="mt-5 mx-2 d-inline-block" size="x-large" color="success" type="submit" @click.prevent="onSubmit(property)">Submit</v-btn>
                             </div>
                     </v-form>
                 </template>
@@ -47,11 +47,56 @@ export default {
         delete  data.value.more.srn;
         let myNewArr = []
         let myObj = data.value.more;
+        const state = [ "Andhra Pradesh",
+                "Arunachal Pradesh",
+                "Assam",
+                "Bihar",
+                "Chhattisgarh",
+                "Goa",
+                "Gujarat",
+                "Haryana",
+                "Himachal Pradesh",
+                "Jammu and Kashmir",
+                "Jharkhand",
+                "Karnataka",
+                "Kerala",
+                "Madhya Pradesh",
+                "Maharashtra",
+                "Manipur",
+                "Meghalaya",
+                "Mizoram",
+                "Nagaland",
+                "Odisha",
+                "Punjab",
+                "Rajasthan",
+                "Sikkim",
+                "Tamil Nadu",
+                "Telangana",
+                "Tripura",
+                "Uttarakhand",
+                "Uttar Pradesh",
+                "West Bengal",
+                "Andaman and Nicobar Islands",
+                "Chandigarh",
+                "Dadra and Nagar Haveli",
+                "Daman and Diu",
+                "Delhi",
+                "Lakshadweep",
+                "Puducherry"]
+        myObj.gender.options = ['male', 'female', 'others'];
+        myObj.address.fields.state.type = 'dropdown';
+        myObj.address.fields.state.options = state;
+        myObj.permanentAddress.fields.state.type = 'dropdown';
+        myObj.permanentAddress.fields.state.options = state;
         for(const key in myObj){
             if(!myObj[key].hasOwnProperty('fields')){
                 if(myObj[key].hasOwnProperty('display')&&myObj[key].display){
                     if(myObj[key].type){
-                        myNewArr.push({'controlName' : key, 'order' : myObj[key].order, 'label' : myObj[key].label, 'mandatory' : myObj[key].mandatory, 'heading' : myObj[key].heading, 'type' : myObj[key].type, 'newPage' : myObj[key].newPage} )
+                        if(myObj[key].options){
+                            myNewArr.push({'controlName' : key, 'order' : myObj[key].order, 'label' : myObj[key].label, 'mandatory' : myObj[key].mandatory, 'heading' : myObj[key].heading, 'type' : myObj[key].type, 'newPage' : myObj[key].newPage, 'options' : myObj[key].options } )
+                        }else{
+                            myNewArr.push({'controlName' : key, 'order' : myObj[key].order, 'label' : myObj[key].label, 'mandatory' : myObj[key].mandatory, 'heading' : myObj[key].heading, 'type' : myObj[key].type, 'newPage' : myObj[key].newPage} )
+                        }
                     }else{
                         myNewArr.push({'controlName' : key, 'order' : myObj[key].order, 'label' : myObj[key].label, 'mandatory' : myObj[key].mandatory, 'heading' : myObj[key].heading, 'type' : 'text', 'newPage' : myObj[key].newPage})
                     }
@@ -63,7 +108,11 @@ export default {
                         let newObjKey1 = `${key}.${key1}`;
                         if(myObj1[key1].hasOwnProperty('display')&&myObj1[key1].display){
                             if(myObj1[key1].type){
-                                myNewArr.push({'controlName' : newObjKey1, 'order' : myObj1[key1].order, 'label' : myObj1[key1].label, 'mandatory' : myObj1[key1].mandatory,  'heading' : myObj1[key1].heading, 'type' : myObj1[key1].type, 'newPage' : myObj1[key1].newPage})
+                                if(myObj1[key1].options){
+                                    myNewArr.push({'controlName' : newObjKey1, 'order' : myObj1[key1].order, 'label' : myObj1[key1].label, 'mandatory' : myObj1[key1].mandatory,  'heading' : myObj1[key1].heading, 'type' : myObj1[key1].type , 'newPage' : myObj1[key1].newPage, 'options' : myObj1[key1].options})
+                                }else{
+                                    myNewArr.push({'controlName' : newObjKey1, 'order' : myObj1[key1].order, 'label' : myObj1[key1].label, 'mandatory' : myObj1[key1].mandatory,  'heading' : myObj1[key1].heading, 'type' : myObj1[key1].type, 'newPage' : myObj1[key1].newPage})
+                                }
                             }else{
                                 myNewArr.push({'controlName' : newObjKey1, 'order' : myObj1[key1].order, 'label' : myObj1[key1].label, 'mandatory' : myObj1[key1].mandatory, 'heading' : myObj1[key1].heading, 'type' : 'text', 'newPage' : myObj1[key1].newPage})
                             }
@@ -75,7 +124,11 @@ export default {
                                 let newObjKey2 = `${key}.${key1}.${key2}`;
                                 if(myObj2[key2].hasOwnProperty('display')){
                                     if(myObj2[key2].type){
-                                        myNewArr.push({'controlName' : newObjKey2, 'order' : myObj2[newObjKey2].order, 'label' : myObj2[key2].label, 'mandatory' : myObj2[key2].mandatory, 'heading' : myObj2[key2].heading, 'type' : myObj2[key2].type, 'newPage' : myObj2[key2].newPage})
+                                        if(myObj2[key2].options){
+                                            myNewArr.push({'controlName' : newObjKey2, 'order' : myObj2[newObjKey2].order, 'label' : myObj2[key2].label, 'mandatory' : myObj2[key2].mandatory, 'heading' : myObj2[key2].heading, 'type' : myObj2[key2].type, 'newPage' : myObj2[key2].newPage, 'options' : myObj2[key2].options})
+                                        }else{
+                                            myNewArr.push({'controlName' : newObjKey2, 'order' : myObj2[newObjKey2].order, 'label' : myObj2[key2].label, 'mandatory' : myObj2[key2].mandatory, 'heading' : myObj2[key2].heading, 'type' : myObj2[key2].type, 'newPage' : myObj2[key2].newPage})
+                                        }
                                     }else{
                                         myNewArr.push({'controlName' : newObjKey2, 'order' : myObj2[key2].order, 'label' : myObj2[key2].label, 'mandatory' : myObj2[key2].mandatory, 'heading' : myObj2[key2].heading, 'type' : 'text', 'newPage' : myObj2[key2].newPage})
                                     }
@@ -86,7 +139,6 @@ export default {
                 }
             }
         }
-        const userData = reactive({});
         myNewArr.sort(function(a, b){return a.order - b.order});
         const newTempObj = {}
         let page = 0;
@@ -130,9 +182,6 @@ export default {
     },
     data(){
         return{
-            rules : {
-                required : value => !!value || 'Required',
-            },
             page : 0,
             userData : {},
         }
@@ -142,9 +191,7 @@ export default {
             let refData = `form${i}`;
             this.$refs[refData][0].validate();
             if(this.valid[i]==null){
-                if (this.$refs[refData][0].items.filter(e => e.isValid == null).length>0) {
-                    this.valid[i]=null
-                }else{
+                if (this.$refs[refData][0].items.filter(e => e.isValid == null).length<=0) {
                     this.valid[i]=true
                 }
             }
@@ -157,37 +204,81 @@ export default {
                 return
             }
         },
-        onSubmit(i){            
+        async onUpload() {
+
+            console.log(fd.values());
+            console.log(this.selectedFile.size)
+            if (this.selectedFile.size < 1024) {
+                $fetch('https://demo02.institute.org.in/api/public/file/upload', { method: 'POST', body: fd })
+                    .then(res => console.log(res, alert("hello")))
+                    .catch(e => console.log(e))
+            } else {
+                console.log("please upload 2kb image")
+            }
+
+        },
+        isFile(value){
+            if(Array.isArray(value) && value.length>0&&value[0] instanceof File){
+                return true
+            }else{
+                return false
+            }
+        },
+        async onSubmit(i){   
+            let newUserData = {};
             if(this.checkValidity(i)){
+                for (const key in this.userData){
+                    debugger
+                    if(this.isFile(this.userData[key])){
+                        const fd = new FormData();
+                        fd.append('ekFile', this.userData[key][0], this.userData[key][0].name);
+                        let myData = null;
+                        myData = await $fetch('https://demo02.institute.org.in/api/public/file/upload', { method: 'POST', body: fd });
+                        if(myData){
+                            debugger
+                            try {
+                                newUserData[key]= myData.url;
+                                debugger 
+                            } catch (error) {
+                                console.log(error);  
+                            }
+                        }
+                    }else{
+                        newUserData[key]= this.userData[key];
+                    }
+                } 
+                debugger       
                 let stdData = {}
-                for(let key in this.userData){
+                for(let key in newUserData){
                     let x = key.split('.');
                     if(x.length==3){
                         if(stdData.hasOwnProperty(x[0])){
                             stdData[x[0]]={};
                             stdData[x[0]][x[1]]={};
-                            stdData[x[0]][x[1]][x[2]]=this.userData[key];
+                            stdData[x[0]][x[1]][x[2]]=newUserData[key];
                         }else{
                             if(!stdData[x[0]].hasOwnProperty(x[1])){
                                 stdData[x[0]][x[1]]={};
-                                stdData[x[0]][x[1]][x[2]]=this.userData[key];
+                                stdData[x[0]][x[1]][x[2]]=newUserData[key];
                             }else{
-                                stdData[x[0]][x[1]][x[2]]=this.userData[key];
+                                stdData[x[0]][x[1]][x[2]]=newUserData[key];
                             }
                         }
                     }else if(x.length==2){
                         if(!stdData.hasOwnProperty(x[0])){
                             stdData[x[0]]={};
-                            stdData[x[0]][x[1]]=this.userData[key];
+                            stdData[x[0]][x[1]]=newUserData[key];
                         }else{
-                            stdData[x[0]][x[1]]=this.userData[key];
+                            stdData[x[0]][x[1]]=newUserData[key];
                         }
 
                     }
                     else if(x.length==1){
-                        stdData[key]=this.userData[key];
+                        stdData[key]=newUserData[key];
                     }
                 }
+                debugger
+                console.log(stdData);
                 this.page= this.page+1;
             }else{
                 return

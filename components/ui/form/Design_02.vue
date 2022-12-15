@@ -1,54 +1,70 @@
 <template>
     <div>
         <template v-if="type == 'text'">
-                <v-text-field validate-on="input" v-if="required" :label="`${label}*`"
-                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.required]" >
-                </v-text-field>
-                <v-text-field validate-on="input" v-else :label="label"
-                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" rules="" >
-                </v-text-field>
+            <v-text-field validate-on="input" v-if="required" :label="`${label}*`"
+                v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.required]" >
+            </v-text-field>
+            <v-text-field validate-on="input" v-else :label="label"
+                v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" rules="" >
+            </v-text-field>
         </template>
-        <!-- <template v-if="type == 'mobile'">
-                <v-text-field validate-on="input" v-if="required" :label="`${label}*`"
-                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.required, rules.mobileNumber]" >
-                </v-text-field>
-                <v-text-field validate-on="input" v-else :label="label"
-                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.mobileNumber]" >
-                </v-text-field>
-        </template> -->
-        <!-- <template v-if="type == 'email'">
-                <v-text-field validate-on="input" v-if="required" :label="`${label}*`"
-                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.required, rules.email]" >
-                </v-text-field>
-                <v-text-field validate-on="input" v-else :label="label"
-                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.email]" >
-                </v-text-field>
-        </template> -->
-        <!-- <template v-if="type == 'number'">
-                <v-text-field validate-on="input" v-if="required" :label="`${label}*`"
-                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.required, rules.number]" >
-                </v-text-field>
-                <v-text-field validate-on="input" v-else :label="label"
-                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.number]" >
-                </v-text-field>
-        </template> -->
-        <!-- <template v-if="type == 'textarea'">
-                <v-text-field validate-on="input" v-if="required" :label="`${label}*`"
-                    v-model="modelValue" rows="4" row-height="30" @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.required, rules.number]" >
-                </v-text-field>
-                <v-text-field validate-on="input" v-else :label="label"
-                    v-model="modelValue" rows="4" row-height="30" @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.number]" >
-                </v-text-field>
-        </template> -->
+        <template v-if="type == 'mobile'">
+            <v-text-field validate-on="input" v-if="required" :label="`${label}*`"
+                v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="modelValue ? [rules.mobileNumber] : [rules.required]" >
+            </v-text-field>
+            <v-text-field validate-on="input" v-else :label="label"
+                v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="modelValue ? [rules.mobileNumber] : ''" >
+            </v-text-field>
+        </template>
+        <template v-if="type == 'email'">
+            <v-text-field v-if="required" validate-on="input" :label="`${label}*`"
+                v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="modelValue ? [rules.email] : [rules.required]" >
+            </v-text-field>
+            <v-text-field  v-else validate-on="input" :label="label"
+                v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="modelValue ? [rules.email] : ''" >
+            </v-text-field>
+        </template>
+        <template v-if="type == 'number'">
+            <v-text-field v-if="required" validate-on="input" :label="`${label}*`"
+                v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="modelValue ? [rules.number] : [rules.required]" >
+            </v-text-field>
+            <v-text-field v-else validate-on="input" :label="label"
+                v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="modelValue ? [rules.number] : ''" >
+            </v-text-field>
+        </template>
+        <template v-if="type == 'textarea'">
+            <v-text-field  v-if="required" validate-on="input" :label="`${label}*`"
+                v-model="modelValue" rows="4" row-height="30" @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.required]" >
+            </v-text-field>
+            <v-text-field v-else validate-on="input"  :label="label"
+                v-model="modelValue" rows="4" row-height="30" @input="$emit('update:modelValue', $event.target.value)"  rules="" >
+            </v-text-field>
+        </template>
         <template v-if="type == 'file'">
-                <v-file-input validate-on="input" v-if="required" :label="`${label}*`"
-                    v-model="modelValue" rows="4"  accept="image/png, image/jpeg, image/bmp" row-height="30"  @change="$emit('update:modelValue', modelValue)" :rules="modelValue? [rules.fileSize]: [rules.fileRequired]" >
+                <v-file-input v-if="required" :label="`${label}*`"
+                    v-model="modelValue" rows="4" show-size="1024" accept="image/png, image/jpeg, image/bmp" row-height="30" @change="$emit('update:modelValue', modelValue)" :rules="modelValue? [rules.fileSize]: [rules.fileRequired]" >
                 </v-file-input>
-                <v-file-input validate-on="input" v-else :label="label"
-                    v-model="modelValue" rows="4" accept="image/png, image/jpeg, image/bmp" row-height="30" @change="$emit('update:modelValue', modelValue)" :rules="modelValue? [rules.fileSize]: ''" >
+                <v-file-input v-else :label="label"
+                    v-model="modelValue" rows="4" show-size="1024" 
+                    accept="image/png, image/jpeg, image/bmp" row-height="30" @change="onFileSelected(modelValue)" :rules="modelValue? [rules.fileSize]: ''" >
                 </v-file-input>
         </template>
-  
+        <template v-if="type == 'radio'">
+            <div style="text-transform: capitalize;">
+                <v-radio-group inline v-model="modelValue" @change="$emit('update:modelValue', modelValue)"  :label="required?`${label}*`:label" :rules="required?[rules.required]:''">
+                    <v-radio v-for="item in options" :key="item" :label="item" :value="item" color="success">
+                    </v-radio>
+                </v-radio-group>
+            </div>
+        </template>
+        <template v-if="type == 'dropdown'">
+            <client-only>
+
+            <v-select :items="options" :label="required ? `${label}*` : label" 
+                v-model="modelValue" :clearable="!required"  @update:modelValue="$emit('update:modelValue', modelValue)" :rules="required?[rules.required]:''">
+            </v-select>
+            </client-only>
+        </template>
     </div>
 </template>
 
@@ -80,7 +96,7 @@ export default {
         },
         fileSize: {
             default : 1*1048576,
-            type: String
+            type: Number
         },
         modelValue: {
             type: String
@@ -104,8 +120,16 @@ export default {
         }
     },
     methods:{
+        newFun(event){
+            this.$refs.fileForm.validate();
+ 
+            console.log(event);
+            debugger
+
+        },
          onFileSelected(event) {
-            console.log(event)
+            console.log(event);
+            this.$emit('update:modelValue', event)
            
             debugger
             // this.selectedFile = event.target.files[0]
