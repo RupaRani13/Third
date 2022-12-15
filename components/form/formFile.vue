@@ -4,30 +4,30 @@
         <v-form v-model="valid" @submit.prevent="onSubmit()" ref="form">
             <v-responsive class="mx-auto" max-width="1000" pb-4>
                 <div v-for="item in formFields" :key="item.id">
-                    <UiFormDesign01 @newValue="myFunction" :label="item.title" :type="item.type"
+                    <UiFormDesign01 :label="item.title" :type="item.type"
                         :required='item.required' :options="item.options" :fileType="item.fileType"
                         :fileSize="item.fileSize" v-model="userData[item.controlName]" :controlName="item.controlName">
                     </UiFormDesign01>
                 </div>
                 <v-btn class="btn" type="submit">submit</v-btn>
             </v-responsive>
-
         </v-form>
     </div>
 </template>
 
 <script>
+
 export default {
     async setup() {
         const formdata = await useForm();
-        const userData = reactive({});
+        const userData = ref({});
         console.log(formdata, 'formdata');
         const formFields = ref(null);
         formFields.value = formdata.fields;
         console.log(formFields.value, ' formFields.value')
-        formFields.value.forEach(item => {
-            userData[item.controlName] = "";
-        });
+        // formFields.value.forEach(item => {
+        //     userData[item.controlName] = "";
+        // });
         console.log(userData, formFields);
         return {
             formFields, userData
@@ -43,64 +43,71 @@ export default {
         }
     },
     methods: {
-        myFunction(a, b) {
-            this.userData[b] = a;
-            console.log(this.userData);
+        // myFunction(a, b) {
+        //     this.userData[b] = a;
+        //     console.log(this.userData);
+        // },
 
-        },
         async submitUserData(userData) {
             const apiUrl = `https://demo02.institute.org.in/api/form/formresponse`
             const data = {
                 form: '6388487e8e13e93f22cbe9c4',
-                response: userData,
+                response: userData,    
             }
             // alert(1);
-            await $fetch(apiUrl, { method: 'POST', body: data }).then(res => console.log(res)).catch(e => console.log(e))
+            await $fetch(apiUrl, { method: 'POST', body: data }).then(res => {
+                console.log(res)
+                this.userData = {} //this is use for reset  
+            }).catch(e => console.log(e))
+        },
+        checkValidity() {
+            this.$refs.form.validate();
+            console.log(this.valid)
+            if (this.valid == null) {
+                if (this.$refs.form.items.filter(e => e.isValid == null).length > 0) {
+                    this.valid = null
+                } else {
+                    this.valid = true
+                }
+            } else {
+                return this.valid;
+            }
         },
         onSubmit(e) {
-            this.$refs.form.validate();
-            debugger
-            if (this.valid) {
-                this.submitUserData(this.userData)
+            if (this.checkValidity()) {
+                debugger
+                this.submitUserData(this.userData);
+                console.log(this.userData,'userdata')
                 this.$refs.form.reset()
                 this.$refs.form.resetValidation();
-                debugger
+                debugger  
                 return
-
             } else {
                 return
             }
-        },
-        onUpload() {
-            const fd = new FormData();
-            if (this.selectedFile && this.selectedFile.size < 3000) {
-                debugger
-                fd.append('ekFile', this.selectedFile, this.selectedFile.name);
-                $fetch('https://demo02.institute.org.in/api/public/file/upload', { method: 'POST', body: fd })
-                    .then(res => {
-                        console.log(res);
-                        debugger
-                        this.value = [];
-                    })
-                //     .catch(e => console.log(e))
-                // debugger
-
-            } else if (this.selectedFile && this.selectedFile.size >= 3000) {
-                if (this.selectedFile) {
-                    debugger
-                    // this.$refs.fileUpload.reset()
-                    alert('file is greater')
-                }
-            }
-            else if (!this.selectedFile) {
-                alert("File missing")
-            }
 
         },
+        
+           // this.submitUserData(this.userData)
+            // 
+            // onUpload(){
+            // const fd = new FormData();
+            // if (this.valid) {
+            //     
+            //     fd.append('ekFile', this.value, this.value.name);
+            //     $fetch('https://demo02.institute.org.in/api/public/file/upload', { method: 'POST', body: fd })
+            //         .then(res => {
+            //             console.log(res);
+            //             return res
+            //         })
+            //         .catch(e => console.log(e))
+            //     
+            // } 
+            // }
+      
         handleFileUpload(e) {
             console.log(e.target)
         },
-
     }
 }
 </script>
