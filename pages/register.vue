@@ -204,19 +204,6 @@ export default {
                 return
             }
         },
-        async onUpload() {
-
-            console.log(fd.values());
-            console.log(this.selectedFile.size)
-            if (this.selectedFile.size < 1024) {
-                $fetch('https://demo02.institute.org.in/api/public/file/upload', { method: 'POST', body: fd })
-                    .then(res => console.log(res, alert("hello")))
-                    .catch(e => console.log(e))
-            } else {
-                console.log("please upload 2kb image")
-            }
-
-        },
         isFile(value){
             if(Array.isArray(value) && value.length>0&&value[0] instanceof File){
                 return true
@@ -235,10 +222,8 @@ export default {
                         let myData = null;
                         myData = await $fetch('https://demo02.institute.org.in/api/public/file/upload', { method: 'POST', body: fd });
                         if(myData){
-                            debugger
                             try {
                                 newUserData[key]= myData.url;
-                                debugger 
                             } catch (error) {
                                 console.log(error);  
                             }
@@ -247,7 +232,6 @@ export default {
                         newUserData[key]= this.userData[key];
                     }
                 } 
-                debugger       
                 let stdData = {}
                 for(let key in newUserData){
                     let x = key.split('.');
@@ -277,7 +261,6 @@ export default {
                         stdData[key]=newUserData[key];
                     }
                 }
-                debugger
                 console.log(stdData);
                 this.page= this.page+1;
             }else{
