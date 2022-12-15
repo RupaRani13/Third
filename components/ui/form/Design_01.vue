@@ -40,26 +40,21 @@
                     v-model="modelValue"  autoGrow shaped rows="4" row-height="50" @input="$emit('update:modelValue', $event.target.value)" :rules="''">
                 </v-textarea>
         </template> -->
-        <template v-if="type == 'dropdown'">
+        <!-- <template v-if="type == 'dropdown'">
             <v-select :items="options"  v-if="required" :label="`${label}*`" v-model="modelValue"
-                @update:modelValue = "$emit('update:modelValue', $event.target.value)"
+            @update:modelValue="$emit('update:modelValue', modelValue)"
                 :rules=" [rules.required,rules.requiredSelect]" class="mb-3">
             </v-select>
             <v-select :items="options"  v-else :label="`${label}*`" v-model="modelValue"
-                @update:modelValue = "$emit('update:modelValue', $event.target.value)"
+            @update:modelValue="$emit('update:modelValue', modelValue)"
                 :rules="''" class="mb-3">
             </v-select>
-        </template>
+        </template> -->
         <!-- <template v-if="type == 'radio'">
             <div class="titlesec">
-                <v-radio-group inline v-if="required" v-model="modelValue" @input="$emit('update:modelValue', $event.target.value)"
-                    :rules="[rules.required,rules.requiredSelect]" class="radiosection mb-3">
-                    <p v-html="`${label}*`"></p>
-                    <v-radio v-for="subItem in options" :key="subItem" :label="subItem" :value="subItem">
-                    </v-radio>
-                </v-radio-group>
-                <v-radio-group inline v-else v-model="modelValue" @input="$emit('update:modelValue', $event.target.value)"
-                    :rules="[rules.requiredSelect]" class="radiosection mb-3">
+                <v-radio-group inline v-model="modelValue"
+                    @update:modelValue="$emit('update:modelValue', modelValue)" :rules="required ? [rules.required] : ''"
+                    class="radiosection mb-3">
                     <p v-html="`${label}*`"></p>
                     <v-radio v-for="subItem in options" :key="subItem" :label="subItem" :value="subItem">
                     </v-radio>
@@ -67,27 +62,24 @@
             </div>
         </template> -->
         <!-- <template v-if="type == 'checkbox'">
-            <div style="display:flex" class="checkboxmsg" v-if="required" >
-                <v-checkbox  v-for="subItem2 in options" :key="subItem2"  :value="subItem2" v-model="modelValue" :label="subItem2"  @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.required]"></v-checkbox>
-            </div>
-            <div style="display:flex" class="checkboxmsg" v-else>
-                <v-checkbox  v-for="subItem2 in options" :key="subItem2"  :value="subItem2" v-model="modelValue" :label="subItem2"  @input="$emit('update:modelValue', $event.target.value)"></v-checkbox>
+            <div style="display:flex" class="checkboxmsg">
+                <v-checkbox v-for="subItem2 in options" :key="subItem2" :value="subItem2" v-model="modelValue"
+                    :label="subItem2"  @update:modelValue ="$emit('update:modelValue', modelValue)"
+                    :rules="[rules.required]"></v-checkbox>
             </div>
         </template> -->
         <template v-if="type == 'file'">
-                <v-file-input validate-on="input" v-if="required" :label="`${label}*`"
-                    v-model="modelValue" rows="4"  accept="image/png, image/jpeg, image/bmp" row-height="30"  @change="$emit('update:modelValue', modelValue)" :rules="modelValue ? [rules.fileSize] : [rules.fileRequired]" >
+                <v-file-input v-if="required" :label="`${label}*`"
+                    v-model="modelValue" rows="4" show-size="1024" accept="image/png, image/jpeg, image/bmp" row-height="30" @change="$emit('update:modelValue', modelValue)" :rules="modelValue? [rules.fileSize]: [rules.fileRequired]" >
                 </v-file-input>
-                <v-file-input validate-on="input" v-else :label="`${label}*`"
-                    v-model="modelValue" rows="4" accept="image/png, image/jpeg, image/bmp" row-height="30" @change="$emit('update:modelValue', modelValue)" :rules="modelValue ? [rules.fileSize] : ''" >
+                <v-file-input v-else :label="label"
+                    v-model="modelValue" rows="4" show-size="1024" accept="image/png, image/jpeg, image/bmp" row-height="30" @change="$emit('update:modelValue', modelValue)" :rules="modelValue? [rules.fileSize]: ''" >
                 </v-file-input>
         </template>
     </div>
 </template>
 
 <script>
-
-
 export default {
     setup() {
 
@@ -109,11 +101,10 @@ export default {
         },
         fileType: {
             default: ['image/png', 'image/jpeg', 'image/bmp'],
-
         },
         fileSize: {
             default: 1 * 1048576,
-            type: Number,
+            type: Number
         },
         modelValue: {
             type: String
@@ -121,11 +112,9 @@ export default {
         controlName: {
             type: String
         }
-
     },
     data() {
         return {
-            checkbox1: true,
             rules: {
                 required: value => !!value || 'Required.',
                 requiredSelect: (value) => value.length > 0 || "Value is required!!",
@@ -138,6 +127,11 @@ export default {
         }
     },
     methods: {
+        onFileSelected(event) {
+            console.log(event);
+            debugger
+            this.$emit('update:modelValue', event)
+        }
         //  onFileSelected(event) {
         //     console.log(event)
         // this.selectedFile = event.target.files[0]
@@ -152,9 +146,6 @@ export default {
         // this.$refs.selectedFile = null
         // }
     },
-
-    // },
-
 }
 
 </script>

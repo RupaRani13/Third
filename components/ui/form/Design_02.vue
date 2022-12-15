@@ -45,8 +45,7 @@
                     v-model="modelValue" rows="4" show-size="1024" accept="image/png, image/jpeg, image/bmp" row-height="30" @change="$emit('update:modelValue', modelValue)" :rules="modelValue? [rules.fileSize]: [rules.fileRequired]" >
                 </v-file-input>
                 <v-file-input v-else :label="label"
-                    v-model="modelValue" rows="4" show-size="1024" 
-                    accept="image/png, image/jpeg, image/bmp" row-height="30" @change="onFileSelected(modelValue)" :rules="modelValue? [rules.fileSize]: ''" >
+                    v-model="modelValue" rows="4" show-size="1024" accept="image/png, image/jpeg, image/bmp" row-height="30" @change="onFileSelected(modelValue)" :rules="modelValue? [rules.fileSize]: ''" >
                 </v-file-input>
         </template>
         <template v-if="type == 'radio'">
@@ -59,7 +58,6 @@
         </template>
         <template v-if="type == 'dropdown'">
             <client-only>
-
             <v-select :items="options" :label="required ? `${label}*` : label" 
                 v-model="modelValue" :clearable="!required"  @update:modelValue="$emit('update:modelValue', modelValue)" :rules="required?[rules.required]:''">
             </v-select>
@@ -91,8 +89,7 @@ export default {
             type: Array
         },
         fileType: {
-            default : ['image/png', 'image/jpeg', 'image/bmp'],
-            
+            default : ['image/png', 'image/jpeg', 'image/bmp'],  
         },
         fileSize: {
             default : 1*1048576,
@@ -103,8 +100,7 @@ export default {
         },
         controlName : {
             type : String
-        }
-       
+        }    
     },
     data() {
         return {
@@ -122,16 +118,11 @@ export default {
     methods:{
         newFun(event){
             this.$refs.fileForm.validate();
- 
             console.log(event);
-            debugger
-
         },
          onFileSelected(event) {
             console.log(event);
             this.$emit('update:modelValue', event)
-           
-            debugger
             // this.selectedFile = event.target.files[0]
             // console.log(this.selectedFile, 'file');
             // if (this.selectedFile.size < 1024) {

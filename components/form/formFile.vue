@@ -4,9 +4,9 @@
         <v-form v-model="valid" @submit.prevent="onSubmit()" ref="form">
             <v-responsive class="mx-auto" max-width="1000" pb-4>
                 <div v-for="item in formFields" :key="item.id">
-                    <UiFormDesign01 :label="item.title" :type="item.type"
-                        :required='item.required' :options="item.options" :fileType="item.fileType"
-                        :fileSize="item.fileSize" v-model="userData[item.controlName]" :controlName="item.controlName">
+                    <UiFormDesign01 :label="item.title" :type="item.type" :required='item.required'
+                        :options="item.options" :fileType="item.fileType" :fileSize="parseInt('10000')"
+                        v-model="userData[item.controlName]" :controlName="item.controlName">
                     </UiFormDesign01>
                 </div>
                 <v-btn class="btn" type="submit">submit</v-btn>
@@ -43,6 +43,7 @@ export default {
         }
     },
     methods: {
+
         // myFunction(a, b) {
         //     this.userData[b] = a;
         //     console.log(this.userData);
@@ -52,12 +53,12 @@ export default {
             const apiUrl = `https://demo02.institute.org.in/api/form/formresponse`
             const data = {
                 form: '6388487e8e13e93f22cbe9c4',
-                response: userData,    
+                response: userData,
             }
             // alert(1);
             await $fetch(apiUrl, { method: 'POST', body: data }).then(res => {
                 console.log(res)
-                this.userData = {} //this is use for reset  
+                
             }).catch(e => console.log(e))
         },
         checkValidity() {
@@ -73,43 +74,53 @@ export default {
                 return this.valid;
             }
         },
-        onSubmit(e) {
+        isFile(value) {
+            if (Array.isArray(value) && value.length > 0 && value[0]) {
+                return true
+            } else {
+                return false
+            }
+        },
+        async onSubmit(e) {
+            let newUserData = {}
             if (this.checkValidity()) {
-                debugger
-                this.submitUserData(this.userData);
-                console.log(this.userData,'userdata')
+                for (const key in this.userData) {
+                    if (this.isFile(this.userData[key])) {
+                        const fd = new FormData();
+                        
+                        fd.append('ekFile', this.userData[key][0], this.userData[key][0].name);
+
+                        let myData = null;
+                        myData = await $fetch('https://demo02.institute.org.in/api/public/file/upload', { method: 'POST', body: fd })
+                        
+                        if (myData) {
+                            try {
+                                newUserData[key] = myData.url;
+                                debugger
+                            } catch (error) {
+                                console.log(error);
+                            }
+                        }
+                    } else {
+                        newUserData[key] = this.userData[key]
+                    }
+                }
+                this.submitUserData(newUserData);
+                console.log(this.userData, 'userdata')
                 this.$refs.form.reset()
                 this.$refs.form.resetValidation();
-                debugger  
                 return
             } else {
                 return
             }
-
         },
-        
-           // this.submitUserData(this.userData)
-            // 
-            // onUpload(){
-            // const fd = new FormData();
-            // if (this.valid) {
-            //     
-            //     fd.append('ekFile', this.value, this.value.name);
-            //     $fetch('https://demo02.institute.org.in/api/public/file/upload', { method: 'POST', body: fd })
-            //         .then(res => {
-            //             console.log(res);
-            //             return res
-            //         })
-            //         .catch(e => console.log(e))
-            //     
-            // } 
-            // }
-      
+        // this.submitUserData(this.userData)
         handleFileUpload(e) {
             console.log(e.target)
         },
-    }
+    },
 }
+
 </script>
 
 <style>
