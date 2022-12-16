@@ -5,7 +5,7 @@
             <v-responsive class="mx-auto" max-width="1000" pb-4>
                 <div v-for="item in formFields" :key="item.id">
                     <UiFormDesign01 :label="item.title" :type="item.type" :required='item.required'
-                        :options="item.options" :fileType="item.fileType" :fileSize="parseInt('10000')"
+                        :options="item.options" :fileType="item.fileType" :fileSize="parseInt('400000')"
                         v-model="userData[item.controlName]" :controlName="item.controlName">
                     </UiFormDesign01>
                 </div>
@@ -96,7 +96,6 @@ export default {
                         if (myData) {
                             try {
                                 newUserData[key] = myData.url;
-                                debugger
                             } catch (error) {
                                 console.log(error);
                             }
@@ -106,9 +105,6 @@ export default {
                     }
                 }
                 this.submitUserData(newUserData);
-                console.log(this.userData, 'userdata')
-                this.$refs.form.reset()
-                this.$refs.form.resetValidation();
                 return
             } else {
                 return
