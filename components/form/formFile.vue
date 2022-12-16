@@ -36,6 +36,7 @@ export default {
     },
     data() {
         return {
+            // newUserData: {},
             fileModel: null,
             valid: true,
             terms: false,
@@ -43,22 +44,23 @@ export default {
         }
     },
     methods: {
-
         // myFunction(a, b) {
         //     this.userData[b] = a;
         //     console.log(this.userData);
         // },
-
         async submitUserData(userData) {
             const apiUrl = `https://demo02.institute.org.in/api/form/formresponse`
             const data = {
                 form: '6388487e8e13e93f22cbe9c4',
                 response: userData,
+               
             }
             // alert(1);
             await $fetch(apiUrl, { method: 'POST', body: data }).then(res => {
                 console.log(res)
-                
+                debugger
+                newUserData = this.$refs.form.reset()
+                debugger
             }).catch(e => console.log(e))
         },
         checkValidity() {
@@ -75,28 +77,24 @@ export default {
             }
         },
         isFile(value) {
-            if (Array.isArray(value) && value.length > 0 && value[0]) {
+            if (Array.isArray(value) && value.length > 0 && value[0] instanceof File) {
                 return true
             } else {
                 return false
             }
         },
-        async onSubmit(e) {
+        async onSubmit() {
             let newUserData = {}
             if (this.checkValidity()) {
                 for (const key in this.userData) {
                     if (this.isFile(this.userData[key])) {
                         const fd = new FormData();
-                        
                         fd.append('ekFile', this.userData[key][0], this.userData[key][0].name);
-
                         let myData = null;
                         myData = await $fetch('https://demo02.institute.org.in/api/public/file/upload', { method: 'POST', body: fd })
-                        
                         if (myData) {
                             try {
                                 newUserData[key] = myData.url;
-                                debugger
                             } catch (error) {
                                 console.log(error);
                             }
@@ -106,10 +104,10 @@ export default {
                     }
                 }
                 this.submitUserData(newUserData);
-                console.log(this.userData, 'userdata')
-                this.$refs.form.reset()
+                console.log(newUserData, 'userdata')
+                // this.$refs.form.reset()
+                debugger
                 this.$refs.form.resetValidation();
-                return
             } else {
                 return
             }

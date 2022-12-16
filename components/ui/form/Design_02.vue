@@ -128,14 +128,11 @@ export default {
             // if (this.selectedFile.size < 1024) {
             //     return
             // } else {
-            //     alert('file size should be less than 1MB')
-            //     // event.target.value = '';
-            // //    this.selectedFile.size.reset()
-            // //    this.$refs.event.target.value= null
+            //      alert('file size should be less than 1MB')
+            //      event.target.value = '';
+            //      this.selectedFile.size.reset()
+            //      this.$refs.event.target.value= null
             // this.$refs.selectedFile = null
-
-              
-
             // }
         },
         onUpload() {
