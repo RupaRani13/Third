@@ -1,27 +1,28 @@
 <template>
     <div id="fromDesign01">
-        <!-- <template v-if="type == 'text'">
+         <template v-if="type == 'text'" >
                 <v-text-field validate-on="input" v-if="required" :label="`${label}*`"
-                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.required]" >
+                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.required]">
                 </v-text-field>
                 <v-text-field validate-on="input" v-else :label="label"
                     v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" rules="" >
                 </v-text-field>
         </template>
-        <template v-if="type == 'mobile'">
+<!--     
+         <template v-if="type == 'mobile'">
                 <v-text-field validate-on="input" v-if="required" :label="`${label}*`"
-                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.required, rules.mobileNumber]" >
+                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="modelValue ? [rules.mobileNumber] : [rules.required]"  >
                 </v-text-field>
                 <v-text-field validate-on="input" v-else :label="label"
-                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.mobileNumber]" >
+                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="modelValue ? [rules.mobileNumber] : ''"  >
                 </v-text-field>
-        </template>
-        <template v-if="type == 'email'">
+        </template> -->
+      <!--  <template v-if="type == 'email'">
                 <v-text-field validate-on="input" v-if="required" :label="`${label}*`"
-                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.required, rules.email]" >
+                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="modelValue ? [rules.email] : [rules.required]"  >
                 </v-text-field>
                 <v-text-field validate-on="input" v-else :label="label"
-                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.email]" >
+                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="modelValue ? [rules.email] : ''" >
                 </v-text-field>
         </template>
         <template v-if="type == 'number'">
@@ -29,7 +30,7 @@
                     v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.required, rules.number]" >
                 </v-text-field>
                 <v-text-field validate-on="input" v-else :label="label"
-                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.number]" >
+                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="''" >
                 </v-text-field>
         </template>
         <template v-if="type == 'textarea'">
@@ -39,44 +40,43 @@
                 <v-textarea validate-on="input" v-else :label="label"
                     v-model="modelValue"  autoGrow shaped rows="4" row-height="50" @input="$emit('update:modelValue', $event.target.value)" :rules="''">
                 </v-textarea>
-        </template> -->
-        <!-- <template v-if="type == 'dropdown'">
-            <v-select :items="options"  v-if="required" :label="`${label}*`" v-model="modelValue"
+        </template> 
+        <template v-if="type == 'dropdown'">
+            <v-select :items="options"  v-if="required" :label="required ? `${label}*` : label"  v-model="modelValue"
             @update:modelValue="$emit('update:modelValue', modelValue)"
                 :rules=" [rules.required,rules.requiredSelect]" class="mb-3">
             </v-select>
-            <v-select :items="options"  v-else :label="`${label}*`" v-model="modelValue"
+            <v-select :items="options"  v-else :label="required ? `${label}*` : label"  v-model="modelValue"
             @update:modelValue="$emit('update:modelValue', modelValue)"
                 :rules="''" class="mb-3">
             </v-select>
         </template> -->
+       
         <!-- <template v-if="type == 'radio'">
-            <div class="titlesec">
-                <v-radio-group inline v-model="modelValue"
-                    @update:modelValue="$emit('update:modelValue', modelValue)" :rules="required ? [rules.required] : ''"
-                    class="radiosection mb-3">
-                    <p v-html="`${label}*`"></p>
-                    <v-radio v-for="subItem in options" :key="subItem" :label="subItem" :value="subItem">
+            <div style="text-transform: capitalize;">
+                <v-radio-group inline v-model="modelValue" @change="$emit('update:modelValue', modelValue)"  :label="required?`${label}*`:label" :rules="required?[rules.required]:''">
+                    <v-radio v-for="item in options" :key="item" :label="item" :value="item" color="success">
                     </v-radio>
                 </v-radio-group>
             </div>
-        </template> -->
-        <!-- <template v-if="type == 'checkbox'">
+        </template>
+        <template v-if="type == 'checkbox'">
             <div style="display:flex" class="checkboxmsg">
                 <v-checkbox v-for="subItem2 in options" :key="subItem2" :value="subItem2" v-model="modelValue"
-                    :label="subItem2"  @update:modelValue ="$emit('update:modelValue', modelValue)"
-                    :rules="[rules.required]"></v-checkbox>
+                    :label="subItem2"  @update:modelValue    ="onFileSelected(modelValue)"
+                    :rules="required ? [rules.required] : ''"  color="success"></v-checkbox>
             </div>
         </template> -->
-        <template v-if="type == 'file'">
+        <!-- <template v-if="type == 'file'">
                 <v-file-input v-if="required" :label="`${label}*`"
-                    v-model="modelValue" rows="4" show-size="1024" accept="image/png, image/jpeg, image/bmp" row-height="30" @change="$emit('update:modelValue', modelValue)" :rules="modelValue? [rules.fileSize]: [rules.fileRequired]" >
+                    v-model="modelValue" clearable  rows="4" show-size="1024" accept="image/png, image/jpeg, image/bmp" row-height="30" @change="onFileSelected(modelValue)" :rules="modelValue? [rules.fileSize]: [rules.fileRequired]">
                 </v-file-input>
                 <v-file-input v-else :label="label"
-                    v-model="modelValue" rows="4" show-size="1024" accept="image/png, image/jpeg, image/bmp" row-height="30" @change="$emit('update:modelValue', modelValue)" :rules="modelValue? [rules.fileSize]: ''" >
+                    v-model="modelValue" clearable rows="4" show-size="1024" accept="image/png, image/jpeg, image/bmp" row-height="30" @change="onFileSelected(modelValue)" :rules="modelValue? [rules.fileSize]: ''">
                 </v-file-input>
-        </template>
+        </template> -->
     </div>
+   
 </template>
 
 <script>
@@ -129,7 +129,7 @@ export default {
     methods: {
         onFileSelected(event) {
             console.log(event);
-            debugger
+         
             this.$emit('update:modelValue', event)
         }
         //  onFileSelected(event) {
