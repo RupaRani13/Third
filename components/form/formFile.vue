@@ -10,7 +10,7 @@
                         </UiFormDesign01>
                     </div>
                     <v-btn class="btn" type="submit">submit</v-btn>
-                    <imageupload   v-model="showErrorMessage" :displayText = displayText></imageupload>
+                    <UiErrormsgDesign01  v-model="showErrorMessage" :displayText="displayText"></UiErrormsgDesign01>
                 </div>
 
             </v-responsive>
@@ -30,16 +30,13 @@ export default {
         const formdata = await useForm();
         const userData = ref({});
         console.log(formdata, 'formdata');
-        debugger
         const formFields = ref(null);
         formFields.value = formdata.fields;
 
         console.log(formFields.value, ' formFields.value')
         console.log(userData, formFields);
-        const displayText = "show My";
-
         return {
-            formFields, userData, displayText
+            formFields, userData
         };
     },
     data() {
@@ -50,6 +47,7 @@ export default {
             selectedFile: null,
             savingSuccessful: false,
             showErrorMessage : false,
+            displayText: 'Please fill the required fields'
         }
     },
     methods: {
@@ -69,15 +67,19 @@ export default {
             this.$refs.form.validate();
             console.log(this.valid,"valid")
             if (this.valid == null) {
+                
                 if (this.$refs.form.items.filter(e => e.isValid == null).length > 0) {
+                    this.showErrorMessage = true;
                     this.valid = null
                 } else {
                     this.valid = true
                 }
-            } else {
-                this.showErrorMessage = true;
-                return this.valid;  
-            }
+            } 
+            // else {
+            //     
+            //     this.showErrorMessage = true;
+            //     return this.valid;  
+            // }
         },
         isFile(value) {
             if (Array.isArray(value) && value.length > 0 && value[0] instanceof File) {
