@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-form v-model="valid" @submit.prevent="onSubmit()" ref="form" >
+        <v-form v-if="!savingSuccessful" v-model="valid" @submit.prevent="onSubmit()" ref="form">
             <v-responsive class="mx-auto" max-width="1000" pb-4>
                 <div v-for="item in formFields" :key="item.id">
                     <UiFormDesign01 :label="item.title" :type="item.type" :required='item.required'
@@ -10,6 +10,11 @@
                 </div>
             </v-responsive>
         </v-form>
+        <div v-else id="submitmessage">
+            <v-container>
+                <h4>Your form Successfully submitted</h4>
+            </v-container>
+        </div>
     </div>
 </template>
 <script>
@@ -19,8 +24,10 @@ export default {
         const formdata = await useForm();
         const userData = ref({});
         console.log(formdata, 'formdata');
+        debugger
         const formFields = ref(null);
         formFields.value = formdata.fields;
+        
         console.log(formFields.value, ' formFields.value')
         console.log(userData, formFields);
         return {
@@ -33,6 +40,7 @@ export default {
             valid: true,
             terms: false,
             selectedFile: null,
+            savingSuccessful: false,
         }
     },
     methods: {
@@ -43,17 +51,9 @@ export default {
                 response: userData,
             }
             await $fetch(apiUrl, { method: 'POST', body: data }).then(res => {
-                console.log(res)
-                var hide = this.$el.querySelector("#formFile");
-                hide.style.display = 'none';
-                var sunmitshow = this.$el.querySelector("#submitmessage");
-                sunmitshow.style.display = 'block';   
-                sunmitshow.innerText = 'Your form Successfully submitted';
-                // for (let key in this.userData) {
-                //     this.userData[key] = "";    
-                // }
-                // this.refs.form.resetValidation()
-                // this.userData = {}
+                console.log(res);   
+                this.savingSuccessful = true;
+
             }).catch(e => console.log(e))
         },
         checkValidity() {
@@ -105,59 +105,62 @@ export default {
         // this.submitUserData(this.userData)
         handleFileUpload(e) {
             console.log(e.target)
-        },
-
-
+        }
     },
 }
 
 </script>
 
 <style>
-#fromDesign01 .v-responsive {
+/* #fromDesign01 .v-responsive {
     border: 3px solid var(--v-success);
     padding: 20px;
     margin: 128px 20px;
     border-radius: 5px;
-}
+}*/
 
-#fromDesign01 .v-row.checkboxmsg {
+#fromDesign01 .checkboxmsg {
     position: relative;
+    flex-wrap: wrap;
 }
-
-#fromDesign01 .v-row.checkboxmsg .v-checkbox.v-input--error .v-input__details {
+#fromDesign01 .checkboxmsg .v-input.v-input--horizontal.v-input--density-default.v-checkbox{
+    max-width: 130px;
+    width: 100px;
+}
+#fromDesign01 .checkboxmsg .v-input{
+flex:none;
+}
+/* #fromDesign01 .v-row.checkboxmsg .v-checkbox.v-input--error .v-input__details {
     display: none !important;
 
-}
+} */
 
-#fromDesign01 .v-row.checkboxmsg .v-col:last-child .v-checkbox.v-input--error .v-input__details {
+#fromDesign01 .checkboxmsg:last-child .v-checkbox.v-input--error .v-input__details {
     display: block !important;
     padding-top: 16px;
+    padding-left: 14px;
 }
 
-#fromDesign01 v-title {
+/* #fromDesign01 v-title {
 
     display: block;
-}
-
-/* #fromDesign01 .v-selection-control-group{
-    margin-left: 15px;
 } */
+/* 
 #fromDesign01 .titlesec {
     margin-left: 15px;
-}
+} */
 
-#fromDesign01 .checkboxmsg .v-col {
+/* #fromDesign01 .checkboxmsg .v-col {
     display: contents;
-}
+} */
 
-#fromDesign01 .v-selection-control .v-label {
+/* #fromDesign01 .v-selection-control .v-label {
     height: fit-content;
-}
+} */
 
-#fromDesign01 .v-selection-control__input {
+/* #fromDesign01 .v-selection-control__input {
     height: fit-content;
-}
+} */
 
 #fromDesign01 .checkboxmsg .v-input__details {
     position: absolute;
@@ -165,21 +168,40 @@ export default {
     left: 0px
 }
 
-#fromDesign01 .v-input .v-input--horizontal .v-input--density-default .v-input--error .v-checkbox {
+/* #fromDesign01 .v-input .v-input--horizontal .v-input--density-default .v-input--error .v-checkbox {
 
     height: 40px;
     align-items: center;
     display: flex;
-}
-
+} */
+/* 
 #fromDesign01 .titlesec .checkboxmsg {
     height: 75px;
-}
-/* #submitmessage{
+}  */
+
+#submitmessage {
     font-size: 24px;
     font-weight: 500;
     border: 2px solid #03a84e;
     border-radius: 4px;
     padding: 20px;
-} */
+    width: 500px;
+    margin: auto;
+    margin-top: 140px;
+    margin-bottom: 140px;
+}
+
+#formFile {
+    margin: 40px;
+    padding: 20px;
+    border: 3px solid #0e922e;
+    border-radius: 5px;
+}
+
+#formFile .v-btn {
+    display: block;
+    margin: auto;
+    background: var(--v-success);
+    color: var(--v-background);
+}
 </style>
