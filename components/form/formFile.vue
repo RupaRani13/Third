@@ -13,7 +13,6 @@
                     <v-btn class="btn" type="submit">submit</v-btn>
                     <UiErrormsgDesign01  v-model="showErrorMessage" :displayText="displayText"></UiErrormsgDesign01>
                 </div>
-
             </v-responsive>
         </v-form>
         <div v-else id="submitmessage">
@@ -111,7 +110,7 @@ export default {
                     }
                 }
                 this.submitUserData(newUserData);
-                console.log(newUserData, 'userdata')
+                return
             } else {
                 return
             }
