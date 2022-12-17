@@ -16,6 +16,7 @@
             </v-container>
         </div>
     </div>
+   
 </template>
 <script>
 
@@ -27,11 +28,13 @@ export default {
         debugger
         const formFields = ref(null);
         formFields.value = formdata.fields;
-        
+
         console.log(formFields.value, ' formFields.value')
         console.log(userData, formFields);
+        const displayText = "show My";
+
         return {
-            formFields, userData
+            formFields, userData, displayText
         };
     },
     data() {
@@ -41,6 +44,7 @@ export default {
             terms: false,
             selectedFile: null,
             savingSuccessful: false,
+            showErrorMessage : false,
         }
     },
     methods: {
@@ -51,14 +55,14 @@ export default {
                 response: userData,
             }
             await $fetch(apiUrl, { method: 'POST', body: data }).then(res => {
-                console.log(res);   
+                console.log(res);
                 this.savingSuccessful = true;
 
             }).catch(e => console.log(e))
         },
         checkValidity() {
             this.$refs.form.validate();
-            console.log(this.valid)
+            console.log(this.valid,"valid")
             if (this.valid == null) {
                 if (this.$refs.form.items.filter(e => e.isValid == null).length > 0) {
                     this.valid = null
@@ -66,7 +70,8 @@ export default {
                     this.valid = true
                 }
             } else {
-                return this.valid;
+                this.showErrorMessage = true;
+                return this.valid;  
             }
         },
         isFile(value) {
@@ -123,13 +128,16 @@ export default {
     position: relative;
     flex-wrap: wrap;
 }
-#fromDesign01 .checkboxmsg .v-input.v-input--horizontal.v-input--density-default.v-checkbox{
+
+#fromDesign01 .checkboxmsg .v-input.v-input--horizontal.v-input--density-default.v-checkbox {
     max-width: 130px;
     width: 100px;
 }
-#fromDesign01 .checkboxmsg .v-input{
-flex:none;
+
+#fromDesign01 .checkboxmsg .v-input {
+    flex: none;
 }
+
 /* #fromDesign01 .v-row.checkboxmsg .v-checkbox.v-input--error .v-input__details {
     display: none !important;
 
@@ -141,43 +149,11 @@ flex:none;
     padding-left: 14px;
 }
 
-/* #fromDesign01 v-title {
-
-    display: block;
-} */
-/* 
-#fromDesign01 .titlesec {
-    margin-left: 15px;
-} */
-
-/* #fromDesign01 .checkboxmsg .v-col {
-    display: contents;
-} */
-
-/* #fromDesign01 .v-selection-control .v-label {
-    height: fit-content;
-} */
-
-/* #fromDesign01 .v-selection-control__input {
-    height: fit-content;
-} */
-
 #fromDesign01 .checkboxmsg .v-input__details {
     position: absolute;
     bottom: 0;
     left: 0px
 }
-
-/* #fromDesign01 .v-input .v-input--horizontal .v-input--density-default .v-input--error .v-checkbox {
-
-    height: 40px;
-    align-items: center;
-    display: flex;
-} */
-/* 
-#fromDesign01 .titlesec .checkboxmsg {
-    height: 75px;
-}  */
 
 #submitmessage {
     font-size: 24px;
