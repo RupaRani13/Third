@@ -2,17 +2,12 @@
     <div>
         <v-form v-if="!savingSuccessful" v-model="valid" @submit.prevent="onSubmit()" ref="form">
             <v-responsive class="mx-auto" max-width="1000" pb-4>
-                <div id="formFile">
-                    <div v-for="item in formFields" :key="item.id">
-                        <UiFormDesign01 :label="item.title" :type="item.type" :required='item.required'
-                            :options="item.options" :fileType="item.fileType" :fileSize="parseInt('10000')"
-                            v-model="userData[item.controlName]" :controlName="item.controlName">
-                        </UiFormDesign01>
-                    </div>
-                    <v-btn class="btn" type="submit">submit</v-btn>
-                    <imageupload   v-model="showErrorMessage" :displayText = displayText></imageupload>
+                <div v-for="item in formFields" :key="item.id">
+                    <UiFormDesign01 :label="item.title" :type="item.type" :required='item.required'
+                        :options="item.options" :fileType="item.fileType" :fileSize="parseInt('400000')"
+                        v-model="userData[item.controlName]" :controlName="item.controlName">
+                    </UiFormDesign01>
                 </div>
-
             </v-responsive>
         </v-form>
         <div v-else id="submitmessage">
@@ -107,7 +102,7 @@ export default {
                     }
                 }
                 this.submitUserData(newUserData);
-                console.log(newUserData, 'userdata')
+                return
             } else {
                 return
             }
