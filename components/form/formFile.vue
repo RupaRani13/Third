@@ -84,7 +84,7 @@ export default {
             }
         },
         async onSubmit() {
-            console.log(newUserData)
+           
             let newUserData = {}
             if (this.checkValidity()) {
                 for (const key in this.userData) {
