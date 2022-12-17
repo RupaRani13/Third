@@ -14,7 +14,7 @@
 <script>
     export default {
         setup() {
-
+            
         },
         props: {
         modelValue: {
@@ -31,6 +31,6 @@
     }
 </script>
 
-<style>
+<style lang="scss" scoped>
 
 </style>
