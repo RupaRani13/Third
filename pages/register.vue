@@ -142,6 +142,7 @@ export default {
         myNewArr.sort(function(a, b){return a.order - b.order});
         const newTempObj = {}
         let page = 0;
+        console.log("register file")
         myNewArr.forEach((item,index)=>{
             if(index==0){
                 newTempObj[page]= [];

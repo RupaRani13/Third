@@ -117,6 +117,8 @@ export default {
     },
     methods:{
         newFun(event){
+            console.log("register file")
+
             this.$refs.fileForm.validate();
             console.log(event);
         },
