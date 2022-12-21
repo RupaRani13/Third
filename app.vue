@@ -1,7 +1,7 @@
 <template>
   <v-app :style="cssProps">
     <NuxtLayout>
-      <NuxtLoadingIndicator height="20" throttle="0" duration="1000"/>
+      <NuxtLoadingIndicator height=20 throttle=0 duration=1000 />
       <NuxtPage />
     </NuxtLayout>
 

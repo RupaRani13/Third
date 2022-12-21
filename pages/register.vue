@@ -212,56 +212,77 @@ export default {
                 return false
             }
         },
-        async onSubmit(i){   
-            let newUserData = {};
-            if(this.checkValidity(i)){
-                for (const key in this.userData){
-                    debugger
-                    if(this.isFile(this.userData[key])){
+        async getFileUploadUrl(obj){
+            return new Promise(async (resolve, reject) => {
+                let newObj = {}
+                for (const key in obj){
+                    if(this.isFile(obj[key])){
                         const fd = new FormData();
-                        fd.append('ekFile', this.userData[key][0], this.userData[key][0].name);
+                        fd.append('ekFile', obj[key][0], obj[key][0].name);
                         let myData = null;
                         myData = await $fetch('https://demo02.institute.org.in/api/public/file/upload', { method: 'POST', body: fd });
                         if(myData){
                             try {
-                                newUserData[key]= myData.url;
+                                newObj[key]= myData.url;
                             } catch (error) {
-                                console.log(error);  
+                                console.log(error); 
+                                reject(error) 
                             }
                         }
                     }else{
-                        newUserData[key]= this.userData[key];
-                    }
-                } 
-                let stdData = {}
-                for(let key in newUserData){
-                    let x = key.split('.');
-                    if(x.length==3){
-                        if(stdData.hasOwnProperty(x[0])){
-                            stdData[x[0]]={};
-                            stdData[x[0]][x[1]]={};
-                            stdData[x[0]][x[1]][x[2]]=newUserData[key];
-                        }else{
-                            if(!stdData[x[0]].hasOwnProperty(x[1])){
-                                stdData[x[0]][x[1]]={};
-                                stdData[x[0]][x[1]][x[2]]=newUserData[key];
-                            }else{
-                                stdData[x[0]][x[1]][x[2]]=newUserData[key];
-                            }
-                        }
-                    }else if(x.length==2){
-                        if(!stdData.hasOwnProperty(x[0])){
-                            stdData[x[0]]={};
-                            stdData[x[0]][x[1]]=newUserData[key];
-                        }else{
-                            stdData[x[0]][x[1]]=newUserData[key];
-                        }
-
-                    }
-                    else if(x.length==1){
-                        stdData[key]=newUserData[key];
+                        newObj[key]= obj[key];
                     }
                 }
+                resolve(newObj)
+            })
+
+            
+        },
+        createStdData(objData){
+            let outputObj = {};
+            for(let key in objData){
+                let x = key.split('.');
+                if(x.length==3){
+                    if(outputObj.hasOwnProperty(x[0])){
+                        outputObj[x[0]]={};
+                        outputObj[x[0]][x[1]]={};
+                        outputObj[x[0]][x[1]][x[2]]=objData[key];
+                    }else{
+                        if(!outputObj[x[0]].hasOwnProperty(x[1])){
+                            outputObj[x[0]][x[1]]={};
+                            outputObj[x[0]][x[1]][x[2]]=objData[key];
+                        }else{
+                            outputObj[x[0]][x[1]][x[2]]=objData[key];
+                        }
+                    }
+                }else if(x.length==2){
+                    if(!outputObj.hasOwnProperty(x[0])){
+                        outputObj[x[0]]={};
+                        outputObj[x[0]][x[1]]=objData[key];
+                    }else{
+                        outputObj[x[0]][x[1]]=objData[key];
+                    }
+
+                }
+                else if(x.length==1){
+                    outputObj[key]=objData[key];
+                }
+            }
+            return outputObj;
+
+        },
+        async onSubmit(i){   
+            let newUserData = {};
+            if(this.checkValidity(i)){
+                newUserData = await this.getFileUploadUrl(this.userData);
+                try {
+                    
+                } catch (error) {
+                    
+                }
+ 
+                let stdData = this.createStdData(newUserData);
+                debugger                
                 console.log(stdData);
                 this.page= this.page+1;
             }else{
