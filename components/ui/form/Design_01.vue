@@ -1,6 +1,6 @@
 <template>
     <div id="fromDesign01">
-         <template v-if="type == 'text'" >
+        <template v-if="type == 'text'" >
                 <v-text-field validate-on="input" v-if="required" :label="`${label}*`"
                     v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.required]">
                 </v-text-field>
@@ -8,7 +8,7 @@
                     v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" rules="" >
                 </v-text-field>
         </template> 
-    
+<!--     
           <template v-if="type == 'mobile'">
                 <v-text-field validate-on="input" v-if="required" :label="`${label}*`"
                     v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="modelValue ? [rules.mobileNumber] : [rules.required]"  >
@@ -17,7 +17,7 @@
                     v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="modelValue ? [rules.mobileNumber] : ''"  >
                 </v-text-field>
         </template>
-      <template v-if="type == 'email'">
+       <template v-if="type == 'email'">
                 <v-text-field validate-on="input" v-if="required" :label="`${label}*`"
                     v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="modelValue ? [rules.email] : [rules.required]"  >
                 </v-text-field>
@@ -25,7 +25,7 @@
                     v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="modelValue ? [rules.email] : ''" >
                 </v-text-field>
         </template>
-        <template v-if="type == 'number'">
+      <template v-if="type == 'number'">
                 <v-text-field validate-on="input" v-if="required" :label="`${label}*`"
                     v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.required, rules.number]" >
                 </v-text-field>
@@ -33,7 +33,7 @@
                     v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="''" >
                 </v-text-field>
         </template>
-       <template v-if="type == 'textarea'">
+      <template v-if="type == 'textarea'">
                 <v-textarea validate-on="input" v-if="required" :label="`${label}*`"
                     v-model="modelValue"  autoGrow shaped rows="4" row-height="50" @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.required]" >
                 </v-textarea>
@@ -47,38 +47,51 @@
                 v-model="modelValue" :clearable="!required"  @update:modelValue="$emit('update:modelValue', modelValue)" :rules="required?[rules.required]:''">
             </v-select>
             </client-only>
-        </template>
+        </template> -->
        
-        <template v-if="type == 'radio'">
+      <!-- <template v-if="type == 'radio'">
             <div style="text-transform: capitalize;">
+                <client-only>
                 <v-radio-group inline v-model="modelValue" @change="$emit('update:modelValue', modelValue)"  :label="required?`${label}*`:label" :rules="required?[rules.required]:''">
                     <v-radio v-for="item in options" :key="item" :label="item" :value="item" color="success">
                     </v-radio>
                 </v-radio-group>
+                </client-only>
             </div>
-        </template> 
-        <template v-if="type == 'checkbox'">
-            <div style="display:flex" class="checkboxmsg">
-                <v-checkbox v-for="subItem2 in options" :key="subItem2" :value="subItem2" v-model="modelValue"
-                    :label="subItem2"  @update:modelValue="onFileSelected(modelValue)"
-                    :rules="required ? [rules.required] : ''"  color="success"></v-checkbox>
+        </template>    -->
+        <!-- <template v-if="type == 'checkbox'">
+            <p>{{label}}</p>
+            <div style="display:flex" class="checkboxmsg" >
+                <v-checkbox v-for="(subItem2,index) in options" :key="index" :value="subItem2" v-model="bindingValue"
+                    :label="subItem2" @update:modelValue="onFileSelected(modelValue)"
+                    :rules="required ? [rules.requiredSelect] : ''" color="success">
+                </v-checkbox>  
             </div>
-        </template> 
-         <template v-if="type == 'file'">
+        </template> -->
+        <template v-if="type == 'file'">
+
                 <v-file-input v-if="required" :label="`${label}*`"
-                    v-model="modelValue" clearable  rows="4" show-size="1024" accept="image/png, image/jpeg, image/bmp" row-height="30" @change="onFileSelected(modelValue)" :rules="modelValue? [rules.fileSize]: [rules.fileRequired]">
+                    v-model="bindingValue" clearable rows="4" show-size=1024 accept="image/png, image/jpeg, image/bmp" row-height="30" @update:modelValue="onFileSelected()" :rules="required ? [rules.fileSize]: [rules.fileRequired]" >
                 </v-file-input>
                 <v-file-input v-else :label="label"
-                    v-model="modelValue" clearable rows="4" show-size="1024" accept="image/png, image/jpeg, image/bmp" row-height="30" @change="onFileSelected(modelValue)" :rules="modelValue? [rules.fileSize]: ''">
+                    v-model="bindingValue" clearable  rows="4" show-size=1024 accept="image/png, image/jpeg, image/bmp" row-height="30" @update:modelValue="onFileSelected()" :rules="[rules.fileSize]">
                 </v-file-input>
         </template> 
     </div>
-   
+
 </template>
 
 <script>
 export default {
-    setup() {
+    setup(props) {
+        const bindingValue = ref(null)
+        if(props.type=='checkbox' || props.type=='file'){
+            bindingValue.value = []
+            console.log( bindingValue.value)
+        }
+        return {
+            bindingValue,
+        }
 
     },
     props: {
@@ -104,11 +117,12 @@ export default {
             type: Number
         },
         modelValue: {
-            type: String
+            type: String || Array
         },
         controlName: {
             type: String
         }
+
     },
     data() {
         return {
@@ -118,17 +132,23 @@ export default {
                 number: value => Number.isInteger(Number(value)) || "The value must be an integer number",
                 mobileNumber: value => (value > 1000000000 && value < 9999999999) || 'Enter a valid 10 digit Mobile Number',
                 email: value => (value != '' && /.+@.+/.test(value)) || 'E-mail must be valid',
-                fileSize: value => (value && value[0] && value[0].size < this.$props.fileSize) || `File size should be less than ${this.$props.fileSize / 1048576} MB`,
-                fileRequired: value => (value && value.length) || 'File is required',
+                fileSize: value => {
+                    if(value&&value && value[0]){
+                        return value[0].size < 10000 || `File size should be less than ${10000 / 1048576} MB`}
+                        },
+                fileRequired: value => {
+                    if(value){
+                        return value.length<0 || `'File is required'`}},
             },
         }
     },
     methods: {
-        onFileSelected(event) {
-            console.log(event);
-         
-            this.$emit('update:modelValue', event)
-        }
+        onFileSelected(value) {
+            alert(val)
+            this.$emit('newVal', value);  
+            debugger
+            
+        },
         //  onFileSelected(event) {
         //     console.log(event)
         // this.selectedFile = event.target.files[0]
