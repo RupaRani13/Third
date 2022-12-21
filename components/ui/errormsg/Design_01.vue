@@ -3,7 +3,7 @@
         <v-snackbar v-model="modelValue" :timeout="timeout" @update:modelValue="$emit('update:modelValue', false)">
             {{ displayText }}
             <template v-slot:actions>
-                <v-btn color="blue" variant="text" @click="$emit('update:modelValue', false)">
+                <v-btn color="#03a84e" variant="text" @click="$emit('update:modelValue', false)">
                     Close
                 </v-btn>
             </template>
