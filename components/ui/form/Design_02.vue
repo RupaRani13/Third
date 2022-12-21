@@ -42,10 +42,10 @@
         </template>
         <template v-if="type == 'file'">
                 <v-file-input v-if="required" :label="`${label}*`"
-                    v-model="modelValue" rows="4" show-size="1024" accept="image/png, image/jpeg, image/bmp" row-height="30" @change="$emit('update:modelValue', modelValue)" :rules="modelValue? [rules.fileSize]: [rules.fileRequired]" >
+                    v-model="modelValue" rows="4" show-size=1024 accept="image/png, image/jpeg, image/bmp" row-height="30" @change="$emit('update:modelValue', modelValue)" :rules="modelValue? [rules.fileSize]: [rules.fileRequired]" >
                 </v-file-input>
                 <v-file-input v-else :label="label"
-                    v-model="modelValue" rows="4" show-size="1024" accept="image/png, image/jpeg, image/bmp" row-height="30" @change="onFileSelected(modelValue)" :rules="modelValue? [rules.fileSize]: ''" >
+                    v-model="modelValue" rows="4" show-size=1024 accept="image/png, image/jpeg, image/bmp" row-height="30" @change="onFileSelected(modelValue)" :rules="modelValue? [rules.fileSize]: ''" >
                 </v-file-input>
         </template>
         <template v-if="type == 'radio'">
@@ -96,7 +96,7 @@ export default {
             type: Number
         },
         modelValue: {
-            type: String
+            type: String || Array,
         },
         controlName : {
             type : String

@@ -1,6 +1,6 @@
 <template>
     <v-form ref="form">
-        <v-card height="100vh">
+        <!-- <v-card height="100vh">
             <v-file-input v-model="myFile" label="File input" @update:modelValue="onFileSelected"></v-file-input>
             <button @click="onUpload">Submit</button>
             <v-file-input label="label" v-model="tempValue" clearable rows="4" show-size="1024"
@@ -8,15 +8,20 @@
                 :rules="tempValue ? [rules.fileSize] : [rules.fileRequired]">
             </v-file-input>
             <v-btn @click="newMethod()">new btn</v-btn>
-        </v-card>
+        </v-card> -->
+        <v-checkbox v-model="ex4" label="red" value="red" ></v-checkbox>
+        <v-checkbox v-model="ex3" label="red-darken-3"  value="red"
+            ></v-checkbox>
     </v-form>
-  
+
 </template>
 
 <script>
 export default {
     data() {
         return {
+            ex4: ['red', 'indigo', 'orange',  'info', 'warning', 'error', 'red darken-3', 'indigo darken-3', 'orange darken-3'],
+            ex3:['primary', 'secondary', 'success',],
             tempValue: [],
             selectedFile: null,
             myFile: '',
@@ -28,7 +33,7 @@ export default {
             },
         }
     },
- 
+
     methods: {
         newMethod() {
             alert("hello")
