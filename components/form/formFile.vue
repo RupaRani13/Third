@@ -65,7 +65,7 @@ export default {
             $fetch(apiUrl, { method: 'POST', body: data }).then(res => {
                 this.savingSuccessful = true;
               
-            }).catch(e => console.log(e))
+            }).catch(e =>console.log(e))
         },
         checkValidity() {
             this.$refs.form.validate();
