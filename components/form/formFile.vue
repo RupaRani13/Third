@@ -4,7 +4,6 @@
             <v-responsive class="mx-auto" max-width="1000" pb-4>
                 <div id="formFile">
                     <div v-for="item in formFields" :key="item.id">
-                        <h2>Hello</h2>
                         <UiFormDesign01 :label="item.title" :type="item.type" :required='item.required'
                             :options="item.options" :fileType="item.fileType" :fileSize="parseInt('10000')"
                             v-model="userData[item.controlName]" :controlName="item.controlName">
