@@ -18,7 +18,6 @@
                         <UiErrormsgDesign01 v-model="showErrorMessage" :displayText="displayText"></UiErrormsgDesign01>
                     </ClientOnly>
                 </div>
-
             </v-responsive>
         </v-form>
         <div v-else id="submitmessage">
@@ -120,6 +119,7 @@ export default {
                     }
                 }
                 this.submitUserData(newUserData);
+                return
             } else {
                 return
             }
