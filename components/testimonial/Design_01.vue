@@ -215,9 +215,6 @@ export default {
 #testimonial-d01 {
     position: relative;
 }
-
-
-
 #testimonial-d01 .nav-container {
     position: absolute;
     left: 0;

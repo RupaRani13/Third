@@ -2,10 +2,10 @@
     <div>
         <template v-if="type == 'text'">
             <v-text-field validate-on="input" v-if="required" :label="`${label}*`"
-                v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.required]" >
+                v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.required, rules.specialcharacter]" >
             </v-text-field>
             <v-text-field validate-on="input" v-else :label="label"
-                v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" rules="" >
+                v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)"  :rules="[rules.specialcharacter]">
             </v-text-field>
         </template>
         <template v-if="type == 'mobile'">
@@ -106,6 +106,7 @@ export default {
         return {
             rules: {
                 required: value => !!value || 'Required.',
+                specialcharacter:  (value) => !/[^\w\s]/gi.test(value)||'special character are not valid.',
                 requiredSelect: (value) => value.length > 0 || "Value is required!!",
                 number: value => Number.isInteger(Number(value)) || "The value must be an integer number",
                 mobileNumber: value => (value > 1000000000 && value < 9999999999) || 'Enter a valid 10 digit Mobile Number',

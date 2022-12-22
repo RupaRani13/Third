@@ -1,87 +1,71 @@
 <template>
-  <div id="aboutdesign05" class="py-5">
-    <v-container>
-      <v-row>
-        <v-col
-          class="v-col-lg-6 v-col-md-6 v-col-sm-6 v-col-12"
-          v-if="blockContent.media && blockContent.needMedia"
-        >
-          <v-img
-            aspect-ratio="1.9"
-            :src="blockContent.media"
-            lazy-src="/gallery_loading_image.jpeg"
-            :alt="blockContent.title"
-            cover
-            class=""
-            width="100%"
-            height="100%"
-          >
-            <template v-slot:placeholder>
-              <v-row class="fill-height ma-0" align="center" justify="center">
-                <v-progress-circular indeterminate color="success"></v-progress-circular>
-              </v-row>
-            </template>
-          </v-img>
-        </v-col>
-        <v-col
-          :class="[
-            blockContent.media && blockContent.needMedia
-              ? 'v-col-lg-6 v-col-md-6 v-col-sm-6 v-col-12'
-              : 'v-col-12',
-          ]"
-        >
-          <v-card flat>
-            <v-card-title v-if="blockContent.heading && blockContent.needHeading">
-              {{ blockContent.heading }}</v-card-title
-            >
-            <v-card-subtitle
-              v-if="blockContent.subHeading && blockContent.needSubHeading"
-              v-html="blockContent.subHeading"
-            >
-            </v-card-subtitle>
-            <v-card-text
-              v-if="blockContent.content && blockContent.needContent"
-              v-html="blockContent.content"
-            >
-            </v-card-text>
-          </v-card>
-          <NuxtLink
-            :to="blockContent.link"
-            target="_blank"
-            v-if="blockContent.link && blockContent.needLink"
-          >
-            <v-btn>msg</v-btn>
-          </NuxtLink>
-        </v-col>
-      </v-row>
-      <template v-if="blockContent.advanceData">
+    <div id="aboutdesign05" class="py-5">
+        <v-container>
+            <v-row>
+                <v-col class="v-col-lg-6 v-col-md-6 v-col-sm-6 v-col-12"
+                    v-if="blockContent.media && blockContent.needMedia">
+                    <v-img aspect-ratio="1.9" :src="blockContent.media" lazy-src="/gallery_loading_image.jpeg"
+                        :alt="blockContent.title" cover class="" width="100%" height="100%">
+                        <template v-slot:placeholder>
+                            <v-row class="fill-height ma-0" align="center" justify="center">
+                                <v-progress-circular indeterminate color="success"></v-progress-circular>
+                            </v-row>
+                        </template>
+                    </v-img>
+                </v-col>
+                <v-col :class="[
+                    blockContent.media && blockContent.needMedia
+                        ? 'v-col-lg-6 v-col-md-6 v-col-sm-6 v-col-12'
+                        : 'v-col-12',
+                ]">
+                    <v-card flat>
+                        <v-card-title v-if="blockContent.heading && blockContent.needHeading">
+                            {{ blockContent.heading }}</v-card-title>
+                        <v-card-subtitle v-if="blockContent.subHeading && blockContent.needSubHeading"
+                            v-html="blockContent.subHeading">
+                        </v-card-subtitle>
+                        <v-card-text v-if="blockContent.content && blockContent.needContent"
+                            v-html="blockContent.content">
+                        </v-card-text>
+                    </v-card>
+                    <NuxtLink :to="blockContent.link" target="_blank" v-if="blockContent.link && blockContent.needLink">
+                        <v-btn>Read More</v-btn>
+                    </NuxtLink>
+                </v-col>
+            </v-row>
+            <template v-if="blockContent.advanceData">
                 <div v-if="blockContent.advanceData.categoryId">
                     <component :is="design" :id="blockContent.advanceData.categoryId" />
                 </div>
                 <div v-else>
-                    <template v-if="blockContent.advanceData.type=='DOWNLOAD'">
+                    <template v-if="blockContent.advanceData.type == 'DOWNLOAD'">
                         <download-category :design="design" :list="blockContent.shortCode" />
                     </template>
-                    <template v-else-if="blockContent.advanceData.type=='PHOTO'||blockContent.advanceData.type=='VIDEO'">
-                        <GalleryAlbum :design="design" :list="blockContent.shortCode" :albumType='blockContent.advanceData.type' />
+                    <template
+                        v-else-if="blockContent.advanceData.type == 'PHOTO' || blockContent.advanceData.type == 'VIDEO'">
+                        <GalleryAlbum :design="design" :list="blockContent.shortCode"
+                            :albumType='blockContent.advanceData.type' />
+                    </template>
+                    <template v-else-if="blockContent.advanceData.type=='FORM'&& blockContent.advanceData.items && blockContent.advanceData.items.length">
+                        <FormFile :design="design" :id="blockContent.advanceData.items[0]"/>
                     </template>
                     <template v-else>
-                        <component :is="design" :id="blockContent.advanceData.categoryId" />
+                        <component :is="design"/>
                     </template>
                 </div>
             </template>
-    </v-container>
-  </div>
+        </v-container>
+    </div>
 </template>
 
 <script>
 export default {
     async setup(props) {
-        const design=shallowRef(null);
+        const design = shallowRef(null);
         if (props.blockContent.advanceData) {
-            if (props.blockContent.advanceData.type=='LIST') {
+            if (props.blockContent.advanceData.type == 'LIST') {
             }
-            else if (props.blockContent.advanceData.type=='FEATURES') {
+            else if (props.blockContent.advanceData.type == 'FEATURES') {
                 if (props.blockContent.advanceData.design.includes('I03')) {
                     if (props.blockContent.advanceData.design.includes('D01')) {
                         design.value = resolveComponent('contentlist/feature/item3/design01')
@@ -141,7 +125,7 @@ export default {
                     }
                 }
             }
-            else if(props.blockContent.advanceData.type=='TEAM'){
+            else if (props.blockContent.advanceData.type == 'TEAM') {
                 if (props.blockContent.advanceData.design == 'D01') {
                     design.value = resolveComponent('contentlist/team/design01')
                 }
@@ -164,7 +148,7 @@ export default {
                     design.value = resolveComponent('contentlist/accordion/design01')
                 }
             }
-            else if(props.blockContent.advanceData.type=='FAQ'){
+            else if (props.blockContent.advanceData.type == 'FAQ') {
                 if (props.blockContent.advanceData.design == 'D01') {
                     design.value = resolveComponent('contentlist/accordion/design01')
                 }
@@ -182,15 +166,15 @@ export default {
                 }
                 else if (props.blockContent.advanceData.design == 'D06') {
                     design.value = resolveComponent('contentlist/accordion/design06')
-                } 
+                }
                 else if (props.blockContent.advanceData.design == 'D07') {
                     design.value = resolveComponent('contentlist/accordion/design07')
-                } 
+                }
                 else {
                     design.value = resolveComponent('contentlist/accordion/design01')
                 }
             }
-            else if (props.blockContent.advanceData.type=='NEWS_NOTICE') {
+            else if (props.blockContent.advanceData.type == 'NEWS_NOTICE') {
                 if (props.blockContent.advanceData.design == 'D01') {
                     design.value = resolveComponent('notification/design01')
                 }
@@ -204,8 +188,8 @@ export default {
                     design.value = resolveComponent('notification/design01')
                 }
             }
-            else if (props.blockContent.advanceData.type=='TESTIMONIAL') {
-                
+            else if (props.blockContent.advanceData.type == 'TESTIMONIAL') {
+
                 if (props.blockContent.advanceData.design == 'D01') {
                     design.value = resolveComponent('testimonial/design01');
                 }
@@ -231,9 +215,29 @@ export default {
                     design.value = resolveComponent('testimonial/design01')
                 }
             }
-            else if (props.blockContent.advanceData.type=='DOWNLOAD'||props.blockContent.advanceData.type=='PHOTO'||props.blockContent.advanceData.type=='VIDEO') {
+            else if(props.blockContent.advanceData.type=='FORM'){
+                if (props.blockContent.advanceData.design == 'D01') {
+                    design.value = resolveComponent('ui/form/design01')
+                }
+                else if (props.blockContent.advanceData.design == 'D02') {
+                    design.value = resolveComponent('ui/form/design02')
+                }
+                else if (props.blockContent.advanceData.design == 'D03') {
+                    design.value = resolveComponent('ui/form/design03')
+                }
+                else if (props.blockContent.advanceData.design == 'D04') {
+                    design.value = resolveComponent('ui/form/design04')
+                }
+                else if (props.blockContent.advanceData.design == 'D05') {
+                    design.value = resolveComponent('ui/form/design05')
+                }
+                else {
+                    design.value = resolveComponent('ui/form/design01')
+                }
+            }
+            else if (props.blockContent.advanceData.type == 'DOWNLOAD' || props.blockContent.advanceData.type == 'PHOTO' || props.blockContent.advanceData.type == 'VIDEO') {
                 if (props.blockContent.advanceData.categoryId) {
-                    if (props.blockContent.advanceData.type=='DOWNLOAD') {
+                    if (props.blockContent.advanceData.type == 'DOWNLOAD') {
                         if (props.blockContent.advanceData.design.includes('L01')) {
                             design.value = resolveComponent('download/list/design01')
                         }
@@ -260,7 +264,7 @@ export default {
                         } else {
                             design.value = resolveComponent('download/list/design01')
                         }
-                    } else if (props.blockContent.advanceData.type=='PHOTO') {
+                    } else if (props.blockContent.advanceData.type == 'PHOTO') {
                         design.value = resolveComponent('gallery/photo/list')
                     } else {
                         design.value = resolveComponent('gallery/video/list')
@@ -298,31 +302,33 @@ export default {
         }
         return { design };
     },
-  props: {
-    blockContent: {
-      required: true,
+    props: {
+        blockContent: {
+            required: true,
+        },
     },
-  },
 };
 </script>
 
 <style scoped>
 #aboutdesign05 .v-card-title {
-  font-size: 30px;
+    font-size: 30px;
 }
 
 #aboutdesign05 .v-card-subtitle {
-  white-space: unset;
-}
-#aboutdesign05 a {
-  text-decoration: none;
-}
-@media only screen and (max-width: 475px) {
-  #aboutdesign05 .v-card-title {
-    margin: 0;
     white-space: unset;
-    font-size: 18px;
-    padding: 1rem;
-  }
+}
+
+#aboutdesign05 a {
+    text-decoration: none;
+}
+
+@media only screen and (max-width: 475px) {
+    #aboutdesign05 .v-card-title {
+        margin: 0;
+        white-space: unset;
+        font-size: 18px;
+        padding: 1rem;
+    }
 }
 </style>

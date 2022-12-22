@@ -9,9 +9,11 @@
                 <v-col :class="[blockContent.media&&blockContent.needMedia?'v-col-12':  'v-col-12']">
                     <v-card-text v-if="blockContent.content&&blockContent.needContent" v-html="blockContent.content">
                     </v-card-text>
-                  
+                    <NuxtLink :to="blockContent.link" target="_blank" v-if="blockContent.link&&blockContent.needLink">
+                        <v-btn>click here</v-btn>
+                </NuxtLink>    
                 </v-col>
-                <v-col class=" v-col-12" v-if="blockContent.media">
+                <v-col class=" v-col-6 pageblockD03" v-if="blockContent.media" >
                     <v-img aspect-ratio="1.9" :src="blockContent.media" lazy-src="/gallery_loading_image.jpeg"
                         :alt="blockContent.title" cover class="" width="100%" height="100%">
                         <template v-slot:placeholder>
@@ -21,9 +23,6 @@
                         </template>
                     </v-img>
                 </v-col>
-                <NuxtLink :to="blockContent.link" target="_blank" v-if="blockContent.link&&blockContent.needLink">
-                        <v-btn>click here</v-btn>
-                </NuxtLink>
             </v-row>
             <template v-if="blockContent.advanceData">
                 <div v-if="blockContent.advanceData.categoryId">
@@ -36,8 +35,11 @@
                     <template v-else-if="blockContent.advanceData.type=='PHOTO'||blockContent.advanceData.type=='VIDEO'">
                         <GalleryAlbum :design="design" :list="blockContent.shortCode" :albumType='blockContent.advanceData.type' />
                     </template>
+                    <template v-else-if="blockContent.advanceData.type=='FORM'&& blockContent.advanceData.items && blockContent.advanceData.items.length">
+                        <FormFile :design="design" :id="blockContent.advanceData.items[0]"/>
+                    </template>
                     <template v-else>
-                        <component :is="design" :id="blockContent.advanceData.categoryId" />
+                        <component :is="design"/>
                     </template>
                 </div>
             </template>
@@ -202,6 +204,26 @@ export default {
                     design.value = resolveComponent('testimonial/design01')
                 }
             }
+            else if(props.blockContent.advanceData.type=='FORM'){
+                if (props.blockContent.advanceData.design == 'D01') {
+                    design.value = resolveComponent('ui/form/design01')
+                }
+                else if (props.blockContent.advanceData.design == 'D02') {
+                    design.value = resolveComponent('ui/form/design02')
+                }
+                else if (props.blockContent.advanceData.design == 'D03') {
+                    design.value = resolveComponent('ui/form/design03')
+                }
+                else if (props.blockContent.advanceData.design == 'D04') {
+                    design.value = resolveComponent('ui/form/design04')
+                }
+                else if (props.blockContent.advanceData.design == 'D05') {
+                    design.value = resolveComponent('ui/form/design05')
+                }
+                else {
+                    design.value = resolveComponent('ui/form/design01')
+                }
+            }
             else if (props.blockContent.advanceData.type=='DOWNLOAD'||props.blockContent.advanceData.type=='PHOTO'||props.blockContent.advanceData.type=='VIDEO') {
                 if (props.blockContent.advanceData.categoryId) {
                     if (props.blockContent.advanceData.type=='DOWNLOAD') {
@@ -294,7 +316,14 @@ export default {
     text-decoration: none;
     margin: auto;
 }
-
+#aboutdesign03 .pageblockD03{
+    margin: auto;
+    box-shadow:rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+#aboutdesign03 .v-btn.v-btn--elevated.v-theme--light.v-btn--density-default{
+display: block;
+margin: auto;
+}
 @media only screen and (max-width:475px) {
     #aboutdesign03 .v-card-title {
         margin: 0;

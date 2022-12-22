@@ -1,50 +1,52 @@
 <template>
-    <div id="fromDesign01">
+    <div id="fromDesign04">      
         <template v-if="type == 'text'" >
                 <v-text-field validate-on="input" v-if="required" :label="`${label}*`"
-                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)"  :rules="[rules.required, rules.specialcharacter]">
+                    v-model="modelValue"   
+                    variant="solo" @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.required, rules.specialcharacter]">
                 </v-text-field>
                 <v-text-field validate-on="input" v-else :label="label"
-                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)"  :rules="[rules.specialcharacter]" >
+                    v-model="modelValue"  
+                    variant="solo"  @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.specialcharacter]">
                 </v-text-field>
         </template> 
  
           <template v-if="type == 'mobile'">
                 <v-text-field validate-on="input" v-if="required" :label="`${label}*`"
-                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="modelValue ? [rules.mobileNumber] : [rules.required]"  >
+                    v-model="modelValue"   variant="solo" @input="$emit('update:modelValue', $event.target.value)" :rules="modelValue ? [rules.mobileNumber] : [rules.required]"  >
                 </v-text-field>
                 <v-text-field validate-on="input" v-else :label="label"
-                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="modelValue ? [rules.mobileNumber] : ''"  >
+                    v-model="modelValue"  variant="solo"  @input="$emit('update:modelValue', $event.target.value)" :rules="modelValue ? [rules.mobileNumber] : ''"  >
                 </v-text-field>
         </template>
        <template v-if="type == 'email'">
                 <v-text-field validate-on="input" v-if="required" :label="`${label}*`"
-                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="modelValue ? [rules.email] : [rules.required]"  >
+                    v-model="modelValue"  variant="solo"  @input="$emit('update:modelValue', $event.target.value)" :rules="modelValue ? [rules.email] : [rules.required]"  >
                 </v-text-field>
                 <v-text-field validate-on="input" v-else :label="label"
-                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="modelValue ? [rules.email] : ''" >
+                    v-model="modelValue"  variant="solo"  @input="$emit('update:modelValue', $event.target.value)" :rules="modelValue ? [rules.email] : ''" >
                 </v-text-field>
         </template>
       <template v-if="type == 'number'">
                 <v-text-field validate-on="input" v-if="required" :label="`${label}*`"
-                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.required, rules.number]" >
+                    v-model="modelValue"  variant="solo"  @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.required, rules.number]" >
                 </v-text-field>
                 <v-text-field validate-on="input" v-else :label="label"
-                    v-model="modelValue"   @input="$emit('update:modelValue', $event.target.value)" :rules="''" >
+                    v-model="modelValue"  variant="solo"  @input="$emit('update:modelValue', $event.target.value)" :rules="''" >
                 </v-text-field>
         </template>
       <template v-if="type == 'textarea'">
                 <v-textarea validate-on="input" v-if="required" :label="`${label}*`"
-                    v-model="modelValue"  autoGrow shaped rows="4" row-height="50" @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.required]" >
+                    v-model="modelValue"  variant="solo" autoGrow shaped rows="4" row-height="50" @input="$emit('update:modelValue', $event.target.value)" :rules="[rules.required]" >
                 </v-textarea>
                 <v-textarea validate-on="input" v-else :label="label"
-                    v-model="modelValue"  autoGrow shaped rows="4" row-height="50" @input="$emit('update:modelValue', $event.target.value)" :rules="''">
+                    v-model="modelValue"  variant="solo" autoGrow shaped rows="4" row-height="50" @input="$emit('update:modelValue', $event.target.value)" :rules="''">
                 </v-textarea>
         </template> 
         <template v-if="type == 'dropdown'">
             <client-only>
             <v-select :items="options" :label="required ? `${label}*` : label" 
-                v-model="modelValue" :clearable="!required"  @update:modelValue="$emit('update:modelValue', modelValue)" :rules="required?[rules.required]:''">
+                v-model="modelValue"  variant="solo" :clearable="!required"  @update:modelValue="$emit('update:modelValue', modelValue)" :rules="required?[rules.required]:''">
             </v-select>
             </client-only>
         </template> 
@@ -52,7 +54,7 @@
             <div style="text-transform: capitalize;">
                 <client-only>
                 <v-radio-group inline v-model="modelValue" @change="$emit('update:modelValue', modelValue)"  :label="required?`${label}*`:label" :rules="required?[rules.required]:''">
-                    <v-radio v-for="item in options" :key="item" :label="item" :value="item" color="success">
+                    <v-radio v-for="item in options" :key="item" :label="item" :value="item" color="success"  variant="solo">
                     </v-radio>
                 </v-radio-group>
                 </client-only>
@@ -63,16 +65,16 @@
             <div style="display:flex" class="checkboxmsg" >
                 <v-checkbox v-for="(subItem2,index) in options" :key="index" :value="subItem2" v-model="bindingValue"
                     :label="subItem2" @update:modelValue="onFileSelected(modelValue)"
-                    :rules="required ? [rules.requiredSelect] : ''" color="success">
+                    :rules="required ? [rules.requiredSelect] : ''" color="success"  variant="solo">
                 </v-checkbox>  
             </div>
         </template>
         <template v-if="type == 'file'">
                 <v-file-input v-if="required" :label="`${label}*`"
-                    v-model="bindingValue" clearable rows="4" :show-size="1024" accept="image/png, image/jpeg, image/bmp" row-height="30" @update:modelValue="onFileSelected()" :rules="[rules.fileRequired] " >
+                    v-model="bindingValue" variant="solo" clearable rows="4" :show-size="1024" accept="image/png, image/jpeg, image/bmp" row-height="30" @update:modelValue="onFileSelected()" :rules="[rules.fileRequired] " >
                 </v-file-input>
                 <v-file-input v-else :label="label"
-                    v-model="bindingValue" clearable  rows="4" :show-size="1024" accept="image/png, image/jpeg, image/bmp" row-height="30" @update:modelValue="onFileSelected()" :rules="[rules.fileSize]">
+                    v-model="bindingValue" variant="solo" clearable  rows="4" :show-size="1024" accept="image/png, image/jpeg, image/bmp" row-height="30" @update:modelValue="onFileSelected()" :rules="[rules.fileSize]">
                 </v-file-input>
         </template> 
     </div>
@@ -144,9 +146,7 @@ export default {
     methods: {
         onFileSelected(value) {
             alert("val")
-            this.$emit('newVal', value);  
-            
-            
+            this.$emit('newVal', value);       
         },
         //  onFileSelected(event) {
         //     console.log(event)
@@ -165,3 +165,62 @@ export default {
 }
 
 </script>
+<style>
+
+#fromDesign04 .checkboxmsg {
+
+position: relative;
+flex-wrap: wrap;
+}
+
+#fromDesign04 .checkboxmsg .v-input.v-input--horizontal.v-input--density-default.v-checkbox {
+max-width: 130px;
+width: 100px;
+}
+
+#fromDesign04 .checkboxmsg .v-input {
+flex: none;
+}
+
+#fromDesign04 .checkboxmsg .v-checkbox .v-input__details .v-messages {
+display: none;
+
+}
+
+#fromDesign04 .checkboxmsg .v-checkbox:last-child .v-input__details .v-messages {
+display: block;
+}
+
+#fromDesign04 .checkboxmsg .v-checkbox .v-input__details {
+position: absolute;
+top: 0;
+bottom: 0;
+left: 0;
+}
+
+ #submitmessage {
+font-size: 24px;
+font-weight: 500;
+border: 2px solid #03a84e;
+border-radius: 4px;
+padding: 20px;
+width: 500px;
+margin: auto;
+margin-top: 140px;
+margin-bottom: 140px;
+}
+
+#formFile {
+margin: 40px;
+padding: 20px;
+border: 3px solid #0e922e;
+border-radius: 5px;
+}
+
+#formFile .v-btn {
+display: block;
+margin: auto;
+background: var(--v-success);
+color: var(--v-background);
+}
+</style>
