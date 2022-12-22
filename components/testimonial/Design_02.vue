@@ -77,7 +77,6 @@
                             <span v-for="(item,index) in testimonials" :key="item.id"
                                 :class="[index==0?'swiper-pagination-bullet swiper-pagination-bullet-active':'swiper-pagination-bullet']"
                                 role="button" aria-label="Go to slide 1" aria-current="true"></span>
-
                         </div>
                     </div>
                 </template>

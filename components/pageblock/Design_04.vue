@@ -35,8 +35,11 @@
                     <template v-else-if="blockContent.advanceData.type=='PHOTO'||blockContent.advanceData.type=='VIDEO'">
                         <GalleryAlbum :design="design" :list="blockContent.shortCode" :albumType='blockContent.advanceData.type' />
                     </template>
+                    <template v-else-if="blockContent.advanceData.type=='FORM'&& blockContent.advanceData.items && blockContent.advanceData.items.length">
+                        <FormFile :design="design" :id="blockContent.advanceData.items[0]"/>
+                    </template>
                     <template v-else>
-                        <component :is="design" :id="blockContent.advanceData.categoryId" />
+                        <component :is="design"/>
                     </template>
                 </div>
             </template>
@@ -199,6 +202,26 @@ export default {
                 }
                 else {
                     design.value = resolveComponent('testimonial/design01')
+                }
+            }
+            else if(props.blockContent.advanceData.type=='FORM'){
+                if (props.blockContent.advanceData.design == 'D01') {
+                    design.value = resolveComponent('ui/form/design01')
+                }
+                else if (props.blockContent.advanceData.design == 'D02') {
+                    design.value = resolveComponent('ui/form/design02')
+                }
+                else if (props.blockContent.advanceData.design == 'D03') {
+                    design.value = resolveComponent('ui/form/design03')
+                }
+                else if (props.blockContent.advanceData.design == 'D04') {
+                    design.value = resolveComponent('ui/form/design04')
+                }
+                else if (props.blockContent.advanceData.design == 'D05') {
+                    design.value = resolveComponent('ui/form/design05')
+                }
+                else {
+                    design.value = resolveComponent('ui/form/design01')
                 }
             }
             else if (props.blockContent.advanceData.type=='DOWNLOAD'||props.blockContent.advanceData.type=='PHOTO'||props.blockContent.advanceData.type=='VIDEO') {

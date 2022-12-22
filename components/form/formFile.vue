@@ -4,14 +4,14 @@
             <v-responsive class="mx-auto" max-width="1000" pb-4>
                 <div id="formFile">
                     <div v-for="item in formFields" :key="item.id">
-                        <UiFormDesign01 v-if="item.type!='checkbox'|| item.type!='file'" :label="item.title" :type="item.type" :required='item.required'
+                        <component :is="design" v-if="item.type!='checkbox'|| item.type!='file'" :label="item.title" :type="item.type" :required='item.required'
                             :options="item.options" :fileType="item.fileType" :fileSize="parseInt('10000')"
                             v-model="userData[item.controlName]" :controlName="item.controlName">
-                        </UiFormDesign01>
-                        <UiFormDesign01 v-else @newVal="myfunction" :label="item.title" :type="item.type" :required='item.required'
+                        </component>
+                        <component :is="design" v-else @newVal="myfunction" :label="item.title" :type="item.type" :required='item.required'
                             :options="item.options" :fileType="item.fileType" :fileSize="parseInt('10000')"
                             v-model="userData[item.controlName]" :controlName="item.controlName">
-                        </UiFormDesign01>
+                        </component>
                     </div>
                     <v-btn class="btn" type="submit">submit</v-btn>
                     <ClientOnly>
@@ -26,13 +26,12 @@
             </v-container>
         </div>
     </div>
-
 </template>
 <script>
 
 export default {
-    async setup() {
-        const formdata = await useForm();
+    async setup(props) {
+        const formdata = await useForm(props.id);
         const formFields = ref(null);
         formFields.value = formdata.fields;
         return {
@@ -51,14 +50,24 @@ export default {
             displayText: 'Please fill the required fields'
         }
     },
+    props:{
+        id: {
+            type: String,
+            default: null,
+            required: false
+        },
+        design:{
+         required:true,
+        }
+    },
     methods: {
-        myfunction(val){
+        myfunction(value){
             alert(1);
         },
         submitUserData(userData) {
             const apiUrl = `https://demo02.institute.org.in/api/form/formresponse`
             const data = {
-                form: '6388487e8e13e93f22cbe9c4',
+                form: this.$props.id,
                 response: userData,
             }
             $fetch(apiUrl, { method: 'POST', body: data }).then(res => {
@@ -68,10 +77,8 @@ export default {
         },
         checkValidity() {
             this.$refs.form.validate();
-          
             if (this.valid == null) {
-                if (this.$refs.form.items.filter(e => e.isValid == null).length > 0) {
-                    debugger
+                if (this.$refs.form.items.filter(e => e.isValid == null).length > 0) {   
                     this.showErrorMessage = true;
                     this.valid = null
                 } else {
@@ -97,16 +104,16 @@ export default {
         },
         async onSubmit() {
             let newUserData = {}
-            debugger
+            
             if (this.checkValidity()) {
-                debugger
+                
                 for (const key in this.userData) {
                     if (this.isFile(this.userData[key])) {
                         const fd = new FormData();
                         fd.append('ekFile', this.userData[key][0], this.userData[key][0].name);
                         let myData = null;
                         myData = await $fetch('https://demo02.institute.org.in/api/public/file/upload', { method: 'POST', body: fd })
-                        debugger
+                        
                         if (myData) {
                             try {
                                 newUserData[key] = myData.url;
@@ -130,6 +137,16 @@ export default {
         }
 
     },
+    props:{
+        id: {
+            type: String,
+            default: null,
+            required: false
+        },
+        design:{
+         required:true,
+        }
+    }
 }
 
 </script>
