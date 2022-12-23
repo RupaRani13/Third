@@ -75,14 +75,16 @@
                 </v-checkbox>
             </div>
         </template>
+      
         <template v-if="type == 'file'">
-            <v-file-input v-if="required" :label="`${label}*`" v-model="bindingValue" variant="solo" clearable rows="4"
-                :show-size="1024" accept="image/png, image/jpeg, image/bmp" row-height="30"
-                @update:modelValue="onFileSelected()" :rules="[rules.fileRequired]">
+            <v-file-input v-if="required" :label="`${label}*`" v-model="modelValue" variant="solo" rows="4" show-size=1024
+                accept="image/png, image/jpeg, image/bmp" row-height="30"
+                @change="$emit('update:modelValue', modelValue)"
+                :rules="modelValue ? [rules.fileSize] : [rules.fileRequired]">
             </v-file-input>
-            <v-file-input v-else :label="label" v-model="bindingValue" variant="solo" clearable rows="4"
-                :show-size="1024" accept="image/png, image/jpeg, image/bmp" row-height="30"
-                @update:modelValue="onFileSelected()" :rules="[rules.fileSize]">
+            <v-file-input v-else :label="label" v-model="modelValue" rows="4" variant="solo" show-size=1024
+                accept="image/png, image/jpeg, image/bmp" row-height="30" @change="onFileSelected(modelValue)"
+                :rules="modelValue ? [rules.fileSize] : ''">
             </v-file-input>
         </template>
     </div>
@@ -93,7 +95,7 @@
 export default {
     setup(props) {
         const bindingValue = ref(null)
-        if (props.type == 'checkbox' || props.type == 'file') {
+        if (props.type == 'checkbox') {
             bindingValue.value = []
             console.log(bindingValue.value)
         }
@@ -156,7 +158,6 @@ export default {
     },
     methods: {
         onFileSelected(value) {
-            alert("val")
             this.$emit('newVal', value);
         },
         //  onFileSelected(event) {

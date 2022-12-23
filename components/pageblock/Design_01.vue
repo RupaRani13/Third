@@ -266,8 +266,6 @@ export default {
                     } else {
                         design.value = resolveComponent('gallery/video/list')
                     }
-
-
                 } else {
                     if (props.blockContent.advanceData.design&&props.blockContent.advanceData.design.includes('D01')) {
                         design.value = resolveComponent('ui/tabs/design01')

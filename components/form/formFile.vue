@@ -1,10 +1,10 @@
 <template>
     <div>
         <v-form v-if="!savingSuccessful" v-model="valid" @submit.prevent="onSubmit()" ref="form">
-            <v-responsive class="mx-auto" max-width="1000" pb-4>
+            <v-responsive class="mx-auto" max-width="500" pb-4>
                 <div id="formFile">
-                    <div v-for="item in formFields" :key="item.id">
-                        <component :is="design" v-if="item.type!='checkbox'|| item.type!='file'" :label="item.title" :type="item.type" :required='item.required'
+                            <div v-for="item in formFields" :key="item.id">
+                        <component :is="design" v-if="item.type!='checkbox'" :label="item.title" :type="item.type" :required='item.required'
                             :options="item.options" :fileType="item.fileType" :fileSize="parseInt('10000')"
                             v-model="userData[item.controlName]" :controlName="item.controlName">
                         </component>
@@ -57,7 +57,7 @@ export default {
             required: false
         },
         design:{
-         required:true,
+            required:true,
         }
     },
     methods: {
@@ -89,9 +89,8 @@ export default {
                 if (this.valid) {
                     this.showErrorMessage = false;
                     return this.valid;
-                } else {
-                  
-                    alert(1);
+                } else { 
+                    
                 }
             }
         },
@@ -109,11 +108,10 @@ export default {
                 
                 for (const key in this.userData) {
                     if (this.isFile(this.userData[key])) {
-                        const fd = new FormData();
+                        const fd = new FormData();      
                         fd.append('ekFile', this.userData[key][0], this.userData[key][0].name);
-                        let myData = null;
-                        myData = await $fetch('https://demo02.institute.org.in/api/public/file/upload', { method: 'POST', body: fd })
-                        
+                        let myData = null;     
+                        myData = await $fetch('https://demo02.institute.org.in/api/public/file/upload', { method: 'POST', body: fd })      
                         if (myData) {
                             try {
                                 newUserData[key] = myData.url;
@@ -137,27 +135,12 @@ export default {
         }
 
     },
-    props:{
-        id: {
-            type: String,
-            default: null,
-            required: false
-        },
-        design:{
-         required:true,
-        }
-    }
+
 }
 
 </script>
 
 <style>
-/* #fromDesign01 .v-responsive {
-    border: 3px solid var(--v-success);
-    padding: 20px;
-    margin: 128px 20px;
-    border-radius: 5px;
-}*/
 
 #fromDesign01 .checkboxmsg {
 
