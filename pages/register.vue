@@ -235,8 +235,6 @@ export default {
                 }
                 resolve(newObj)
             })
-
-            
         },
         createStdData(objData){
             let outputObj = {};
@@ -274,17 +272,34 @@ export default {
         async onSubmit(i){   
             let newUserData = {};
             if(this.checkValidity(i)){
-                newUserData = await this.getFileUploadUrl(this.userData);
-                try {
-                    
-                } catch (error) {
-                    
-                }
- 
+                newUserData = await this.getFileUploadUrl(this.userData); 
                 let stdData = this.createStdData(newUserData);
-                debugger                
-                console.log(stdData);
-                this.page= this.page+1;
+                stdData.address = {};
+                stdData.father = {};
+                stdData.mother = {};
+                stdData.pastCourses = [];
+                stdData.pastExams = [];
+                stdData.email = `${stdData.mobile}@edukitapp.com`;
+                let bodyData = {
+                    createLogin: true,
+                    student: stdData,
+                    user: {
+                        password: stdData.password || Math.random() * 100000 | 0 ,
+                        username:  stdData.mobile
+                    }
+                };
+                $fetch('https://demo02.institute.org.in/api/public/user/student', { method: 'POST', body: bodyData }).then((res)=>{
+                    console.log(res);
+                    // if(process.client){
+                    //     localStorage.setItem("user", JSON.stringify(res.user));
+                    // }
+
+                    this.page= this.page+1;
+                    }
+
+                ).catch(e=> console.log(e))
+   
+
             }else{
                 return
             }

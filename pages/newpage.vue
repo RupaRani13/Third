@@ -1,67 +1,70 @@
 <template>
-  <v-form ref="form" v-model="valid">
-    <v-text-field v-model="name" :counter="10" label="Name"></v-text-field>
+  <v-app>
+    <v-main>
+      <v-container class="fill-height" fluid>
+        <v-row align="center" justify="center" dense>
+          <v-col cols="12" sm="8" md="4" lg="4">
+            <v-card>
+             <v-card-text>
+               <v-form>
+                 <v-text-field label="Enter your user name" name="name" v-model="userData.username" prepend-inner-icon="mdi-account" type="text" class="rounded-0" outlined>
+                 </v-text-field>
+                 <v-text-field label="Enter your password" name="password" v-model="userData.password" prepend-inner-icon="mdi-lock" type="password" suffix="| Forgot?"  class="rounded-0" outlined>
+                 </v-text-field>
+                 <v-btn x-large block @click="signIn()">Login</v-btn>
+               </v-form>
+             </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-main>
+  </v-app>
+  
 
-    <v-text-field v-model="email" label="E-mail"></v-text-field>
 
-    <v-select v-model="select" :items="items" label="Item"></v-select>
 
-    <v-checkbox v-model="checkbox" label="Do you agree?"></v-checkbox>
-
-    <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">
-      Validate
-    </v-btn>
-
-    <v-btn color="error" class="mr-4" @click="reset">
-      Reset Form
-    </v-btn>
-
-    <v-btn color="warning" @click="resetValidation">
-      Reset Validation
-    </v-btn>
-  </v-form>
+    <!-- <form @submit.prevent="userLogin">
+      <div>
+        <label>Username</label>
+        <input type="text" v-model="login.username" />
+      </div>
+      <div>
+        <label>Password</label>
+        <input type="text" v-model="login.password" />
+      </div>
+      <div>
+        <button type="submit">Submit</button>
+      </div>
+    </form> -->
+ 
 </template>
 
 <script>
 export default {
-  data: () => ({
-    valid: true,
-    name: '',
-    nameRules: [
-      v => !!v || 'Name is required',
-      v => (v && v.length <= 10) || 'Name must be less than 10 characters',
-    ],
-    email: '',
-    emailRules: [
-      v => !!v || 'E-mail is required',
-      v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-    ],
-    select: null,
-    items: [
-      'Item 1',
-      'Item 2',
-      'Item 3',
-      'Item 4',
-    ],
-    checkbox: false,
-  }),
+  setup(){
+    const userData = ref(null);
+    userData.value = {}
+    userData.value.username="";
+    userData.value.password="";
+    const signIn = ()=> {
+      $fetch(`https://demo02.institute.org.in/api/auth/signin`,{method:'POST',body: userData.value}).then(res=>{
+        useSetLoginDetails(res.token,res.user)
+      }).catch(e=>console.log(e))
+    } 
+    return {
+      userData, signIn
 
-  methods: {
-    validate() {
-      this.$refs.form.validate()
-      let x = this.valid;
-      debugger
-    },
-    reset() {
-      this.$refs.form.reset()
-    },
-    resetValidation() {
-      this.$refs.form.resetValidation()
-    },
+    } 
+
+
   },
+  data() {
+
+  },
+  methods: {
+
+
+  }
 }
 </script>
-
-<style scoped>
-
-</style>

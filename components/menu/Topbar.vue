@@ -22,13 +22,18 @@
 
         <v-spacer></v-spacer>
 
-        <v-btn class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
+        <v-btn v-if="!login" class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
             <v-icon icon="mdi-account-plus" class="mr-2"></v-icon>
             Register
         </v-btn>
-        <v-btn class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
+        <v-btn v-if="!login" class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
             <v-icon icon="mdi-login-variant" class="mr-2"></v-icon>
             Login
+        </v-btn>
+        <span v-if="login">Hello, {{ name }}!!</span>
+        <v-btn v-if="login" @click="logOut()" class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
+            <v-icon icon="mdi-login-variant" class="mr-2"></v-icon>
+            Logout
         </v-btn>
 
         </v-system-bar>
@@ -40,11 +45,27 @@
 <script>
 export default {
     async setup() {
-        const websiteData=await useWebsiteData('5f8ff2901c6863595640aa75')
+        const websiteData=await useWebsiteData('5f8ff2901c6863595640aa75');
+        const loginDetails = ref(null);
+        const login = ref(false);
+        const name = ref(null)
+        if(process.client){
+            loginDetails.value = useGetLoginDetails();
+            if(loginDetails.value.authToken){
+                login.value = true;
+            }
+            if(loginDetails.value.user&&loginDetails.value.user.firstName){
+                name.value = loginDetails.value.user.firstName;
+            }
+        }
+        const logOut = () => {
+            useRemoveLoginDetails();
+        }
         return {
-            websiteData,
+            websiteData, login, name, logOut
         };
     },
+
 }
 
 
