@@ -1,6 +1,7 @@
 <template>
-  <v-app>
     <v-main>
+      {{ counter.count }}
+      <v-btn @click="counter.increment">Increate</v-btn>
       <v-container class="fill-height" fluid>
         <v-row align="center" justify="center" dense>
           <v-col cols="12" sm="8" md="4" lg="4">
@@ -19,7 +20,6 @@
         </v-row>
       </v-container>
     </v-main>
-  </v-app>
   
 
 
@@ -41,27 +41,30 @@
 </template>
 
 <script>
+import { useCounterStore } from '@/stores/counter'
 export default {
+
   setup(){
+    const counter = useCounterStore();
     const userData = ref(null);
     userData.value = {}
     userData.value.username="";
     userData.value.password="";
+    // const {useSetLoginDetails} = useLogin();
+    debugger
     const signIn = ()=> {
       $fetch(`https://demo02.institute.org.in/api/auth/signin`,{method:'POST',body: userData.value}).then(res=>{
-        useSetLoginDetails(res.token,res.user)
+        // useSetLoginDetails(res.token,res.user)
       }).catch(e=>console.log(e))
     } 
     return {
-      userData, signIn
+      userData, signIn, counter
 
     } 
 
 
   },
-  data() {
 
-  },
   methods: {
 
 
