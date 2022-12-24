@@ -18,10 +18,7 @@
             <v-icon icon="mdi-email" class="mr-2"></v-icon>
             {{websiteData.email[1]}}
         </v-btn>
-
-
         <v-spacer></v-spacer>
-
         <v-btn v-if="!login" class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
             <v-icon icon="mdi-account-plus" class="mr-2"></v-icon>
             Register
@@ -35,7 +32,6 @@
             <v-icon icon="mdi-login-variant" class="mr-2"></v-icon>
             Logout
         </v-btn>
-
         </v-system-bar>
     </div>
 
