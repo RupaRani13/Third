@@ -21,8 +21,6 @@
 
 
         <v-spacer></v-spacer>
-    
-
         <v-btn v-if="!counter.$state.token" class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
             <v-icon icon="mdi-account-plus" class="mr-2"></v-icon>
             Register
@@ -36,7 +34,6 @@
             <v-icon icon="mdi-login-variant" class="mr-2"></v-icon>
             Logout
         </v-btn>
-
         </v-system-bar>
     </div>
 
@@ -49,9 +46,8 @@ import { useCounterStore } from '@/stores/counter'
 export default {
     async setup() {
         const counter = useCounterStore();
-
         const websiteData= await useWebsiteData('5f8ff2901c6863595640aa75');
-        if (process.client) {
+        if(process.client){
             if(localStorage.getItem('authToken')){
                 counter.$patch({'token' : localStorage.getItem('authToken')})
             }
@@ -63,7 +59,6 @@ export default {
             websiteData, counter
         };
     },
-
 }
 
 

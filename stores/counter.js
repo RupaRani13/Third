@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 export const useCounterStore = defineStore('counter', {
   state: () => {
     return { 
@@ -17,23 +17,10 @@ export const useCounterStore = defineStore('counter', {
     login(){
     localStorage.setItem('authToken',token);
     localStorage.setItem('user', JSON.stringify(user));
+    console.log('Hello23');
     this.$state.token = '';
     this.$state.user = '';
     }
   },
 
 })
-
-
-
-// export const useCounterStore = defineStore('counter', () => {
-//     const count = ref(0)
-//     function increment() {
-//       count.value++
-//     }
-  
-//     return { count, increment }
-//   })
-
-
-   
