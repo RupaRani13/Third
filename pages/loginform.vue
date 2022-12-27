@@ -1,6 +1,5 @@
 <template>
   <v-main>
-    {{ counter.count }}
     <!-- <v-btn @click="counter.increment">Increate</v-btn> -->
     <v-container class="fill-height" fluid>
       <v-row align="center" justify="center" dense>
@@ -12,7 +11,7 @@
                </v-text-field>
                <v-text-field label="Enter your password" name="password" v-model="userData.password" prepend-inner-icon="mdi-lock" type="password" suffix="| Forgot?"  class="rounded-0" outlined>
                </v-text-field>
-               <v-btn x-large block type="submit" @click="counter.logOut">Login</v-btn>
+               <v-btn x-large block type="submit">Login</v-btn>
              </v-form>
            </v-card-text>
           </v-card>
@@ -37,15 +36,15 @@ setup(){
   // myObj = {'sdsd' : 'sdsd'};
   // debugger
   const userData = ref(null);
-
-  counter.$patch({ name: 'newName' });
   userData.value = {}
   userData.value.username="";
   userData.value.password="";
   // const {useSetLoginDetails} = useLogin(); 
   const signIn = ()=> {
     $fetch(`https://demo02.institute.org.in/api/auth/signin`,{method:'POST',body: userData.value}).then(res=>{
-      useSetLoginDetails(res.token,res.user)
+      useSetLoginDetails(res.token,res.user);
+      counter.$state.token = res.token;
+      counter.$state.user = res.user;
     }).catch(e=>console.log(e))
   };
   // const pinia = createPinia();
@@ -57,7 +56,6 @@ setup(){
   //   (state) => {
   //     localStorage.setItem('authToken', JSON.stringify(state))
   // },{ deep: true });
-  debugger 
   return {
     userData, signIn, counter
 

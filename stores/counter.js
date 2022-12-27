@@ -2,23 +2,23 @@ import { defineStore } from 'pinia'
 export const useCounterStore = defineStore('counter', {
   state: () => {
     return { 
-            count: 10,
-              /* Initialize state from local storage to enable user to stay logged in */
-              // loginDetails.value:''
               user: '',
               token: '',
-           
            }
   },
 
   actions: {
-    // increment() {
-    //   // this.count++
-    // },
     logOut(){
-      debugger
-      alert('1')
-      this.loginDetails.value
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('user');
+      this.$state.token = '';
+      this.$state.user = '';
+    },
+    login(){
+    localStorage.setItem('authToken',token);
+    localStorage.setItem('user', JSON.stringify(user));
+    this.$state.token = '';
+    this.$state.user = '';
     }
   },
 

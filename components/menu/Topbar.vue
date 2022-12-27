@@ -21,21 +21,18 @@
 
 
         <v-spacer></v-spacer>
-      
-        {{ counter.count }}
-        {{ counter.name }}
-        <v-btn @click="counter.increment">Increate</v-btn>
+    
 
-        <v-btn v-if="!login" class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
+        <v-btn v-if="!counter.$state.token" class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
             <v-icon icon="mdi-account-plus" class="mr-2"></v-icon>
             Register
         </v-btn>
-        <v-btn v-if="!login" class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
+        <v-btn v-if="!counter.$state.token" class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
             <v-icon icon="mdi-login-variant" class="mr-2"></v-icon>
             Login
         </v-btn>
-        <span v-if="login">Hello, {{ name }}!!</span>
-        <v-btn v-if="login" @click="counter.logOut" class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
+        <span v-if="counter&&counter.$state&&counter.$state.token">Hello, {{ counter.$state.user.firstName }}!!</span>
+        <v-btn v-if="counter&&counter.$state&&counter.$state.token" @click="counter.logOut" class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
             <v-icon icon="mdi-login-variant" class="mr-2"></v-icon>
             Logout
         </v-btn>
@@ -54,31 +51,16 @@ export default {
         const counter = useCounterStore();
 
         const websiteData= await useWebsiteData('5f8ff2901c6863595640aa75');
-        const loginDetails = ref(null);
-        const login = ref(false);
-        const name = ref(null)
         if (process.client) {
-            loginDetails.value = useGetLoginDetails();
-            if (loginDetails.value.authToken) {
-                login.value = true;
+            if(localStorage.getItem('authToken')){
+                counter.$patch({'token' : localStorage.getItem('authToken')})
             }
-            if (loginDetails.value.user && loginDetails.value.user.firstName) {
-                name.value = loginDetails.value.user.firstName;
+            if(localStorage.getItem('user')){
+                counter.$patch({'user' : JSON.parse(localStorage.getItem('user'))})
             }
-        }
-        // const {authToken, user, useRemoveLoginDetails } = useLogin();
-        // debugger
-        // if(authToken.value){
-        //     login.value=true
-        // }
-        // if(user.value&&user.value.firstName){
-        //     name.value=user.value.firstName
-        // }
-        const logOut = () => {
-            useRemoveLoginDetails();
         }
         return {
-            websiteData, login, name , counter,logOut
+            websiteData, counter
         };
     },
 
