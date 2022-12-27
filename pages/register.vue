@@ -274,7 +274,7 @@ export default {
             if(this.checkValidity(i)){
                 newUserData = await this.getFileUploadUrl(this.userData); 
                 let stdData = this.createStdData(newUserData);
-                stdData.address = {};
+                stdData.address = {}; //required in api
                 stdData.father = {};
                 stdData.mother = {};
                 stdData.pastCourses = [];
@@ -293,7 +293,7 @@ export default {
                     // if(process.client){
                     //     localStorage.setItem("user", JSON.stringify(res.user));
                     // }
-
+                    
                     this.page= this.page+1;
                     }
 
