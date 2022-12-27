@@ -17,7 +17,7 @@ export const useCounterStore = defineStore('counter', {
     login(){
     localStorage.setItem('authToken',token);
     localStorage.setItem('user', JSON.stringify(user));
-    console.log('Hello');
+    console.log('Hello23');
     this.$state.token = '';
     this.$state.user = '';
     }

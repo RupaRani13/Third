@@ -5,7 +5,6 @@ export default defineNuxtConfig({
     transpile: ['vuetify'],
   },
   modules: [
-    // ...
     '@pinia/nuxt',
   ],
   app: {
