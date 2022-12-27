@@ -4,6 +4,10 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify'],
   },
+  modules: [
+    // ...
+    '@pinia/nuxt',
+  ],
   app: {
     pageTransition: { name: 'page', mode: 'out-in'}
   },

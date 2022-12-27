@@ -8,11 +8,11 @@
     function useSetLoginDetails(token, user) {
         localStorage.setItem('authToken',token);
         localStorage.setItem('user', JSON.stringify(user));
-    } 
+    }
     function useRemoveLoginDetails() {
         localStorage.removeItem('authToken');
         localStorage.removeItem('user');
-        authToken = ref(null);
-        user = ref(null);
+        authToken.value = ref(null);
+        user.value = ref(null);
     } 
 export {useGetLoginDetails, useSetLoginDetails, useRemoveLoginDetails }

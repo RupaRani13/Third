@@ -18,7 +18,14 @@
             <v-icon icon="mdi-email" class="mr-2"></v-icon>
             {{websiteData.email[1]}}
         </v-btn>
+
+
         <v-spacer></v-spacer>
+      
+        {{ counter.count }}
+        {{ counter.name }}
+        <v-btn @click="counter.increment">Increate</v-btn>
+
         <v-btn v-if="!login" class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
             <v-icon icon="mdi-account-plus" class="mr-2"></v-icon>
             Register
@@ -28,10 +35,11 @@
             Login
         </v-btn>
         <span v-if="login">Hello, {{ name }}!!</span>
-        <v-btn v-if="login" @click="logOut()" class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
+        <v-btn v-if="login" @click="counter.logOut" class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
             <v-icon icon="mdi-login-variant" class="mr-2"></v-icon>
             Logout
         </v-btn>
+
         </v-system-bar>
     </div>
 
@@ -39,26 +47,38 @@
 </template>
 
 <script>
+import { useCounterStore } from '@/stores/counter'
+
 export default {
     async setup() {
-        const websiteData=await useWebsiteData('5f8ff2901c6863595640aa75');
+        const counter = useCounterStore();
+
+        const websiteData= await useWebsiteData('5f8ff2901c6863595640aa75');
         const loginDetails = ref(null);
         const login = ref(false);
         const name = ref(null)
-        if(process.client){
+        if (process.client) {
             loginDetails.value = useGetLoginDetails();
-            if(loginDetails.value.authToken){
+            if (loginDetails.value.authToken) {
                 login.value = true;
             }
-            if(loginDetails.value.user&&loginDetails.value.user.firstName){
+            if (loginDetails.value.user && loginDetails.value.user.firstName) {
                 name.value = loginDetails.value.user.firstName;
             }
         }
+        // const {authToken, user, useRemoveLoginDetails } = useLogin();
+        // debugger
+        // if(authToken.value){
+        //     login.value=true
+        // }
+        // if(user.value&&user.value.firstName){
+        //     name.value=user.value.firstName
+        // }
         const logOut = () => {
             useRemoveLoginDetails();
         }
         return {
-            websiteData, login, name, logOut
+            websiteData, login, name , counter,logOut
         };
     },
 
