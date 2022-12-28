@@ -14,13 +14,14 @@ export const useCounterStore = defineStore('counter', {
       this.$state.token = '';
       this.$state.user = '';
     },
-    login(){
+    logIn(){
     localStorage.setItem('authToken',token);
     localStorage.setItem('user', JSON.stringify(user));
-    this.$state.token = '';
-    this.$state.user = '';
+    this.$state.token = 'token';
+    this.$state.user = 'user';
     }
-  },
+ 
+}
 
 })
 
