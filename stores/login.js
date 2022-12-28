@@ -1,10 +1,15 @@
 import { defineStore } from 'pinia';
-export const useCounterStore = defineStore('counter', {
+export const useLoginStore = defineStore('counter', {
   state: () => {
     return { 
-              user: '',
-              token: '',
+              user: null,
+              token: null,
+
            }
+  },
+  getters : {
+    isLogin : (state) => {if(state.token){ return true}else{ return false }},
+    firstName : (state) => {if(state.user){ return state.user.firstName}else{ return null }},
   },
 
   actions: {
@@ -21,7 +26,16 @@ export const useCounterStore = defineStore('counter', {
         this.$state.token = res.token;
         this.$state.user = res.user;
       }).catch(e=>console.log(e))
-
+    },
+    getLocalStorageData(){
+      if(process.client){
+          if(localStorage.getItem('authToken')){
+            this.$state.token = localStorage.getItem('authToken')
+          }
+          if(localStorage.getItem('user')){
+            this.$state.user = JSON.parse(localStorage.getItem('user'));
+          }
+      }
     }
   },
 
