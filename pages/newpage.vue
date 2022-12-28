@@ -17,7 +17,6 @@
         </v-row>
       </v-container>
 </template>
-
 <script>
 import { useLoginStore } from '@/stores/login'
 export default {
@@ -29,15 +28,7 @@ export default {
     userData.value.password="";
     return {
       userData, store
-
     } 
-
-
   },
-
-  methods: {
-
-
-  }
 }
 </script>
