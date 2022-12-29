@@ -21,22 +21,19 @@
 
 
         <v-spacer></v-spacer>
-    
-
-        <v-btn v-if="!counter.$state.token" class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
+        <v-btn v-if="!store.isLogin" class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
             <v-icon icon="mdi-account-plus" class="mr-2"></v-icon>
             Register
         </v-btn>
-        <v-btn v-if="!counter.$state.token" class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
+        <v-btn v-if="!store.isLogin" class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
             <v-icon icon="mdi-login-variant" class="mr-2"></v-icon>
             Login
         </v-btn>
-        <span v-if="counter&&counter.$state&&counter.$state.token">Hello, {{ counter.$state.user.firstName }}!!</span>
-        <v-btn v-if="counter&&counter.$state&&counter.$state.token" @click="counter.logOut" class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
+        <span v-if="store.firstName">Hello, {{ store.firstName }}!!</span>
+        <v-btn v-if="store.firstName" @click="store.logOut" class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
             <v-icon icon="mdi-login-variant" class="mr-2"></v-icon>
             Logout
         </v-btn>
-
         </v-system-bar>
     </div>
 
@@ -44,26 +41,17 @@
 </template>
 
 <script>
-import { useCounterStore } from '@/stores/counter'
+import { useLoginStore } from '@/stores/login'
 
 export default {
     async setup() {
-        const counter = useCounterStore();
-
+        const store = useLoginStore();
         const websiteData= await useWebsiteData('5f8ff2901c6863595640aa75');
-        if (process.client) {
-            if(localStorage.getItem('authToken')){
-                counter.$patch({'token' : localStorage.getItem('authToken')})
-            }
-            if(localStorage.getItem('user')){
-                counter.$patch({'user' : JSON.parse(localStorage.getItem('user'))})
-            }
-        }
+        store.getLocalStorageData();
         return {
-            websiteData, counter
+            websiteData, store
         };
     },
-
 }
 
 
