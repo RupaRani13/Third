@@ -24,7 +24,7 @@
             default: 'Please fill the required fields',
         },
         timeout: {
-            default: 4000,
+            default: 2000,
         }
     }
         
