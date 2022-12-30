@@ -1,7 +1,8 @@
 <template>
     <div>
-<p >Child {{myprop}}</p>
-<dummychild-1 :xyz="myprop"></dummychild-1>
+        <v-btn @click="showData">see more</v-btn>
+<!-- <p >Child {{myprop}}</p> -->
+<!-- <dummychild-1 :xyz="myprop"></dummychild-1> -->
     </div>
 </template>
 
@@ -12,6 +13,17 @@
                 type : String,
 
             }
+        },
+        data(){
+            return{
+      
+            }
+        },
+     
+        methods:{
+            showData(){
+                this.$emit('showMsg',23)
+            } 
         }
     }
 </script>
