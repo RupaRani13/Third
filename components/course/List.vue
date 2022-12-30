@@ -163,7 +163,6 @@ export default {
                             value: null,
                         }
                     }
-                    debugger
                     if (item.name) {
                         myObj.title['value'] = item.name;
                     }
@@ -196,8 +195,6 @@ export default {
                         myObj.endDate['value'] = item.myObj.linkedProduct.validity;
                     }
                     if (item.id) {
-                        // myObj.pathUrl.value = '$course-detail'item.id
-                        // myObj.pathUrl.value = "/course-detail/" + item.id + "fnjdf" + item.dsd;
                         myObj.pathUrl.value = `/course-detail/${item.id}`;
                     }
                     if (item.linkedProduct) {
@@ -206,9 +203,7 @@ export default {
                     CourseArr.push(myObj)
                 })
                 return CourseArr;
-
             }
-
         }
     },
     created() {
