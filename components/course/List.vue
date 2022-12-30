@@ -140,6 +140,7 @@ export default {
                         },
                         buyBtn: {
                             show: true,
+                            value: null
                         },
                         description: {
                             show: true,
@@ -162,6 +163,7 @@ export default {
                             value: null,
                         }
                     }
+                    debugger
                     if (item.name) {
                         myObj.title['value'] = item.name;
                     }
@@ -197,6 +199,9 @@ export default {
                         // myObj.pathUrl.value = '$course-detail'item.id
                         // myObj.pathUrl.value = "/course-detail/" + item.id + "fnjdf" + item.dsd;
                         myObj.pathUrl.value = `/course-detail/${item.id}`;
+                    }
+                    if (item.linkedProduct) {
+                        myObj.buyBtn.value = `/buy/${item.linkedProduct.id}`;
                     }
                     CourseArr.push(myObj)
                 })
