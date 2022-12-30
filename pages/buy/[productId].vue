@@ -11,11 +11,8 @@ import { useLoginStore } from '~~/stores/login';
             const route = useRoute();
             const router = useRouter();
             function createPaymentUrl(storeId, orderId, orderNo, totalAmt, nodeId){
-            let url = `${window.location.origin}/api/sales/order/make-online-payment?storeId=${storeId}&orderId=${orderId}&nodeId=${nodeId}&orderNo=${orderNo}&totalAmount=${totalAmt}
-            &redirectUrl=${window.location.origin}/api/sales/order/online-payment-response/${storeId}
-            &cancelUrl=${window.location.origin}/api/sales/order/online-payment-cancel-response/${storeId}
-            &responsePreviewUrl=${window.location.origin}/api/sales/order/online-payment-response/${storeId}`;
-            router.push({fullPath : url})
+            let url = `/api/sales/order/make-online-payment?storeId=${storeId}&orderId=${orderId}&nodeId=${nodeId}&orderNo=${orderNo}&totalAmount=${totalAmt}&redirectUrl=${window.location.origin}/api/sales/order/online-payment-response/${storeId}&cancelUrl=${window.location.origin}/api/sales/order/online-payment-cancel-response/${storeId}&responsePreviewUrl=${window.location.origin}/api/sales/order/online-payment-response/${storeId}`;
+            router.push(url)
         }
             const store = useLoginStore();
             const data = ref(null)
