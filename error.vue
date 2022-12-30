@@ -1,9 +1,6 @@
 <template>
     <div>
-        <PagenotfoundDesign02 @handleClearError = 'handleClearError'></PagenotfoundDesign02>
-
-        <!-- <button @click="handleClearError">Go Back</button> -->
-
+        <PagenotfoundDesign03 @handleClearError = 'handleClearError'></PagenotfoundDesign03>
     </div>
 </template>
 

@@ -140,6 +140,7 @@ export default {
                         },
                         buyBtn: {
                             show: true,
+                            value: null
                         },
                         description: {
                             show: true,
@@ -194,16 +195,15 @@ export default {
                         myObj.endDate['value'] = item.myObj.linkedProduct.validity;
                     }
                     if (item.id) {
-                        // myObj.pathUrl.value = '$course-detail'item.id
-                        // myObj.pathUrl.value = "/course-detail/" + item.id + "fnjdf" + item.dsd;
                         myObj.pathUrl.value = `/course-detail/${item.id}`;
+                    }
+                    if (item.linkedProduct) {
+                        myObj.buyBtn.value = `/buy/${item.linkedProduct.id}`;
                     }
                     CourseArr.push(myObj)
                 })
                 return CourseArr;
-
             }
-
         }
     },
     created() {
