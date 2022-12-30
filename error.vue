@@ -1,6 +1,6 @@
 <template>
     <div>
-        <PagenotfoundDesign01 @handleClearError = 'handleClearError'></PagenotfoundDesign01>
+        <PagenotfoundDesign03 @handleClearError = 'handleClearError'></PagenotfoundDesign03>
     </div>
 </template>
 
