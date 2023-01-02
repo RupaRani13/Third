@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { useSnackbar } from '@/stores/snackbar'
 
 
 export const useLoginStore = defineStore('login', {
@@ -6,7 +7,6 @@ export const useLoginStore = defineStore('login', {
     return {
       user: null,
       token: null,
-      savingSuccessful: false,
       displayText: 'Your form Successfully logged  In',
       loginwithotp:false,
       otpSubmit:false,
@@ -32,18 +32,20 @@ export const useLoginStore = defineStore('login', {
       this.token = '';
       this.user = '';
     },
-    login(userData) {
+    login(userData, url) {
+      const snackbar = useSnackbar();
       const router = useRouter();
       $fetch(`https://demo02.institute.org.in/api/auth/signin`, { method: 'POST', body: userData }).then(res => {
         localStorage.setItem('authToken', res.token);
         localStorage.setItem('user', JSON.stringify(res.user));
         this.token = res.token;
         this.user = res.user;
-        this.savingSuccessful = true;
-        router.push('/')
-      }).catch(e => console.log(e))
-      
- 
+        snackbar.showSnackbar(`Successfully logged in as ${this.user.firstName}`)
+        debugger
+        router.push(url)
+      }).catch(e => {
+        if(e.data&&e.data.message) snackbar.showSnackbar(e.data.message);
+        console.log(e)})
     },
     getLocalStorageData() {
       if (process.client) {
@@ -56,13 +58,17 @@ export const useLoginStore = defineStore('login', {
       }
     },
     getOtp(userName) {
+      const snackbar = useSnackbar();
       const myData = { 'username': userName }
       const apiUrl = 'https://demo02.institute.org.in/api/public/send-otp23'
       $fetch(`${apiUrl}`, { method: 'POST', body: myData }).then(res => {
         this.otpSubmit = true;
+        snackbar.showSnackbar('OTP send to your registered Mobile Number');
         this.loginWithOtpDetails.user = res.user.id;
         this.loginWithOtpDetails.id = res.id;
+
       }).catch(e => {
+        if(e.data&&e.data.message) snackbar.showSnackbar(e.data.message);
         console.log(e)
         this.otpSubmit = true;
         this.loginWithOtpDetails.user = res.user.id;
@@ -71,6 +77,7 @@ export const useLoginStore = defineStore('login', {
       )
     },
     loginViaOtp(otp){
+      const snackbar = useSnackbar();
       const router = useRouter();
       this.loginWithOtpDetails.otp=otp;
       $fetch("https://demo02.institute.org.in/api/public/varify",{method:'POST',body: this.loginWithOtpDetails }).then(res=>{
@@ -79,10 +86,12 @@ export const useLoginStore = defineStore('login', {
         localStorage.setItem('user', JSON.stringify(res.user));
         this.token = res.token;
         this.user = res.user;
-        this.savingSuccessful = true;
+        snackbar.showSnackbar(`Successfully logged in as ${this.user.firstName}`)
         router.push('/')     
         
-      }).catch(e=>console.log(e))
+      }).catch(e=>{
+        if(e.data&&e.data.message) snackbar.showSnackbar(e.data.message);
+        console.log(e)})
     },
   }
 

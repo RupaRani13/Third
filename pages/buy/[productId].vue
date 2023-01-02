@@ -1,5 +1,9 @@
 <template>
     <div>
+        <div v-for="(value,key) in planWisePaymentNodes" :key="key">
+            {{ key }}
+            <div v-for="item in value" :key="item">{{item}}</div>
+        </div>
 
     </div>
 </template>
@@ -11,9 +15,26 @@ import { useLoginStore } from '~~/stores/login';
             const route = useRoute();
             const router = useRouter();
             function createPaymentUrl(storeId, orderId, orderNo, totalAmt, nodeId){
-            let url = `/api/sales/order/make-online-payment?storeId=${storeId}&orderId=${orderId}&nodeId=${nodeId}&orderNo=${orderNo}&totalAmount=${totalAmt}&redirectUrl=${window.location.origin}/api/sales/order/online-payment-response/${storeId}&cancelUrl=${window.location.origin}/api/sales/order/online-payment-cancel-response/${storeId}&responsePreviewUrl=${window.location.origin}/api/sales/order/online-payment-response/${storeId}`;
-            router.push(url)
-        }
+                let url = `https://demo02.institute.org.in/api/sales/order/make-online-payment?storeId=${storeId}&orderId=${orderId}&nodeId=${nodeId}&orderNo=${orderNo}&totalAmount=${totalAmt}&redirectUrl=https://demo02.institute.org.in/api/sales/order/online-payment-response/${storeId}&cancelUrl=https://demo02.institute.org.in/api/sales/order/online-payment-cancel-response/${storeId}&responsePreviewUrl=https://demo02.institute.org.in/api/sales/order/online-payment-response/${storeId}`;
+                window.location.href = url;
+
+            }
+            function goToPaymentPage(nodeIdVal){
+                $fetch(`https://demo02.institute.org.in/api/cmn/order/${orderId}`,{method: 'PUT', headers: { token: store.token },  body : {paymentOptionAmt : res1[0].amount, paymentOption : res1[0].title}}).then(res2=>{
+                                        console.log(res2);
+                                        let storeId = res2.store.id;
+                                        let orderId = res2.id;
+                                        let orderNo = res2.orderNo;
+                                        let totalAmt = res2.paymentOptionAmt;
+                                        let nodeId = [];
+                                        nodeId.push(nodeIdVal);
+
+                                        // let nodeId = ;
+
+                                        createPaymentUrl(storeId, orderId, orderNo, totalAmt, nodeId)
+                                        
+                                    }).catch(e=>console.log(e))
+            }
             const store = useLoginStore();
             const data = ref(null)
             const batch = ref(null)
@@ -21,6 +42,7 @@ import { useLoginStore } from '~~/stores/login';
                 user : '' ,
                 order : {} ,
             }
+            const planWisePaymentNodes =ref({});
             placeOrderData.order = {
                 stream: "",
                 course: "",
@@ -75,27 +97,26 @@ import { useLoginStore } from '~~/stores/login';
                             console.log(res);
                             debugger
                             const orderId = res.id
-                            $fetch(`https://demo02.institute.org.in/api/cmn/order/payment-nodes?order=${orderId}`).then(
+                            $fetch(`https://demo02.institute.org.in/api/cmn/order/payment-nodes?order=${orderId}&populatePaymentOpt=true`).then(
                                 res1=>{
+                                    
+                                    res1.forEach(item=>{
+                                        if(!planWisePaymentNodes.value.hasOwnProperty(item.paymentOption.emiPlan)){
+                                            planWisePaymentNodes.value[item.paymentOption.emiPlan]= [];
+                                            planWisePaymentNodes.value[item.paymentOption.emiPlan].push({
+                                                title : item.title,
+                                                amount : item.amount,
+                                                nodeId : item.id,
+                                            });
+                                        }else{
+                                            planWisePaymentNodes.value[item.paymentOption.emiPlan].push({
+                                                title : item.title,
+                                                amount : item.amount,
+                                                nodeId : item.id,
+                                            })
+                                        }
+                                    })
                                     console.log(res1);
-                                    const nodeIdVal = res1[0].id
-                                    debugger
-                                    $fetch(`https://demo02.institute.org.in/api/cmn/order/${orderId}`,{method: 'PUT', headers: { token: store.token },  body : {paymentOptionAmt : res1[0].amount, paymentOption : res1[0].title}}).then(res2=>{
-                                        console.log(res2);
-                                        let storeId = res2.store.id;
-                                        let orderId = res2.id;
-                                        let orderNo = res2.orderNo;
-                                        let totalAmt = res2.paymentOptionAmt;
-                                        let nodeId = [];
-                                        nodeId.push(nodeIdVal);
-
-                                        // let nodeId = ;
-
-                                        createPaymentUrl(storeId, orderId, orderNo, totalAmt, nodeId)
-                                        
-                                        debugger
-                                    }).catch(e=>console.log(e))
-
                                 }
                             ).catch(e=>console.log(e))
                             debugger
@@ -107,7 +128,7 @@ import { useLoginStore } from '~~/stores/login';
             debugger
 
 
-            return {data}
+            return {data, goToPaymentPage,planWisePaymentNodes}
 
         }
         
