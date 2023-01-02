@@ -7,7 +7,7 @@
         <!-- <div>{{dummydata[0]}}</div> -->
         <!-- <Dummychild desc="this is desc" @showMsg="getData($event)"></Dummychild>
         <h4>Result: {{ result }}</h4> -->
-        
+<!--         
             <v-card v-for="(item,index) in dummydata" :key="index" class="mx-auto"
     max-width="344">
                 <v-img :src="item.image" height="200px" cover></v-img>
@@ -32,7 +32,7 @@
                         </v-card-text>
                     </div>
                 </v-expand-transition>
-            </v-card>
+            </v-card> -->
        
     </div>
 </template>
@@ -57,7 +57,7 @@ export default {
     },
     methods: {
         getData(data) {
-            this.result = data
+            this.result = data;
         },
     }
 }

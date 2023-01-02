@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-btn @click="showData">see more</v-btn>
+        <!-- <v-btn @click="showData">see more</v-btn> -->
 <!-- <p >Child {{myprop}}</p> -->
 <!-- <dummychild-1 :xyz="myprop"></dummychild-1> -->
     </div>
