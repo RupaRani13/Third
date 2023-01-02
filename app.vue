@@ -4,6 +4,7 @@
       <NuxtLoadingIndicator :height="20" :throttle="0" :duration="1000" />
       <NuxtPage />
       <UiErrormsgDesign01 v-model="store.savingSuccessful" :displayText="store.displayText"></UiErrormsgDesign01>
+      <UiSnackbarDesign01 v-model="snackbar.display" :displayText="snackbar.displayText"></UiSnackbarDesign01>
     </NuxtLayout>
 
   </v-app>
@@ -11,11 +12,13 @@
 </template>
 <script>
 import { useLoginStore } from '@/stores/login'
+import { useSnackbar } from '@/stores/snackbar'
 export default {
   setup(){
     const store = useLoginStore();
+    const snackbar = useSnackbar();
     return{
-      store
+      store,snackbar
     }
   },
   computed: {
