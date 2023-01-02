@@ -33,6 +33,9 @@
                     </div>
                 </v-expand-transition>
             </v-card> -->
+            <dummychild  @opcao-emit="receivedOpcao($event)"></dummychild>
+            <h4>Result: {{ result }}</h4> 
+  
        
     </div>
 </template>
@@ -47,6 +50,7 @@ export default {
         }
     },
     methods: {
+    
 
     },
     data() {
@@ -59,6 +63,9 @@ export default {
         getData(data) {
             this.result = data;
         },
+        receivedOpcao(data){
+            this.result = data
+        }
     }
 }
 </script>

@@ -6,6 +6,7 @@
         <div v-if="!store.isLogin">
           <ui-tabs-design01 :list="tabArr" @activeIndex="(i) => index = i">
           </ui-tabs-design01>
+    
           <v-card v-if="index == 0">
             <v-card-text>
               <v-form>
