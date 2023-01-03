@@ -5,9 +5,7 @@
             {{ item }}
         </V-card> -->
         <!-- <div>{{dummydata[0]}}</div> -->
-        <!-- <Dummychild desc="this is desc" @showMsg="getData($event)"></Dummychild>
-        <h4>Result: {{ result }}</h4> -->
-        <!--         
+
             <v-card v-for="(item,index) in dummydata" :key="index" class="mx-auto"
     max-width="344">
                 <v-img :src="item.image" height="200px" cover></v-img>
@@ -60,10 +58,12 @@ export default {
     async setup() {
         const dummydata = await usedummytesti()
         console.log(dummydata)
-        let newalert = ref(null)
-        newalert = !newalert;
+        function getData(a,b,c,d) {
+            alert(1)
+            this.result = a+b+c+d;
+        };
         return {
-            dummydata,newalert
+            dummydata, getData
         }
     },
     data() {
@@ -80,6 +80,7 @@ export default {
         receivedOpcao(data) {
             this.result = data
         }
+
     }
 }
 </script>
