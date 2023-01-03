@@ -21,14 +21,19 @@
 
 
         <v-spacer></v-spacer>
-        <v-btn v-if="!store.isLogin" class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
-            <v-icon icon="mdi-account-plus" class="mr-2"></v-icon>
-            Register
-        </v-btn>
-        <v-btn v-if="!store.isLogin" class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
-            <v-icon icon="mdi-login-variant" class="mr-2"></v-icon>
-            Login
-        </v-btn>
+        <NuxtLink to="signup"> 
+            <v-btn v-if="!store.isLogin" class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
+                <v-icon icon="mdi-account-plus" class="mr-2"></v-icon>
+                Register
+            </v-btn>
+        </NuxtLink>
+        <NuxtLink to="login"> 
+            <v-btn v-if="!store.isLogin" class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
+                <v-icon icon="mdi-login-variant" class="mr-2"></v-icon>
+                Login
+            </v-btn>
+        </NuxtLink>
+
         <span v-if="store.firstName">Hello, {{ store.firstName }}!!</span>
         <v-btn v-if="store.firstName" @click="store.logOut" class="bg-grey mr-2 text-lowercase" color="white" ripple density="compact" elevation="1" variant="text">
             <v-icon icon="mdi-login-variant" class="mr-2"></v-icon>
@@ -58,4 +63,7 @@ export default {
 </script>
 
 <style scoped>
+    a {
+        text-decoration: nones;
+    }
 </style>

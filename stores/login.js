@@ -1,7 +1,5 @@
 import { defineStore } from 'pinia';
 import { useSnackbar } from '@/stores/snackbar'
-
-
 export const useLoginStore = defineStore('login', {
   state: () => {
     return {
@@ -10,7 +8,6 @@ export const useLoginStore = defineStore('login', {
       displayText: 'Your form Successfully logged  In',
       loginwithotp:false,
       otpSubmit:false,
-  
       loginWithOtpDetails : {
         otp : '',
         verifyOption : 'mobile',
@@ -35,6 +32,20 @@ export const useLoginStore = defineStore('login', {
     login(userData, url) {
       const snackbar = useSnackbar();
       const router = useRouter();
+      if(!userData.username&&!userData.password) {
+        snackbar.showSnackbar("username & password is required");
+        return
+      }
+      debugger
+      if(!userData.username) {
+        snackbar.showSnackbar("username is required");
+        return
+      }
+      if(!userData.password) {
+        snackbar.showSnackbar("password is required");
+        return
+      }
+
       $fetch(`https://demo02.institute.org.in/api/auth/signin`, { method: 'POST', body: userData }).then(res => {
         localStorage.setItem('authToken', res.token);
         localStorage.setItem('user', JSON.stringify(res.user));
@@ -57,38 +68,20 @@ export const useLoginStore = defineStore('login', {
         }
       }
     },
-    getOtp(userName) {
-      const snackbar = useSnackbar();
-      const myData = { 'username': userName }
-      const apiUrl = 'https://demo02.institute.org.in/api/public/send-otp23'
-      $fetch(`${apiUrl}`, { method: 'POST', body: myData }).then(res => {
-        this.otpSubmit = true;
-        snackbar.showSnackbar('OTP send to your registered Mobile Number');
-        this.loginWithOtpDetails.user = res.user.id;
-        this.loginWithOtpDetails.id = res.id;
-
-      }).catch(e => {
-        if(e.data&&e.data.message) snackbar.showSnackbar(e.data.message);
-        console.log(e)
-        this.otpSubmit = true;
-        this.loginWithOtpDetails.user = res.user.id;
-        this.loginWithOtpDetails.id = res.id;
-      }
-      )
-    },
-    loginViaOtp(otp){
+    loginViaOtp(userData){
       const snackbar = useSnackbar();
       const router = useRouter();
-      this.loginWithOtpDetails.otp=otp;
-      $fetch("https://demo02.institute.org.in/api/public/varify",{method:'POST',body: this.loginWithOtpDetails }).then(res=>{
-        console.log(res)
+      if(!userData.otp) {
+        snackbar.showSnackbar("OTP is required");
+        return
+      }
+      $fetch("https://demo02.institute.org.in/api/public/varify",{method:'POST',body: userData}).then(res=>{
         localStorage.setItem('authToken', res.token);
         localStorage.setItem('user', JSON.stringify(res.user));
         this.token = res.token;
         this.user = res.user;
         snackbar.showSnackbar(`Successfully logged in as ${this.user.firstName}`)
         router.push('/')     
-        
       }).catch(e=>{
         if(e.data&&e.data.message) snackbar.showSnackbar(e.data.message);
         console.log(e)})
