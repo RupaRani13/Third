@@ -7,7 +7,7 @@
         <!-- <div>{{dummydata[0]}}</div> -->
         <!-- <Dummychild desc="this is desc" @showMsg="getData($event)"></Dummychild>
         <h4>Result: {{ result }}</h4> -->
-<!--         
+        <!--         
             <v-card v-for="(item,index) in dummydata" :key="index" class="mx-auto"
     max-width="344">
                 <v-img :src="item.image" height="200px" cover></v-img>
@@ -33,10 +33,25 @@
                     </div>
                 </v-expand-transition>
             </v-card> -->
-            <dummychild  @opcao-emit="receivedOpcao($event)"></dummychild>
-            <h4>Result: {{ result }}</h4> 
-  
-       
+        <dummychild @opcao-emit="receivedOpcao($event)"></dummychild>
+        <h4>Result: {{ result }}</h4>
+
+        <div>
+            <div  class="text-center">
+                <v-btn @click="newalert">
+                    Reset
+                </v-btn>
+            </div>
+            <v-alert  v-model="newalert" border="start" variant="tonal" closable close-label="Close Alert"
+                color="deep-purple-accent-4" title="Closable Alert">
+                Aenean imperdiet. Quisque id odio. Cras dapibus. Pellentesque ut neque. Cras dapibus.
+            </v-alert>
+          
+          
+        </div>
+
+
+
     </div>
 </template>
 
@@ -45,25 +60,24 @@ export default {
     async setup() {
         const dummydata = await usedummytesti()
         console.log(dummydata)
+        let newalert = ref(null)
+        newalert = !newalert;
         return {
-            dummydata
+            dummydata,newalert
         }
-    },
-    methods: {
-    
-
     },
     data() {
         return {
             result: '',
-            show:false
+            show: false,
+            newalert: true,
         }
     },
     methods: {
         getData(data) {
             this.result = data;
         },
-        receivedOpcao(data){
+        receivedOpcao(data) {
             this.result = data
         }
     }

@@ -12,7 +12,8 @@
           </v-card>
 
           <v-card v-if="index == 1">
-            <v-form>
+            <login-reset-psd></login-reset-psd>
+            <!-- <v-form>
               <v-text-field :disabled="store.otpSubmit" label="Enter your user name" name="name"
                 v-model="userData.username" prepend-inner-icon="mdi-account" type="text" class="rounded-0" outlined>
               </v-text-field>
@@ -20,11 +21,12 @@
                 prepend-inner-icon="mdi-account" type="text" class="rounded-0" outlined>
               </v-text-field>
               <v-btn v-if="store.otpSubmit" @click="store.getOtp(userData.username)&&timerCount">Reset Otp  {{ timerCount }}</v-btn>
+             
               <v-btn v-if="store.otpSubmit" @click="store.otpSubmit = false;">Reset Number</v-btn>
               
-            </v-form>
-            <v-btn v-if="!store.otpSubmit" x-large block @click="store.getOtp(userData.username)">Send otp</v-btn><br>
-            <v-btn v-if="store.otpSubmit" x-large block @click="store.loginViaOtp(userData.otp)">Submit</v-btn><br>
+            </v-form> -->
+            <!-- <v-btn v-if="!store.otpSubmit" x-large block @click="store.getOtp(userData.username)">Send otp</v-btn><br> -->
+            <!-- <v-btn v-if="store.otpSubmit" x-large block @click="store.loginViaOtp(userData.otp)">Submit</v-btn><br> -->
           </v-card>
         </div>
         <v-card v-if="store.isLogin">
